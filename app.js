@@ -1,7 +1,21 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
 const CONFIG = window.IN_DAYS_CONFIG || {};
-const SUPABASE_URL = String(CONFIG.SUPABASE_URL || '').trim();
+
+// Supabase Project URL must be the project root. Older copies sometimes used
+// the REST endpoint (…/rest/v1/), which makes Auth requests fail with
+// "Invalid path specified in request URL". Normalize any pasted path away.
+function normalizeSupabaseUrl(value) {
+  const raw = String(value || '').trim();
+  if (!raw) return '';
+  try {
+    return new URL(raw).origin;
+  } catch {
+    return '';
+  }
+}
+
+const SUPABASE_URL = normalizeSupabaseUrl(CONFIG.SUPABASE_URL);
 const SUPABASE_KEY = String(CONFIG.SUPABASE_PUBLISHABLE_KEY || '').trim();
 const supabase = SUPABASE_URL && SUPABASE_KEY ? createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
@@ -298,9 +312,17 @@ function closeAuth(){state.authOpen=false;document.getElementById('authRoot').in
 async function sendMagicLink(){
   const email=document.getElementById('authEmail').value.trim(); if(!email)return;
   state.email=email; state.authStatus='发送中…'; document.getElementById('authStatus').textContent=state.authStatus;
-  const redirectTo=window.location.href;
+  // Always redirect back to the GitHub Pages app root, matching the
+  // URL configured in Supabase Authentication → URL Configuration.
+  const path = window.location.pathname.endsWith('/') ? window.location.pathname : `${window.location.pathname}/`;
+  const redirectTo = `${window.location.origin}${path}`;
   const {error}=await supabase.auth.signInWithOtp({email,options:{emailRedirectTo:redirectTo}});
-  state.authStatus=error?error.message:'登录链接已发送到邮箱，请打开邮件完成登录。'; document.getElementById('authStatus').textContent=state.authStatus;
+  state.authStatus = error
+    ? (/Invalid path specified in request URL/i.test(error.message)
+      ? 'Supabase 连接地址仍有问题：请确保 Project URL 是 https://你的项目ID.supabase.co（不要带 /rest/v1/）。'
+      : error.message)
+    : '登录链接已发送到邮箱，请打开邮件完成登录。';
+  document.getElementById('authStatus').textContent=state.authStatus;
 }
 function toast(message){ const el=document.getElementById('toast'); if(!el)return; el.textContent=message; el.classList.add('show'); clearTimeout(window.__toastTimer); window.__toastTimer=setTimeout(()=>el.classList.remove('show'),2200); }
 
