@@ -23,7 +23,7 @@ const CANVAS_H = 420;
 const STICKER_CATEGORIES = [
   {key:'all',label:'全部'}, {key:'recommended',label:'推荐'}, {key:'daily',label:'日常'},
   {key:'food',label:'食物'}, {key:'nature',label:'自然'}, {key:'animals',label:'动物'},
-  {key:'mood',label:'心情'}, {key:'travel',label:'旅行'}, {key:'hobby',label:'兴趣'}, {key:'life',label:'生活'}
+  {key:'mood',label:'心情'}, {key:'travel',label:'旅行'}, {key:'hobby',label:'兴趣'}, {key:'festival',label:'节日'}, {key:'life',label:'生活'}
 ];
 
 function s(id,name,category,accent,render,tags=[]) { return {id,name,category,accent,render,tags:[name,...tags]}; }
@@ -144,6 +144,1522 @@ const STICKERS = [
   s('campfire','篝火','travel','#c58f6b','fire',['露营','夜晚','户外'])
 ];
 
+const SUPPLEMENT_STICKERS = [
+  {
+    "id": "wallet",
+    "name": "钱包",
+    "category": "daily",
+    "accent": "#b3ada2",
+    "tags": [
+      "钱包",
+      "出门",
+      "消费"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M14%2019h32a5%205%200%200%201%205%205v23H14z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M14%2022h34M14%2028h30%22%2F%3E%3Cpath%20d%3D%22M41%2037h12v9H41a4%204%200%200%201%200-9Z%22%2F%3E%3Ccircle%20cx%3D%2244%22%20cy%3D%2241.5%22%20r%3D%221.5%22%20fill%3D%22%233f3f3b%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "bottle",
+    "name": "水瓶",
+    "category": "daily",
+    "accent": "#a7b8c0",
+    "tags": [
+      "喝水",
+      "水杯",
+      "健康"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M23%2013h18v8l3%206v22H20V27l3-6Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M27%2013h10v7H27zM20%2034h24%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "thermos",
+    "name": "保温杯",
+    "category": "daily",
+    "accent": "#d6a47f",
+    "tags": [
+      "热水",
+      "通勤",
+      "办公室"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2222%22%20y%3D%2215%22%20width%3D%2220%22%20height%3D%2238%22%20rx%3D%225%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.25%22%2F%3E%3Cpath%20d%3D%22M27%2010h10v7H27zM22%2025h20%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "tissue",
+    "name": "纸巾",
+    "category": "daily",
+    "accent": "#b3ada2",
+    "tags": [
+      "纸巾",
+      "日常",
+      "清洁"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2024c7-5%2021-5%2028%200v29H18Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M18%2024c7-5%2021-5%2028%200M24%2018c4-3%2012-3%2016%200M25%2033h14M25%2039h9%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "flashlight",
+    "name": "手电筒",
+    "category": "daily",
+    "accent": "#d7b86e",
+    "tags": [
+      "夜晚",
+      "露营",
+      "照明"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M24%2014h16l-2%2010-12%2024H22l4-24Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M24%2014h16M22%2048h6M27%2024h10%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "charger",
+    "name": "充电器",
+    "category": "daily",
+    "accent": "#a7b8c0",
+    "tags": [
+      "充电",
+      "手机",
+      "数据线"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2218%22%20y%3D%2213%22%20width%3D%2217%22%20height%3D%2221%22%20rx%3D%224%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M35%2025h8c6%200%206%208%201%208h-9M24%2034v10c0%206%205%209%209%209%22%2F%3E%3Cpath%20d%3D%22M24%2016v5M29%2016v5%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "powerbank",
+    "name": "充电宝",
+    "category": "daily",
+    "accent": "#b3ada2",
+    "tags": [
+      "充电",
+      "电量",
+      "出门"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2221%22%20y%3D%229%22%20width%3D%2222%22%20height%3D%2246%22%20rx%3D%226%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M26%2018h12M29%2047h6%22%2F%3E%3Cpath%20d%3D%22M31%2026h2v12h-2z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.6%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "remote",
+    "name": "遥控器",
+    "category": "daily",
+    "accent": "#b3ada2",
+    "tags": [
+      "电视",
+      "遥控",
+      "家里"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2222%22%20y%3D%228%22%20width%3D%2220%22%20height%3D%2248%22%20rx%3D%226%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.18%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2218%22%20r%3D%223%22%2F%3E%3Ccircle%20cx%3D%2227%22%20cy%3D%2227%22%20r%3D%222%22%2F%3E%3Ccircle%20cx%3D%2237%22%20cy%3D%2227%22%20r%3D%222%22%2F%3E%3Ccircle%20cx%3D%2227%22%20cy%3D%2235%22%20r%3D%222%22%2F%3E%3Ccircle%20cx%3D%2237%22%20cy%3D%2235%22%20r%3D%222%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "umbrella_folded",
+    "name": "折叠伞",
+    "category": "daily",
+    "accent": "#a7b8c0",
+    "tags": [
+      "雨天",
+      "出门",
+      "雨伞"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M27%2012h10v29c0%204-2%207-5%207s-5-3-5-7Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.3%22%2F%3E%3Cpath%20d%3D%22M27%2012h10M32%2048c0%205%205%205%206%201%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "shoes",
+    "name": "鞋子",
+    "category": "daily",
+    "accent": "#d6a47f",
+    "tags": [
+      "鞋",
+      "出门",
+      "运动"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2038c8%200%2010%208%2018%208h13c5%200%206%207%201%208H23c-7%200-12-5-7-16Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M18%2040c5%203%209%203%2015%203M29%2034c3%203%205%205%209%207%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "scarf",
+    "name": "围巾",
+    "category": "daily",
+    "accent": "#c89e9c",
+    "tags": [
+      "冬天",
+      "保暖",
+      "穿搭"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2013c7%206%2017%206%2024%200v12c-7%205-17%205-24%200Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.32%22%2F%3E%3Cpath%20d%3D%22M20%2025v27l10-7%208%207V25%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "hat",
+    "name": "帽子",
+    "category": "daily",
+    "accent": "#b3ada2",
+    "tags": [
+      "帽子",
+      "穿搭",
+      "出门"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M13%2044c2-10%208-16%2019-16s17%206%2019%2016H13Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M10%2044h44M25%2028c0-6%2014-6%2014%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "banana",
+    "name": "香蕉",
+    "category": "food",
+    "accent": "#d7b86e",
+    "tags": [
+      "水果",
+      "早餐",
+      "零食"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2039c8%209%2018%208%2027-2%205-6%207-13%206-18-1-3-5-2-6%201-1%205-3%208-7%2011-6%205-12%204-18-1%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.5%22%2F%3E%3Cpath%20d%3D%22M18%2039c8%209%2018%208%2027-2M49%2019l3-2%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "grapes",
+    "name": "葡萄",
+    "category": "food",
+    "accent": "#c89e9c",
+    "tags": [
+      "水果",
+      "零食",
+      "聚会"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M31%2019c6-6%2011-4%2013%201-5%202-9%202-13-1Z%22%20fill%3D%22%239fb29b%22%20opacity%3D%22.65%22%2F%3E%3Ccircle%20cx%3D%2226%22%20cy%3D%2228%22%20r%3D%225%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.55%22%2F%3E%3Ccircle%20cx%3D%2237%22%20cy%3D%2228%22%20r%3D%225%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.55%22%2F%3E%3Ccircle%20cx%3D%2231%22%20cy%3D%2238%22%20r%3D%225%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.55%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2238%22%20r%3D%225%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.55%22%2F%3E%3Ccircle%20cx%3D%2240%22%20cy%3D%2238%22%20r%3D%225%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.55%22%2F%3E%3Ccircle%20cx%3D%2227%22%20cy%3D%2247%22%20r%3D%225%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.55%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "peach",
+    "name": "桃子",
+    "category": "food",
+    "accent": "#c89e9c",
+    "tags": [
+      "水果",
+      "夏天",
+      "甜"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2020c-10-7-18%201-16%2011%202%2011%209%2021%2016%2022%207-1%2014-11%2016-22%202-10-6-18-16-11Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.48%22%2F%3E%3Cpath%20d%3D%22M32%2020c1-6%205-9%2010-9-2%206-5%209-10%209Z%22%2F%3E%3Cpath%20d%3D%22M32%2025v28%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "cherry",
+    "name": "樱桃",
+    "category": "food",
+    "accent": "#c89e9c",
+    "tags": [
+      "水果",
+      "甜",
+      "夏天"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2225%22%20cy%3D%2240%22%20r%3D%227%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.5%22%2F%3E%3Ccircle%20cx%3D%2241%22%20cy%3D%2240%22%20r%3D%227%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.5%22%2F%3E%3Cpath%20d%3D%22M25%2033c2-11%205-17%209-21M41%2033c-2-10-5-16-7-21%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "pineapple",
+    "name": "菠萝",
+    "category": "food",
+    "accent": "#d7b86e",
+    "tags": [
+      "水果",
+      "夏天",
+      "热带"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M22%2024c-2%207-2%2019%202%2028%205%206%2011%206%2016%200%204-9%204-20%202-28Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.45%22%2F%3E%3Cpath%20d%3D%22M23%2023c-3-5%200-10%205-8%201-7%206-10%209-4%204-4%208%201%205%207M28%2030l8%2018M38%2030l-9%2018%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "yogurt",
+    "name": "酸奶",
+    "category": "food",
+    "accent": "#a7b8c0",
+    "tags": [
+      "早餐",
+      "乳制品",
+      "健康"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2022h24l-2%2030H22Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M20%2022h24l-2-7H22Z%22%2F%3E%3Cpath%20d%3D%22M25%2030h14M25%2037h11%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "milk",
+    "name": "牛奶",
+    "category": "food",
+    "accent": "#a7b8c0",
+    "tags": [
+      "早餐",
+      "饮品",
+      "健康"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M22%2016h20l-2%2039H24Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M22%2016h20M28%2010h8v6h-8zM25%2030h14%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "bubbletea",
+    "name": "奶茶",
+    "category": "food",
+    "accent": "#d6a47f",
+    "tags": [
+      "奶茶",
+      "饮料",
+      "下午茶"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M21%2022h22l-3%2030H24Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.3%22%2F%3E%3Cpath%20d%3D%22M22%2022h20M26%2014h12M32%2014v-5M26%2043l3%203M34%2042l3%204M39%2041l-1%205%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "dumpling",
+    "name": "饺子",
+    "category": "food",
+    "accent": "#d6a47f",
+    "tags": [
+      "春节",
+      "早餐",
+      "吃饭"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M14%2039c5-12%2031-12%2036%200-8%208-28%209-36%200Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.45%22%2F%3E%3Cpath%20d%3D%22M14%2039c5-12%2031-12%2036%200M20%2036c3%202%206%202%209%200s6%202%209%200%205%201%207%203%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "hotpot",
+    "name": "火锅",
+    "category": "food",
+    "accent": "#c89e9c",
+    "tags": [
+      "聚餐",
+      "冬天",
+      "吃饭"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2028h32l-4%2020c-6%207-18%207-24%200Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.24%22%2F%3E%3Cpath%20d%3D%22M16%2028h32M21%2023c5-6%209%206%2014%200%204-5%206%204%209%201M24%2036h16M24%2042h16%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "friedegg",
+    "name": "煎蛋",
+    "category": "food",
+    "accent": "#d7b86e",
+    "tags": [
+      "早餐",
+      "蛋",
+      "吃饭"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2036c3-10%2015-10%2020-6%205%204%2016-2%2020%204%205%209-5%2016-14%2016-10%200-29-3-26-14Z%22%20fill%3D%22%23fffdf7%22%2F%3E%3Ccircle%20cx%3D%2235%22%20cy%3D%2240%22%20r%3D%226%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.75%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "salad",
+    "name": "沙拉",
+    "category": "food",
+    "accent": "#9fb29b",
+    "tags": [
+      "健康",
+      "午餐",
+      "蔬菜"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2031h32c-2%2013-8%2022-16%2022s-14-9-16-22Z%22%20fill%3D%22%239fb29b%22%20opacity%3D%22.4%22%2F%3E%3Cpath%20d%3D%22M18%2030c5-7%2010-4%2014%200%204-8%2010-7%2014%200M23%2036h18%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "blanket",
+    "name": "毯子",
+    "category": "life",
+    "accent": "#c89e9c",
+    "tags": [
+      "家居",
+      "休息",
+      "保暖"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M15%2025h34v27H15Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.25%22%2F%3E%3Cpath%20d%3D%22M20%2025c4%205%208%205%2012%200%204%205%208%205%2012%200M20%2034h24M20%2042h24%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "wardrobe",
+    "name": "衣柜",
+    "category": "life",
+    "accent": "#b3ada2",
+    "tags": [
+      "衣柜",
+      "家居",
+      "整理"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2215%22%20y%3D%2210%22%20width%3D%2234%22%20height%3D%2244%22%20rx%3D%223%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.2%22%2F%3E%3Cpath%20d%3D%22M32%2010v44M22%2031h4M38%2031h4%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "bookshelf",
+    "name": "书架",
+    "category": "life",
+    "accent": "#b3ada2",
+    "tags": [
+      "书架",
+      "阅读",
+      "家居"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2010h28v44H18Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.2%22%2F%3E%3Cpath%20d%3D%22M18%2025h28M18%2040h28M24%2017v7M32%2029v11M41%2043v11%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "laundry",
+    "name": "洗衣",
+    "category": "life",
+    "accent": "#a7b8c0",
+    "tags": [
+      "洗衣",
+      "家务",
+      "日常"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%2236%22%20height%3D%2240%22%20rx%3D%225%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.22%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2237%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2237%22%20r%3D%225%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.35%22%2F%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%2222%22%20r%3D%221.8%22%20fill%3D%22%233f3f3b%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "vacuum",
+    "name": "吸尘器",
+    "category": "life",
+    "accent": "#a7b8c0",
+    "tags": [
+      "清洁",
+      "家务"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M23%2013h12v22H23Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.25%22%2F%3E%3Cpath%20d%3D%22M35%2025c10%200%2013%205%2013%2012v8M20%2035c-5%200-8%204-8%209v9h8V37%22%2F%3E%3Cpath%20d%3D%22M28%2035v19%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "mop",
+    "name": "拖把",
+    "category": "life",
+    "accent": "#9fb29b",
+    "tags": [
+      "清洁",
+      "家务",
+      "打扫"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M39%2011%2030%2044%22%2F%3E%3Cpath%20d%3D%22M22%2043h23l-5%2011H27Z%22%20fill%3D%22%239fb29b%22%20opacity%3D%22.35%22%2F%3E%3Cpath%20d%3D%22M29%2044%2025%2055M36%2044l-2%2011M42%2044l-1%2011%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "trash",
+    "name": "垃圾桶",
+    "category": "life",
+    "accent": "#b3ada2",
+    "tags": [
+      "清洁",
+      "家务",
+      "垃圾"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M19%2021h26l-3%2033H22Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M17%2021h30M25%2015h14M28%2012h8M26%2028v18M32%2028v18M38%2028v18%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "bathtub",
+    "name": "浴缸",
+    "category": "life",
+    "accent": "#a7b8c0",
+    "tags": [
+      "洗澡",
+      "浴室",
+      "放松"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M13%2031h40c-2%2013-9%2022-20%2022s-18-9-20-22Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.24%22%2F%3E%3Cpath%20d%3D%22M13%2031h40M20%2027V18c0-6%209-6%209%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "shower",
+    "name": "淋浴",
+    "category": "life",
+    "accent": "#a7b8c0",
+    "tags": [
+      "洗澡",
+      "浴室",
+      "清洁"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M17%2024c0-8%207-13%2015-13%209%200%2015%205%2015%2013%22%2F%3E%3Cpath%20d%3D%22M47%2024H30M37%2024v17M28%2041h18%22%2F%3E%3Cpath%20d%3D%22M22%2031v3M28%2031v3M34%2031v3%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "mirror",
+    "name": "镜子",
+    "category": "life",
+    "accent": "#a7b8c0",
+    "tags": [
+      "镜子",
+      "梳妆",
+      "家里"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cellipse%20cx%3D%2232%22%20cy%3D%2229%22%20rx%3D%2216%22%20ry%3D%2221%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M32%2050v7M26%2057h12%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "monitor",
+    "name": "显示器",
+    "category": "daily",
+    "accent": "#a7b8c0",
+    "tags": [
+      "电脑",
+      "办公",
+      "工作"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2211%22%20y%3D%2212%22%20width%3D%2242%22%20height%3D%2229%22%20rx%3D%224%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M28%2041v8M21%2052h22M18%2049h28%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "tablet",
+    "name": "平板",
+    "category": "daily",
+    "accent": "#b3ada2",
+    "tags": [
+      "学习",
+      "办公",
+      "阅读"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2218%22%20y%3D%229%22%20width%3D%2228%22%20height%3D%2246%22%20rx%3D%225%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.2%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2249%22%20r%3D%222%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "document",
+    "name": "文件",
+    "category": "daily",
+    "accent": "#b3ada2",
+    "tags": [
+      "文件",
+      "工作",
+      "资料"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2010h22l8%208v36H18Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.18%22%2F%3E%3Cpath%20d%3D%22M40%2010v10h8M24%2030h18M24%2037h15M24%2044h12%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "paperclip",
+    "name": "回形针",
+    "category": "daily",
+    "accent": "#a7b8c0",
+    "tags": [
+      "文具",
+      "文件",
+      "办公"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M25%2048%2043%2030c5-5-2-12-7-7L20%2039c-8%208%204%2020%2012%2012l13-13%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "sticky",
+    "name": "便利贴",
+    "category": "daily",
+    "accent": "#d7b86e",
+    "tags": [
+      "便签",
+      "记录",
+      "工作"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M14%2014h36v27H32l-18%2012Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M32%2041v12M22%2023h20M22%2030h14%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "ruler",
+    "name": "尺子",
+    "category": "daily",
+    "accent": "#b3ada2",
+    "tags": [
+      "文具",
+      "学习",
+      "画图"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M19%2051%2013%2045%2043%2015l6%206Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M22%2044l-4-4M27%2039l-4-4M32%2034l-4-4M37%2029l-4-4%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "calculator",
+    "name": "计算器",
+    "category": "daily",
+    "accent": "#a7b8c0",
+    "tags": [
+      "计算",
+      "工作",
+      "学习"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2218%22%20y%3D%229%22%20width%3D%2228%22%20height%3D%2246%22%20rx%3D%224%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M24%2018h16v7H24zM24%2031h5M35%2031h5M24%2039h5M35%2039h5M24%2047h5M35%2047h5%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "presentation",
+    "name": "演示",
+    "category": "daily",
+    "accent": "#c89e9c",
+    "tags": [
+      "汇报",
+      "会议",
+      "工作"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2212%22%20y%3D%2214%22%20width%3D%2240%22%20height%3D%2230%22%20rx%3D%223%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.18%22%2F%3E%3Cpath%20d%3D%22M32%2044v11M24%2055h16M20%2036l8-8%206%205%2010-12%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "meeting",
+    "name": "会议",
+    "category": "daily",
+    "accent": "#b3ada2",
+    "tags": [
+      "会议",
+      "讨论",
+      "工作"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2221%22%20cy%3D%2227%22%20r%3D%225%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.35%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.35%22%2F%3E%3Ccircle%20cx%3D%2243%22%20cy%3D%2227%22%20r%3D%225%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.35%22%2F%3E%3Cpath%20d%3D%22M14%2045c2-7%2011-7%2014%200M25%2043c2-8%2012-8%2014%200M36%2045c2-7%2011-7%2014%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "graduation",
+    "name": "毕业",
+    "category": "daily",
+    "accent": "#d7b86e",
+    "tags": [
+      "毕业",
+      "学校",
+      "学业"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M11%2025%2032%2014l21%2011-21%2011Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.35%22%2F%3E%3Cpath%20d%3D%22M20%2030v13c8%207%2016%207%2024%200V30M53%2025v14%22%2F%3E%3Cpath%20d%3D%22M49%2040v7M46%2047h6%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "metro",
+    "name": "地铁",
+    "category": "travel",
+    "accent": "#a7b8c0",
+    "tags": [
+      "通勤",
+      "地铁",
+      "交通"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2216%22%20y%3D%2210%22%20width%3D%2232%22%20height%3D%2244%22%20rx%3D%228%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M22%2022h20M22%2030h20M20%2047h24M27%2054l-5%206M37%2054l5%206%22%2F%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%2240%22%20r%3D%223%22%20fill%3D%22%233f3f3b%22%2F%3E%3Ccircle%20cx%3D%2240%22%20cy%3D%2240%22%20r%3D%223%22%20fill%3D%22%233f3f3b%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "tram",
+    "name": "电车",
+    "category": "travel",
+    "accent": "#a7b8c0",
+    "tags": [
+      "交通",
+      "城市",
+      "出行"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2215%22%20y%3D%2214%22%20width%3D%2234%22%20height%3D%2236%22%20rx%3D%226%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.24%22%2F%3E%3Cpath%20d%3D%22M20%2022h24M21%2031h22M25%2050v6M39%2050v6M32%2014V8M25%208h14%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "taxi",
+    "name": "出租车",
+    "category": "travel",
+    "accent": "#d7b86e",
+    "tags": [
+      "打车",
+      "城市",
+      "出行"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M15%2036h34l-5-11c-1-3-4-5-7-5H27c-4%200-6%202-8%205l-4%2011Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.33%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2242%22%20r%3D%224%22%2F%3E%3Ccircle%20cx%3D%2242%22%20cy%3D%2242%22%20r%3D%224%22%2F%3E%3Cpath%20d%3D%22M19%2032h26%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "bikeride",
+    "name": "摩托车",
+    "category": "travel",
+    "accent": "#b3ada2",
+    "tags": [
+      "出行",
+      "骑行",
+      "城市"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2244%22%20r%3D%228%22%2F%3E%3Ccircle%20cx%3D%2245%22%20cy%3D%2244%22%20r%3D%228%22%2F%3E%3Cpath%20d%3D%22M20%2044h12l8-12h10M31%2044l-6-14h10M36%2030h-5%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "parking",
+    "name": "停车",
+    "category": "travel",
+    "accent": "#a7b8c0",
+    "tags": [
+      "停车",
+      "开车",
+      "出行"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2216%22%20y%3D%2210%22%20width%3D%2232%22%20height%3D%2244%22%20rx%3D%225%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M27%2045V19h9c9%200%209%2012%200%2012h-9%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "landmark",
+    "name": "景点",
+    "category": "travel",
+    "accent": "#d6a47f",
+    "tags": [
+      "旅行",
+      "景点",
+      "城市"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2052h40M17%2052V28h30v24M13%2028%2032%2014l19%2014M23%2038h5M36%2038h5%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.22%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "ticket",
+    "name": "车票",
+    "category": "travel",
+    "accent": "#a7b8c0",
+    "tags": [
+      "车票",
+      "旅行",
+      "出行"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2021h40v22H12Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.2%22%2F%3E%3Cpath%20d%3D%22M18%2027h28M18%2034h18%22%2F%3E%3Cpath%20d%3D%22M16%2020l3-3M44%2020l3-3%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "luggage_tag",
+    "name": "行李牌",
+    "category": "travel",
+    "accent": "#c89e9c",
+    "tags": [
+      "行李",
+      "旅行",
+      "机场"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2017h29v31H18Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.25%22%2F%3E%3Cpath%20d%3D%22M28%2017v-5h9v5M24%2025h17M24%2033h12%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "guitar",
+    "name": "吉他",
+    "category": "hobby",
+    "accent": "#d6a47f",
+    "tags": [
+      "音乐",
+      "乐器",
+      "弹琴"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M27%2045c-8%203-12-6-8-12%203-4%207-5%2010-2l16-16%206%206-16%2016c3%203%202%208-2%2010-2%202-4%202-6-2Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M40%2025l6%206M29%2029l-8%208%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "crochet",
+    "name": "钩针",
+    "category": "hobby",
+    "accent": "#c89e9c",
+    "tags": [
+      "手工",
+      "钩织",
+      "兴趣"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2047c8%204%2020-3%2027-12%205-6%202-14-4-13-4%201-5%207-2%2010M18%2047l-5%204M41%2022l8-8%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "knitting",
+    "name": "编织",
+    "category": "hobby",
+    "accent": "#d6a47f",
+    "tags": [
+      "手工",
+      "毛线",
+      "兴趣"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M14%2020l36%2024M50%2020%2014%2044%22%2F%3E%3Cpath%20d%3D%22M20%2024c5%209%2019%2016%2024%207M44%2040c-6-8-18-14-24-6%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "novel",
+    "name": "小说",
+    "category": "hobby",
+    "accent": "#b3ada2",
+    "tags": [
+      "阅读",
+      "小说",
+      "周末"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M14%2015c9-4%2018-4%2018%202v38c0-6-9-7-18-2Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.18%22%2F%3E%3Cpath%20d%3D%22M50%2015c-9-4-18-4-18%202v38c0-6%209-7%2018-2Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.18%22%2F%3E%3Cpath%20d%3D%22M19%2025h9M19%2032h9M37%2025h9M37%2032h9%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "puzzle",
+    "name": "拼图",
+    "category": "hobby",
+    "accent": "#a7b8c0",
+    "tags": [
+      "游戏",
+      "益智",
+      "兴趣"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M15%2017h18v10c6-4%2011%201%207%206h9v18H31V41c-7%204-12-3-6-8h-10Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.25%22%2F%3E%3Cpath%20d%3D%22M33%2017v10c6-4%2011%201%207%206h9%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "skateboard",
+    "name": "滑板",
+    "category": "hobby",
+    "accent": "#d6a47f",
+    "tags": [
+      "滑板",
+      "运动",
+      "兴趣"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2039c7%208%2033%208%2040%200%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2247%22%20r%3D%224%22%2F%3E%3Ccircle%20cx%3D%2244%22%20cy%3D%2247%22%20r%3D%224%22%2F%3E%3Cpath%20d%3D%22M20%2039h24%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "badminton",
+    "name": "羽毛球",
+    "category": "hobby",
+    "accent": "#a7b8c0",
+    "tags": [
+      "羽毛球",
+      "运动",
+      "兴趣"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2025v28M19%2025c7%204%2019%204%2026%200M22%2020l-7-6M27%2020l-3-8M37%2020l3-8M42%2020l7-6%22%2F%3E%3Cpath%20d%3D%22M26%2013c-4%202-5%207-2%2011M38%2013c4%202%205%207%202%2011%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "fishing",
+    "name": "钓鱼",
+    "category": "hobby",
+    "accent": "#a7b8c0",
+    "tags": [
+      "钓鱼",
+      "户外",
+      "休闲"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2016v24M16%2040c0%208%207%2010%2013%205s8-11%208-18M37%2027c7-4%2013-1%2013%206%200%206-6%2010-12%207%22%2F%3E%3Cpath%20d%3D%22M37%2027l6-7%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "baking",
+    "name": "烘焙",
+    "category": "hobby",
+    "accent": "#d6a47f",
+    "tags": [
+      "烘焙",
+      "厨房",
+      "兴趣"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2034h32v19H16Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M21%2029c-4-3-1-8%204-7%203-7%2010-6%2012%200%206-3%2010%203%205%207M16%2040h32%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "planting",
+    "name": "种植",
+    "category": "hobby",
+    "accent": "#9fb29b",
+    "tags": [
+      "种花",
+      "植物",
+      "园艺"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2036h24l-3%2018H23Z%22%20fill%3D%22%239fb29b%22%20opacity%3D%22.3%22%2F%3E%3Cpath%20d%3D%22M32%2036V17M32%2025c-8-3-10-8-7-11%204-4%208%200%207%206%201-8%208-11%2011-7%202%203-1%207-7%2010%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "swim",
+    "name": "游泳",
+    "category": "hobby",
+    "accent": "#a7b8c0",
+    "tags": [
+      "游泳",
+      "运动",
+      "夏天"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2042c6-6%2012%206%2018%200%206-6%2012%206%2022%200M12%2051c6-6%2012%206%2018%200%206-6%2012%206%2022%200M24%2016c7-6%2014%202%209%209-5%207-13%203-12-4%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "basketball",
+    "name": "篮球",
+    "category": "hobby",
+    "accent": "#d6a47f",
+    "tags": [
+      "篮球",
+      "运动",
+      "打球"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2219%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M18%2023c7%204%2021%204%2028-2M18%2041c7-4%2021-4%2028%202M26%2014c3%206%203%2018%200%2036M38%2014c-3%206-3%2018%200%2036%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "football",
+    "name": "足球",
+    "category": "hobby",
+    "accent": "#b3ada2",
+    "tags": [
+      "足球",
+      "运动",
+      "球类"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2219%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22m32%2024%207%205-3%208h-8l-3-8%207-5ZM18%2035l9%202M46%2035l-9%202M23%2020l5%207M41%2020l-5%207%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "tennis",
+    "name": "网球",
+    "category": "hobby",
+    "accent": "#9fb29b",
+    "tags": [
+      "网球",
+      "运动",
+      "球类"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2218%22%20fill%3D%22%239fb29b%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M19%2023c6%205%2020%201%2026-6M19%2041c6-5%2020-1%2026%206%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "jump_rope",
+    "name": "跳绳",
+    "category": "hobby",
+    "accent": "#c89e9c",
+    "tags": [
+      "跳绳",
+      "运动",
+      "健身"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2217%22%20r%3D%225%22%2F%3E%3Cpath%20d%3D%22M32%2022v13M32%2027l-10-6M32%2027l10-6M32%2035l-10%2015M32%2035l10%2015%22%2F%3E%3Cpath%20d%3D%22M16%2049c6%208%2026%208%2032%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "mat",
+    "name": "瑜伽垫",
+    "category": "hobby",
+    "accent": "#9fb29b",
+    "tags": [
+      "瑜伽",
+      "健身",
+      "放松"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2045h28v9H18Z%22%20fill%3D%22%239fb29b%22%20opacity%3D%22.3%22%2F%3E%3Cpath%20d%3D%22M23%2045c0-8%2018-8%2018%200M32%2019v15M25%2025l7%205%207-5%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "dumbbell",
+    "name": "哑铃",
+    "category": "hobby",
+    "accent": "#b3ada2",
+    "tags": [
+      "健身",
+      "力量",
+      "运动"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2028v8M18%2024v16M24%2028v8M40%2028v8M46%2024v16M52%2028v8M24%2032h16%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "hiking",
+    "name": "徒步",
+    "category": "hobby",
+    "accent": "#9fb29b",
+    "tags": [
+      "徒步",
+      "登山",
+      "户外"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2237%22%20cy%3D%2214%22%20r%3D%225%22%2F%3E%3Cpath%20d%3D%22M34%2021l-4%2012%2010%206M30%2029l10%202M34%2033l-10%208M40%2039l10%2010%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "wind",
+    "name": "风",
+    "category": "nature",
+    "accent": "#a7b8c0",
+    "tags": [
+      "风",
+      "天气",
+      "散步"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M11%2025h31c7%200%207-9%201-10-4-1-7%202-8%205M11%2035h38c5%200%206%208%201%209-4%201-6-1-7-4M11%2045h20%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "fog",
+    "name": "雾",
+    "category": "nature",
+    "accent": "#a7b8c0",
+    "tags": [
+      "雾",
+      "天气",
+      "清晨"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M13%2026h38M10%2035h44M16%2044h33%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "lake",
+    "name": "湖",
+    "category": "nature",
+    "accent": "#a7b8c0",
+    "tags": [
+      "湖",
+      "自然",
+      "旅行"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M10%2037c8-8%2015%208%2022%200%207-8%2014%208%2022%200M10%2047c8-8%2015%208%2022%200%207-8%2014%208%2022%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "maple",
+    "name": "枫叶",
+    "category": "nature",
+    "accent": "#d6a47f",
+    "tags": [
+      "秋天",
+      "落叶",
+      "自然"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2014%2037%2024l10-3-5%2010%208%205-10%202%201%2010-9-6-9%206%201-10-10-2%208-5-5-10%2010%203Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.38%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "cherry_blossom",
+    "name": "樱花",
+    "category": "nature",
+    "accent": "#c89e9c",
+    "tags": [
+      "春天",
+      "樱花",
+      "自然"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2049V34M32%2034c-4-8-12-4-10%202%202%205%209%205%2010%200M32%2034c4-8%2012-4%2010%202-2%205-9%205-10%200M32%2031c-7-3-10-11-4-13%205-1%208%205%204%2013M32%2031c7-3%2010-11%204-13-5-1-8%205-4%2013%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2231%22%20r%3D%223%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.8%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "grass",
+    "name": "草地",
+    "category": "nature",
+    "accent": "#9fb29b",
+    "tags": [
+      "草地",
+      "公园",
+      "自然"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2050c5-8%208-17%208-25M20%2050c1-9%205-15%209-21M28%2050c3-8%208-14%2013-20M38%2050c2-7%206-11%2012-16%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "rainboots",
+    "name": "雨靴",
+    "category": "nature",
+    "accent": "#a7b8c0",
+    "tags": [
+      "下雨",
+      "雨天",
+      "出门"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2013h13v27c0%206-4%2010-10%2010H14c-3%200-4-4-2-6l6-7Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.35%22%2F%3E%3Cpath%20d%3D%22M36%2013h13v27c0%206-4%2010-10%2010h-7c-3%200-4-4-2-6l6-7Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.35%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "kite",
+    "name": "风筝",
+    "category": "nature",
+    "accent": "#c89e9c",
+    "tags": [
+      "放风筝",
+      "春天",
+      "户外"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2013%2048%2030%2032%2047%2016%2030Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.25%22%2F%3E%3Cpath%20d%3D%22M32%2013v34M16%2030h32M32%2047c0%207%205%2010%2010%2010%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "hamster",
+    "name": "仓鼠",
+    "category": "animals",
+    "accent": "#d6a47f",
+    "tags": [
+      "宠物",
+      "可爱",
+      "动物"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2233%22%20r%3D%2218%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.28%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2220%22%20r%3D%226%22%2F%3E%3Ccircle%20cx%3D%2242%22%20cy%3D%2220%22%20r%3D%226%22%2F%3E%3Ccircle%20cx%3D%2226%22%20cy%3D%2233%22%20r%3D%222%22%2F%3E%3Ccircle%20cx%3D%2238%22%20cy%3D%2233%22%20r%3D%222%22%2F%3E%3Cpath%20d%3D%22M29%2041c2%202%204%202%206%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "squirrel",
+    "name": "松鼠",
+    "category": "animals",
+    "accent": "#d6a47f",
+    "tags": [
+      "森林",
+      "秋天",
+      "动物"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M19%2039c-4-11%205-19%2013-12%207-10%2018-3%2015%206-2%208-10%2015-19%2015-5%200-8-4-9-9Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.25%22%2F%3E%3Cpath%20d%3D%22M39%2029c4-7%2010-10%2011-4%201%206-4%2010-9%2011%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "otter",
+    "name": "水獭",
+    "category": "animals",
+    "accent": "#a7b8c0",
+    "tags": [
+      "海边",
+      "河边",
+      "可爱"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2039c1-11%2010-17%2018-15%207%202%2012%209%2010%2016-2%2010-11%2014-20%2011-6-2-9-7-8-12Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.24%22%2F%3E%3Ccircle%20cx%3D%2228%22%20cy%3D%2233%22%20r%3D%222%22%2F%3E%3Ccircle%20cx%3D%2238%22%20cy%3D%2233%22%20r%3D%222%22%2F%3E%3Cpath%20d%3D%22M31%2040c2%202%204%202%206%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "deer_head",
+    "name": "鹿",
+    "category": "animals",
+    "accent": "#b3ada2",
+    "tags": [
+      "森林",
+      "秋天",
+      "动物"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2234%22%20r%3D%2215%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M23%2020l-6-8M41%2020l6-8M21%2015l-5-2M43%2015l5-2M32%2019v-8%22%2F%3E%3Ccircle%20cx%3D%2227%22%20cy%3D%2233%22%20r%3D%222%22%2F%3E%3Ccircle%20cx%3D%2237%22%20cy%3D%2233%22%20r%3D%222%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "horse",
+    "name": "马",
+    "category": "animals",
+    "accent": "#b3ada2",
+    "tags": [
+      "动物",
+      "农场",
+      "旅行"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2046c-4-9%202-20%2011-20%208%200%2015%207%2013%2015-2%2010-17%2015-24%205Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M25%2025c-2-6%200-10%205-13M31%2025c2-4%206-6%209-5%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "pig",
+    "name": "小猪",
+    "category": "animals",
+    "accent": "#c89e9c",
+    "tags": [
+      "农场",
+      "可爱",
+      "动物"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2235%22%20r%3D%2218%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.25%22%2F%3E%3Cpath%20d%3D%22M18%2027c-5-6-1-9%204-5M46%2027c5-6%201-9-4-5%22%2F%3E%3Cellipse%20cx%3D%2232%22%20cy%3D%2241%22%20rx%3D%228%22%20ry%3D%226%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.55%22%2F%3E%3Ccircle%20cx%3D%2229%22%20cy%3D%2241%22%20r%3D%221.5%22%2F%3E%3Ccircle%20cx%3D%2235%22%20cy%3D%2241%22%20r%3D%221.5%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "cow",
+    "name": "奶牛",
+    "category": "animals",
+    "accent": "#b3ada2",
+    "tags": [
+      "农场",
+      "动物",
+      "牛奶"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M17%2028c0-9%207-14%2015-14s15%205%2015%2014v13c0%208-6%2012-15%2012s-15-4-15-12Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M20%2022l-6-5M44%2022l6-5M25%2033c3-3%205%202%208-1%203-3%205%202%208-1%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "duck",
+    "name": "鸭子",
+    "category": "animals",
+    "accent": "#d7b86e",
+    "tags": [
+      "动物",
+      "水边",
+      "可爱"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2038c0-10%208-16%2017-16%207%200%2012%204%2014%209%204%207-1%2016-10%2018H24c-4%200-6-4-6-11Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M46%2031h8M36%2036c2%202%204%202%206%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "dolphin",
+    "name": "海豚",
+    "category": "animals",
+    "accent": "#a7b8c0",
+    "tags": [
+      "海边",
+      "游泳",
+      "海洋"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M11%2036c10-12%2025-14%2039-6l-7%203%205%206c-12%204-27%203-37-3Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M31%2028c2-7%207-10%2012-8-4%204-7%207-12%208Z%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "seagull",
+    "name": "海鸥",
+    "category": "animals",
+    "accent": "#a7b8c0",
+    "tags": [
+      "海边",
+      "旅行",
+      "天空"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2032c7-8%2014-8%2020%200%206-8%2013-8%2020%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "butterfly2",
+    "name": "小蝴蝶",
+    "category": "animals",
+    "accent": "#c89e9c",
+    "tags": [
+      "花园",
+      "春天",
+      "可爱"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2031c-9-14-20-10-17-2%202%207%2010%208%2017%204M32%2031c9-14%2020-10%2017-2-2%207-10%208-17%204M32%2031v19%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2230%22%20r%3D%223%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.6%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "comfort",
+    "name": "安慰",
+    "category": "mood",
+    "accent": "#c89e9c",
+    "tags": [
+      "安慰",
+      "治愈",
+      "陪伴"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2036c4-8%2010-12%2014-12s10%204%2014%2012c-4%207-10%2012-14%2012s-10-5-14-12Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M24%2035c2%203%204%203%206%200M34%2035c2%203%204%203%206%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "energy",
+    "name": "元气",
+    "category": "mood",
+    "accent": "#d7b86e",
+    "tags": [
+      "精神",
+      "活力",
+      "开心"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2212%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.5%22%2F%3E%3Cpath%20d%3D%22M32%208v7M32%2049v7M8%2032h7M49%2032h7M15%2015l5%205M44%2044l5%205M49%2015l-5%205M20%2044l-5%205%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "focus",
+    "name": "专注",
+    "category": "mood",
+    "accent": "#a7b8c0",
+    "tags": [
+      "专注",
+      "工作",
+      "学习"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2219%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M22%2035c5-10%2015-10%2020%200M25%2026h14%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "relaxed",
+    "name": "放松",
+    "category": "mood",
+    "accent": "#9fb29b",
+    "tags": [
+      "放松",
+      "治愈",
+      "休息"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M13%2039c7-8%2014%208%2021%200%207-8%2014%208%2017%200M19%2049h26%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "anxious",
+    "name": "焦虑",
+    "category": "mood",
+    "accent": "#a7b8c0",
+    "tags": [
+      "焦虑",
+      "压力",
+      "心情"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2218%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.18%22%2F%3E%3Cpath%20d%3D%22M24%2028c3%203%205%203%208%200M34%2028c3%203%205%203%208%200M25%2042c4-4%2010-4%2014%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "surprise",
+    "name": "惊讶",
+    "category": "mood",
+    "accent": "#d7b86e",
+    "tags": [
+      "惊讶",
+      "意外",
+      "心情"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2218%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.18%22%2F%3E%3Ccircle%20cx%3D%2226%22%20cy%3D%2228%22%20r%3D%222%22%2F%3E%3Ccircle%20cx%3D%2238%22%20cy%3D%2228%22%20r%3D%222%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2240%22%20r%3D%223%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "newyear",
+    "name": "元旦",
+    "category": "festival",
+    "accent": "#d7b86e",
+    "tags": [
+      "元旦",
+      "新年",
+      "一月"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2012h24v40H20Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.2%22%2F%3E%3Cpath%20d%3D%22M26%208v8M38%208v8M20%2022h24M27%2030h10M27%2038h6%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "newyear_firework",
+    "name": "跨年烟花",
+    "category": "festival",
+    "accent": "#c89e9c",
+    "tags": [
+      "元旦",
+      "跨年",
+      "烟花"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2035V12M32%2019l-8-8M32%2019l8-8M32%2019v-8M32%2019l8%202M32%2019l-8%202M32%2035l-7%207M32%2035l7%207%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2212%22%20r%3D%222%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.7%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "spring_lantern",
+    "name": "春节灯笼",
+    "category": "festival",
+    "accent": "#c89e9c",
+    "tags": [
+      "春节",
+      "灯笼",
+      "过年"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M22%2019c6-5%2014-5%2020%200l3%2022c-7%207-19%207-26%200Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.38%22%2F%3E%3Cpath%20d%3D%22M22%2019h20M25%2030h14M27%2045v7M37%2045v7%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "red_envelope",
+    "name": "红包",
+    "category": "festival",
+    "accent": "#c89e9c",
+    "tags": [
+      "春节",
+      "红包",
+      "过年"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2218%22%20y%3D%2213%22%20width%3D%2228%22%20height%3D%2240%22%20rx%3D%223%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.3%22%2F%3E%3Cpath%20d%3D%22M18%2030h28M25%2023l7-6%207%206M32%2022v16%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "spring_couplet",
+    "name": "春联",
+    "category": "festival",
+    "accent": "#c89e9c",
+    "tags": [
+      "春节",
+      "春联",
+      "过年"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2215%22%20y%3D%2214%22%20width%3D%2212%22%20height%3D%2238%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.22%22%2F%3E%3Crect%20x%3D%2237%22%20y%3D%2214%22%20width%3D%2212%22%20height%3D%2238%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M21%2020v24M43%2020v24M30%2018h4v28h-4z%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "qingming_kite",
+    "name": "清明风筝",
+    "category": "festival",
+    "accent": "#a7b8c0",
+    "tags": [
+      "清明节",
+      "风筝",
+      "踏青"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2012%2046%2027%2032%2042%2018%2027Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M32%2012v30M18%2027h28M32%2042c1%208%207%2012%2012%2010%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "qingming_willow",
+    "name": "清明柳枝",
+    "category": "festival",
+    "accent": "#9fb29b",
+    "tags": [
+      "清明节",
+      "柳树",
+      "踏青"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2052c1-16%204-29%2013-39M32%2039c-7-4-11-9-13-16M35%2029c7-4%2010-8%2012-13M29%2034c-6-3-9-6-12-11%22%2F%3E%3Cpath%20d%3D%22M43%2015l-3-4M46%2020l4-3M20%2023l-5-1M23%2029l-5%201%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "mayday_tools",
+    "name": "劳动节工具",
+    "category": "festival",
+    "accent": "#d6a47f",
+    "tags": [
+      "劳动节",
+      "劳动",
+      "工作"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2048h32M28%2048V19M22%2019h19M19%2026l8-8M45%2026l-8-8%22%2F%3E%3Cpath%20d%3D%22M16%2048v6M48%2048v6%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "mayday_luggage",
+    "name": "劳动节出行",
+    "category": "festival",
+    "accent": "#a7b8c0",
+    "tags": [
+      "劳动节",
+      "假期",
+      "出游"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2219%22%20y%3D%2217%22%20width%3D%2226%22%20height%3D%2235%22%20rx%3D%225%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M27%2017v-6h10v6M27%2029h10M25%2040h14%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "dragonboat",
+    "name": "龙舟",
+    "category": "festival",
+    "accent": "#a7b8c0",
+    "tags": [
+      "端午节",
+      "龙舟",
+      "端午"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2039h40c-3%209-12%2013-20%2013S15%2048%2012%2039Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.25%22%2F%3E%3Cpath%20d%3D%22M26%2039l4-20%205%2020M30%2019l-4-5M30%2019l7-1%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "zongzi",
+    "name": "粽子",
+    "category": "festival",
+    "accent": "#9fb29b",
+    "tags": [
+      "端午节",
+      "粽子",
+      "端午"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2012%2050%2035%2032%2055%2014%2035Z%22%20fill%3D%22%239fb29b%22%20opacity%3D%22.38%22%2F%3E%3Cpath%20d%3D%22M32%2012v43M20%2027l24%2016M44%2027%2020%2043%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "mugwort",
+    "name": "艾草",
+    "category": "festival",
+    "accent": "#9fb29b",
+    "tags": [
+      "端午节",
+      "艾草",
+      "香包"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2052V21M32%2032c-9-3-13-9-10-13%204-4%2010%202%2010%209%201-9%207-14%2011-10%203%203-1%209-7%2012M32%2039c-8-2-12-6-11-10%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "mooncake",
+    "name": "月饼",
+    "category": "festival",
+    "accent": "#d6a47f",
+    "tags": [
+      "中秋节",
+      "月饼",
+      "团圆"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2234%22%20r%3D%2218%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.35%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2234%22%20r%3D%229%22%2F%3E%3Cpath%20d%3D%22M32%2020v8M24%2028l8%205%208-5M24%2040l8-5%208%205M32%2040v8%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "fullmoon",
+    "name": "满月",
+    "category": "festival",
+    "accent": "#d7b86e",
+    "tags": [
+      "中秋节",
+      "月亮",
+      "团圆"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2219%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.5%22%2F%3E%3Cpath%20d%3D%22M43%2019c-7%202-10%2010-7%2016%203%207%2010%2010%2016%207-4%208-14%2011-22%207-11-5-15-17-10-28%204-9%2014-14%2023-12Z%22%20fill%3D%22%23fffdf7%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "midautumn_lantern",
+    "name": "中秋灯笼",
+    "category": "festival",
+    "accent": "#d6a47f",
+    "tags": [
+      "中秋节",
+      "灯笼",
+      "赏月"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M24%2020c5-4%2011-4%2016%200l2%2020c-6%206-14%206-20%200Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.3%22%2F%3E%3Cpath%20d%3D%22M24%2020h16M27%2029h10M28%2044v8M36%2044v8%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "moonrabbit",
+    "name": "玉兔",
+    "category": "festival",
+    "accent": "#b3ada2",
+    "tags": [
+      "中秋节",
+      "玉兔",
+      "月亮"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2231%22%20cy%3D%2235%22%20r%3D%2215%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M24%2023V12c0-5%205-6%207%200v10M39%2023V12c0-5-5-6-7%200M27%2035h0M37%2035h0M30%2042c2%202%204%202%206%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "nationalflag",
+    "name": "国庆红旗",
+    "category": "festival",
+    "accent": "#c89e9c",
+    "tags": [
+      "国庆节",
+      "国庆",
+      "假期"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2053V12M16%2014h30L37%2024l9%2010H16Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.35%22%2F%3E%3Ccircle%20cx%3D%2225%22%20cy%3D%2220%22%20r%3D%223%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M16%2053h34%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "nationalfirework",
+    "name": "国庆烟花",
+    "category": "festival",
+    "accent": "#c89e9c",
+    "tags": [
+      "国庆节",
+      "烟花",
+      "庆祝"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2043V12M32%2022l-9-9M32%2022l9-9M32%2022l11-1M32%2022l-11-1M32%2022l7%2010M32%2022l-7%2010%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2212%22%20r%3D%222.5%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.75%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "nationalribbon",
+    "name": "国庆彩带",
+    "category": "festival",
+    "accent": "#c89e9c",
+    "tags": [
+      "国庆节",
+      "庆祝",
+      "中国"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M15%2018c12%208%2010%2020%200%2028M49%2018c-12%208-10%2020%200%2028M18%2024c8%204%209%209%209%2016M46%2024c-8%204-9%209-9%2016%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.18%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "festival_calendar",
+    "name": "节日日期",
+    "category": "festival",
+    "accent": "#d7b86e",
+    "tags": [
+      "节日",
+      "日历",
+      "纪念"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2215%22%20y%3D%2212%22%20width%3D%2234%22%20height%3D%2242%22%20rx%3D%225%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.2%22%2F%3E%3Cpath%20d%3D%22M22%208v9M42%208v9M15%2024h34M24%2033h4M36%2033h4M24%2041h4M36%2041h4%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "medicine",
+    "name": "药品",
+    "category": "life",
+    "accent": "#c89e9c",
+    "tags": [
+      "药品",
+      "生病",
+      "健康"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2216%22%20y%3D%2214%22%20width%3D%2232%22%20height%3D%2238%22%20rx%3D%225%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.2%22%2F%3E%3Cpath%20d%3D%22M32%2023v20M22%2033h20%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "firstaid",
+    "name": "急救箱",
+    "category": "life",
+    "accent": "#c89e9c",
+    "tags": [
+      "急救",
+      "健康",
+      "药箱"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2214%22%20y%3D%2222%22%20width%3D%2236%22%20height%3D%2229%22%20rx%3D%224%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M24%2022v-6h16v6M32%2029v13M25%2035h14%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "phonecall",
+    "name": "电话",
+    "category": "life",
+    "accent": "#a7b8c0",
+    "tags": [
+      "电话",
+      "联系",
+      "消息"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M22%2014c-5%203-7%209-4%2016%204%2010%2012%2018%2022%2022%207%203%2013%200%2016-5l-8-7-6%204c-4-3-9-8-12-12l4-6Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.22%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "email",
+    "name": "邮件",
+    "category": "life",
+    "accent": "#a7b8c0",
+    "tags": [
+      "邮件",
+      "邮箱",
+      "消息"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2211%22%20y%3D%2218%22%20width%3D%2242%22%20height%3D%2230%22%20rx%3D%224%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.2%22%2F%3E%3Cpath%20d%3D%22m13%2021%2019%2016%2019-16M13%2046l15-13M51%2046%2036%2033%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "photo",
+    "name": "照片",
+    "category": "life",
+    "accent": "#c89e9c",
+    "tags": [
+      "照片",
+      "回忆",
+      "拍照"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2212%22%20y%3D%2218%22%20width%3D%2240%22%20height%3D%2233%22%20rx%3D%224%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.18%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2234%22%20r%3D%229%22%2F%3E%3Cpath%20d%3D%22M21%2018l4-6h14l4%206%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "cooking",
+    "name": "做饭",
+    "category": "life",
+    "accent": "#d6a47f",
+    "tags": [
+      "做饭",
+      "厨房",
+      "生活"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M15%2031h34v18a7%207%200%200%201-7%207H22a7%207%200%200%201-7-7V31Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.2%22%2F%3E%3Cpath%20d%3D%22M11%2031h42M22%2022c4-5%208%204%2012-1%204-5%208%204%2010%201%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "musicnote",
+    "name": "音乐会",
+    "category": "hobby",
+    "accent": "#c89e9c",
+    "tags": [
+      "音乐",
+      "演出",
+      "兴趣"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M23%2018v27M23%2018l24-6v27%22%2F%3E%3Cellipse%20cx%3D%2218%22%20cy%3D%2247%22%20rx%3D%228%22%20ry%3D%226%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.45%22%2F%3E%3Cellipse%20cx%3D%2242%22%20cy%3D%2241%22%20rx%3D%228%22%20ry%3D%226%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.45%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "plantcare",
+    "name": "浇花",
+    "category": "hobby",
+    "accent": "#9fb29b",
+    "tags": [
+      "植物",
+      "浇水",
+      "园艺"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2038h24v16H20Z%22%20fill%3D%22%239fb29b%22%20opacity%3D%22.25%22%2F%3E%3Cpath%20d%3D%22M32%2038V21M32%2028c-7-2-10-7-7-10%204-3%207%201%207%206%201-8%207-11%2010-7%202%203-1%208-7%2011%22%2F%3E%3Cpath%20d%3D%22M15%2024h9v8c-2%205-7%205-9%200Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.25%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "sleep",
+    "name": "睡觉",
+    "category": "mood",
+    "accent": "#a7b8c0",
+    "tags": [
+      "睡觉",
+      "晚安",
+      "休息"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2044c5-13%2027-13%2032%200%22%2F%3E%3Cpath%20d%3D%22M22%2044v8h20v-8%22%2F%3E%3Cpath%20d%3D%22M26%2029c2-3%204%201%206-1%202-2%204%201%206%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "raincoat",
+    "name": "雨衣",
+    "category": "daily",
+    "accent": "#d7b86e",
+    "tags": [
+      "下雨",
+      "雨天",
+      "穿衣"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M25%2014h14l8%2012-5%208v20H22V34l-5-8%208-12Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M25%2014c3%205%2011%205%2014%200M22%2034h20%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  },
+  {
+    "id": "notebook",
+    "name": "记事本",
+    "category": "daily",
+    "accent": "#c89e9c",
+    "tags": [
+      "记事",
+      "笔记",
+      "记录"
+    ],
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2217%22%20y%3D%2210%22%20width%3D%2231%22%20height%3D%2245%22%20rx%3D%224%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.2%22%2F%3E%3Cpath%20d%3D%22M24%2010v45M29%2021h13M29%2030h13M29%2039h10%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+  }
+];
+STICKERS.push(...SUPPLEMENT_STICKERS.map(({body, ...rest}) => ({...rest, tags:[...new Set([rest.name,...(rest.tags||[])])]})));
+
+
 const RECOMMENDATION_RULES = [
   [/咖啡|拿铁|咖啡店|☕/, ['coffee','tea','cake']],
   [/奶茶|下午茶|喝|饮料/, ['tea','donut','icecream']],
@@ -167,16 +1683,16 @@ const RECOMMENDATION_RULES = [
   [/画画|绘画|创作|艺术/, ['paint','flower','star']],
   [/跑步|运动|健身|锻炼/, ['running','yoga','bicycle','ball']],
   [/骑车|骑行/, ['bicycle','sun','tree']],
-  [/猫|猫咪/, ['cat','heart']],
-  [/狗|狗狗/, ['dog','heart']],
+  [/猫|猫咪/, ['cat','love']],
+  [/狗|狗狗/, ['dog','love']],
   [/花|花园|春天/, ['flower','butterfly','bee','sprout']],
   [/成长|开始|新的开始/, ['sprout','sun','star']],
-  [/开心|快乐|高兴/, ['happy','heart','wow']],
+  [/开心|快乐|高兴/, ['happy','love','wow']],
   [/放松|治愈|舒服|平静/, ['calm','leaf','cloud']],
   [/累|疲惫|很困|熬夜/, ['tired','sleepy','coffee']],
   [/难过|失落|低落/, ['sad','cloud','rain']],
   [/生气|郁闷/, ['angry','cloud']],
-  [/喜欢|心动|爱/, ['heart','flower','happy']],
+  [/喜欢|心动|爱/, ['love','flower','happy']],
   [/惊喜|礼物|收到/, ['wow','gift','happy']],
   [/购物|逛街|买东西/, ['shopping','bag','gift']],
   [/回家|家里|房间/, ['home','plant','candle']]
@@ -193,7 +1709,7 @@ let state = {
   drawerOpen: false, stickerCategory:'all', stickerSearch:'', recommendedIds:[],
   multiSelectMode:false, selectedLibrary:new Set(), canvasMultiSelect:false, selectedCanvas:new Set(),
   monthEntries:{}, entry:null, user:null, authOpen:false, profileOpen:false,
-  email:'', authStatus:'', status:'', autosaveStatus:'', drag:null, selectedText:null, historyPast:[], historyFuture:[], textEditStart:null, historyBusy:false
+  email:'', authStatus:'', status:'', autosaveStatus:'', drag:null, selectedText:null, historyPast:[], historyFuture:[], textEditStart:null, historyBusy:false, draftTimer:null, recoTimer:null, inputComposing:false, stickerSearchComposing:false
 };
 
 function dateKey(year,month,day){ return `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`; }
@@ -259,6 +1775,9 @@ function getDisplayName(user){
 function getInitial(name){ const value=String(name||'一').trim(); return sanitizeText(value.slice(0,1).toUpperCase()); }
 
 function svgSticker(sticker,size=54){
+  if (sticker?.inlineSvg) {
+    return `<img class="sticker-image" src="${sticker.inlineSvg}" width="${size}" height="${size}" alt="${sanitizeText(sticker.name||'贴纸')}" loading="lazy" draggable="false" />`;
+  }
   const stroke='#3f3f3b', accent=sticker?.accent||'#b7c9ad';
   const common=`fill="none" stroke="${stroke}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"`;
   let content='';
@@ -461,6 +1980,35 @@ function moveMonth(delta){
 }
 function goToday(){ commitDraftBeforeNavigation(); state.year=currentYear; state.month=currentMonth; state.selectedDay=currentDay; state.drawerOpen=false; closeDrawer(); renderCalendar(); loadCurrentMonth(); loadSelectedEntry(); }
 
+function previewFontSize(text, base, min, maxChars, factor=1){
+  const len=[...String(text||'')].length;
+  if(!len)return base;
+  return clamp(base - Math.max(0, len-maxChars)*factor, min, base);
+}
+function calendarDayHtml(entry, key, day, active, today){
+  const e=entry || emptyEntry(key);
+  const stickers=(e.stickers||[]).slice().sort((a,b)=>(a.z||0)-(b.z||0)).slice(0,14).map(p=>{
+    const st=STICKERS.find(x=>x.id===p.stickerId); if(!st)return '';
+    const x=clamp(Number(p.x)||.5,.06,.94)*100, y=clamp(Number(p.y)||.5,.18,.94)*100;
+    const scale=clamp(Number(p.scale)||1,.65,1.55)*.30;
+    const rot=clamp(Number(p.rotation)||0,-180,180);
+    return `<div class="thumb-object thumb-sticker" style="left:${x}%;top:${y}%;transform:translate(-50%,-50%) rotate(${rot}deg) scale(${scale})">${svgSticker(st,64)}</div>`;
+  }).join('');
+  const title=String(e.title||'').trim();
+  const content=String(e.content||'').trim();
+  const titleLen=[...title].length;
+  const contentLen=[...content].length;
+  const titleSize=title?clamp(15.5-Math.max(0,titleLen-10)*.28,8.2,15.5):0;
+  const contentSize=content?clamp(10.2-Math.max(0,contentLen-26)*.035,6.2,10.2):0;
+  const titleHtml=title?`<div class="thumb-object thumb-title" style="left:${clamp(e.titlePos?.x??.10,.04,.74)*100}%;top:${clamp(e.titlePos?.y??.18,.12,.72)*100}%;font-size:${titleSize}px;text-align:${e.titleStyle?.align||'left'}" title="${sanitizeText(title)}">${sanitizeText(title)}</div>`:'';
+  const contentHtml=content?`<div class="thumb-object thumb-content" style="left:${clamp(e.contentPos?.x??.10,.04,.72)*100}%;top:${clamp(e.contentPos?.y??.36,.18,.78)*100}%;font-size:${contentSize}px;text-align:${e.contentStyle?.align||'left'}" title="${sanitizeText(content)}">${sanitizeText(content)}</div>`:'';
+  const empty=!title&&!content&&!(e.stickers||[]).length;
+  return `<button class="day-card ${active?'active':''} ${today?'today':''} ${entry?'has-entry':''}" data-day="${day}" aria-label="${state.year}年${state.month+1}月${day}日" style="--day-bg:${e.background||'#fffdf7'}">
+    <div class="day-thumbnail" style="background:${e.background||'#fffdf7'}">${titleHtml}${contentHtml}${stickers}${empty?'<span class="thumb-empty"></span>':''}</div>
+    <span class="day-number">${String(day).padStart(2,'0')}</span>
+    ${today?'<span class="today-mark">TODAY</span>':''}
+  </button>`;
+}
 function renderCalendar(){
   document.getElementById('yearLabel').textContent=state.year;
   document.getElementById('monthLabel').textContent=monthNames[state.month];
@@ -469,23 +2017,15 @@ function renderCalendar(){
   const hasEntry=currentEntry&&(currentEntry.title||currentEntry.content||(currentEntry.stickers||[]).length);
   const previewText=(currentEntry?.title||currentEntry?.content||'').replace(/\s+/g,' ').trim();
   document.getElementById('selectedPreview').textContent=hasEntry?(previewText||'这一天已经留下了一些东西。'):'点击任意日期，写下一点今天的心情，再放几枚贴纸。';
-  const grid=document.getElementById('calendarGrid'), firstWeekday=new Date(state.year,state.month,1).getDay(), mondayOffset=(firstWeekday+6)%7, totalDays=new Date(state.year,state.month+1,0).getDate();
+  const grid=document.getElementById('calendarGrid');
+  const firstWeekday=new Date(state.year,state.month,1).getDay();
+  const mondayOffset=(firstWeekday+6)%7;
+  const totalDays=new Date(state.year,state.month+1,0).getDate();
   const cells=[];
   for(let i=0;i<mondayOffset;i++)cells.push('<div class="day-card empty" aria-hidden="true"></div>');
   for(let day=1;day<=totalDays;day++){
     const key=dateKey(state.year,state.month,day), entry=state.monthEntries[key], active=day===state.selectedDay, today=isToday(state.year,state.month,day);
-    const stickers=(entry?.stickers||[]).slice(0,4).map(p=>{const sticker=STICKERS.find(x=>x.id===p.stickerId);return sticker?svgSticker(sticker,31):'';}).join('');
-    const more=(entry?.stickers?.length||0)>4?`<span class="day-more">+${entry.stickers.length-4}</span>`:'';
-    const text=(entry?.title||entry?.content||'').replace(/\s+/g,' ').trim();
-    cells.push(`<button class="day-card ${active?'active':''} ${today?'today':''}" data-day="${day}" aria-label="${state.year}年${state.month+1}月${day}日">
-      <span class="day-number">${String(day).padStart(2,'0')}</span>
-      ${today?'<span class="today-mark">TODAY</span>':''}
-      <div class="day-preview">
-        <div class="day-art">${stickers}${more}</div>
-        ${text?`<div class="day-text-preview">${sanitizeText(text.slice(0,46))}${text.length>46?'…':''}</div>`:'<div class="day-text-preview placeholder">留下一点什么</div>'}
-      </div>
-      ${entry?.content||entry?.title?'<span class="entry-dot"></span>':''}
-    </button>`);
+    cells.push(calendarDayHtml(entry,key,day,active,today));
   }
   grid.innerHTML=cells.join('');
   grid.querySelectorAll('.day-card[data-day]').forEach(btn=>btn.addEventListener('click',()=>{
@@ -505,9 +2045,19 @@ function setLocal(entry){localStorage.setItem(LOCAL_PREFIX+entry.entry_date,JSON
 function getDraft(key){const raw=localStorage.getItem(DRAFT_PREFIX+key);if(!raw)return null;try{return JSON.parse(raw);}catch{return null;}}
 function saveDraft(entry){
   if(!entry?.entry_date)return;
-  const design=normalizeDesign(entry,entry.entry_date); const payload={entry_date:entry.entry_date,title:entry.title||'',content:entry.content||'',background:entry.background||'#fffdf7',design,drafted_at:new Date().toISOString()};
-  localStorage.setItem(DRAFT_PREFIX+entry.entry_date,JSON.stringify(payload));
-  state.autosaveStatus='草稿已自动保存';
+  const design=normalizeDesign(entry,entry.entry_date);
+  const payload={entry_date:entry.entry_date,title:entry.title||'',content:entry.content||'',background:entry.background||'#fffdf7',design,drafted_at:new Date().toISOString()};
+  try{ localStorage.setItem(DRAFT_PREFIX+entry.entry_date,JSON.stringify(payload)); state.autosaveStatus='草稿已自动保存'; }
+  catch(err){ console.warn('Draft save failed:',err); state.autosaveStatus='草稿保存失败'; }
+}
+function queueDraftSave(entry){
+  clearTimeout(state.draftTimer);
+  state.autosaveStatus='正在保存草稿…';
+  state.draftTimer=setTimeout(()=>saveDraft(entry),180);
+}
+function queueRecommendationUpdate(){
+  clearTimeout(state.recoTimer);
+  state.recoTimer=setTimeout(()=>{ if(state.drawerOpen) updateStickerPanelResults(); },180);
 }
 function clearDraft(date){localStorage.removeItem(DRAFT_PREFIX+date);}
 function entryFromRow(row){
@@ -581,10 +2131,16 @@ async function deleteEntry(){
 
 function getTextForRecommendations(){return `${state.entry?.title||''} ${state.entry?.content||''}`.trim();}
 function recommendationIds(){
-  const text=getTextForRecommendations(); if(!text)return [];
+  const text=getTextForRecommendations().toLowerCase(); if(!text)return [];
   const scores=new Map();
-  for(const [pattern,ids] of RECOMMENDATION_RULES){if(pattern.test(text))ids.forEach(id=>scores.set(id,(scores.get(id)||0)+1));}
-  return [...scores.entries()].sort((a,b)=>b[1]-a[1]).slice(0,8).map(([id])=>id);
+  for(const [pattern,ids] of RECOMMENDATION_RULES){if(pattern.test(text))ids.forEach(id=>scores.set(id,(scores.get(id)||0)+3));}
+  for(const sticker of STICKERS){
+    for(const rawTag of (sticker.tags||[])){
+      const tag=String(rawTag||'').trim().toLowerCase();
+      if(tag.length>=2 && text.includes(tag)) scores.set(sticker.id,(scores.get(sticker.id)||0)+2);
+    }
+  }
+  return [...scores.entries()].sort((a,b)=>b[1]-a[1]).filter(([id])=>STICKERS.some(st=>st.id===id)).slice(0,12).map(([id])=>id);
 }
 function filteredStickers(){
   const q=state.stickerSearch.trim().toLowerCase();
@@ -619,7 +2175,7 @@ function autoArrangeStickers(){
   list.forEach((item,i)=>{const a=anchors[i%anchors.length];item.x=a.x;item.y=a.y;item.rotation=(i%5-2)*3;item.z=i+1;});
   pushHistory(before); saveDraft(state.entry); renderCanvasOnly(); toast('贴纸已自动排版');
 }
-function toggleLibrarySticker(id){if(state.selectedLibrary.has(id))state.selectedLibrary.delete(id);else state.selectedLibrary.add(id);renderStickerPanel();}
+function toggleLibrarySticker(id){if(state.selectedLibrary.has(id))state.selectedLibrary.delete(id);else state.selectedLibrary.add(id);updateStickerPanelResults();}
 function toggleCanvasStickerSelection(id){if(state.selectedCanvas.has(id))state.selectedCanvas.delete(id);else state.selectedCanvas.add(id);state.selectedText=null;renderCanvasSelectionState();}
 function clearCanvasSelection(){state.selectedCanvas.clear();state.selectedText=null;renderCanvasSelectionState();}
 function bringToFront(id){const max=Math.max(0,...(state.entry.stickers||[]).map(s=>s.z||0));state.entry.stickers=state.entry.stickers.map(s=>s.id===id?{...s,z:max+1}:s);}
@@ -629,9 +2185,35 @@ function removeSticker(id){mutateEntry(()=>{state.entry.stickers=(state.entry.st
 function removeSelectedCanvas(){if(!state.selectedCanvas.size)return;const ids=new Set(state.selectedCanvas);mutateEntry(()=>{state.entry.stickers=(state.entry.stickers||[]).filter(item=>!ids.has(item.id));});state.selectedCanvas.clear();renderDrawer();}
 function adjustSelectedScale(delta){updateSelectedSticker(item=>item.scale=clamp((item.scale||1)+delta,.65,1.55));}
 function rotateSelected(delta){updateSelectedSticker(item=>item.rotation=clamp((item.rotation||0)+delta,-180,180));}
-function layerSelected(dir){ const before=cloneEntry(state.entry); const items=state.entry.stickers||[]; const id=[...state.selectedCanvas][0]; if(!id)return; const sorted=[...items].sort((a,b)=>(a.z||0)-(b.z||0)); const idx=sorted.findIndex(x=>x.id===id); const target=dir==='front'?sorted[sorted.length-1]?.z+1:sorted[0]?.z-1; const item=items.find(x=>x.id===id); if(item)item.z=Number.isFinite(target)?target:1; pushHistory(before);saveDraft(state.entry);renderCanvasOnly();}
+function layerSelected(dir){
+  const ids=[...state.selectedCanvas]; if(!ids.length)return;
+  const before=cloneEntry(state.entry); const items=state.entry.stickers||[];
+  const sorted=[...items].sort((a,b)=>(a.z||0)-(b.z||0));
+  if(dir==='front'){let z=Math.max(0,...sorted.map(x=>Number(x.z)||0))+1;ids.forEach(id=>{const item=items.find(x=>x.id===id);if(item)item.z=z++;});}
+  else {let z=Math.min(0,...sorted.map(x=>Number(x.z)||0))-ids.length;ids.forEach(id=>{const item=items.find(x=>x.id===id);if(item)item.z=z++;});}
+  pushHistory(before);saveDraft(state.entry);renderCanvasOnly();
+}
 function setTextSize(kind,delta){const before=cloneEntry(state.entry);state.entry[`${kind}Style`]=state.entry[`${kind}Style`]||{};state.entry[`${kind}Style`].fontSize=clamp(Number(state.entry[`${kind}Style`].fontSize|| (kind==='title'?25:12))+delta,kind==='title'?18:10,kind==='title'?40:22);pushHistory(before);saveDraft(state.entry);renderCanvasOnly();renderTextTools();}
 function toggleTextAlign(kind){const before=cloneEntry(state.entry);state.entry[`${kind}Style`]=state.entry[`${kind}Style`]||{};const v=state.entry[`${kind}Style`].align||'left';state.entry[`${kind}Style`].align=v==='left'?'center':v==='center'?'right':'left';pushHistory(before);saveDraft(state.entry);renderCanvasOnly();renderTextTools();}
+function moveSelectionByKeyboard(dx,dy){
+  const hasText=state.selectedText==='title'||state.selectedText==='content';
+  if(!hasText && !state.selectedCanvas.size)return;
+  const before=cloneEntry(state.entry);
+  if(hasText){
+    const key=`${state.selectedText}Pos`;
+    const pos=state.entry[key]||{x:.1,y:.36};
+    state.entry[key]={x:clamp(pos.x+dx,.04,.84),y:clamp(pos.y+dy,.12,.88)};
+  }else{
+    (state.entry.stickers||[]).forEach(item=>{
+      if(state.selectedCanvas.has(item.id)){
+        item.x=clamp(item.x+dx,.06,.94);
+        item.y=clamp(item.y+dy,.24,.92);
+      }
+    });
+  }
+  pushHistory(before); saveDraft(state.entry); renderCanvasOnly();
+}
+
 function bindCanvasInteractions(canvas){
   if(!canvas)return;
   const startDrag=(kind,id,event)=>{
@@ -643,8 +2225,11 @@ function bindCanvasInteractions(canvas){
       }else{
         state.selectedCanvas.clear();state.selectedText=null;state.selectedCanvas.add(id);renderCanvasSelectionState();
       }
+      const before=cloneEntry(state.entry);
       const ids=[...state.selectedCanvas], starts=Object.fromEntries(ids.map(i=>{const it=state.entry.stickers.find(x=>x.id===i);return [i,{x:it.x,y:it.y}]}));
-      state.drag={kind,id,rect,startX:nx,startY:ny,ids,starts,before:cloneEntry(state.entry)}; bringToFront(id); event.currentTarget.setPointerCapture?.(event.pointerId);
+      state.drag={kind,id,rect,startX:nx,startY:ny,ids,starts,before};
+      bringToFront(id);
+      event.currentTarget.setPointerCapture?.(event.pointerId);
     }else{
       state.selectedCanvas.clear();state.selectedText=kind;renderCanvasSelectionState(); const pos=kind==='title'?state.entry.titlePos:state.entry.contentPos; state.drag={kind,id:null,rect,startX:nx,startY:ny,starts:{[kind]:{x:pos.x,y:pos.y}},before:cloneEntry(state.entry)};event.currentTarget.setPointerCapture?.(event.pointerId);
     }
@@ -685,24 +2270,53 @@ function renderCanvasOnly(){
 
 function renderStickerPanel(){
   const panel=document.getElementById('stickerPanel');if(!panel)return;
+  panel.innerHTML=`
+    <div class="sticker-search-row"><div class="search-wrap"><span>⌕</span><input id="stickerSearch" value="${sanitizeText(state.stickerSearch)}" placeholder="搜索贴纸 / 例如：咖啡、旅行、下雨" autocomplete="off" /></div><button class="ghost-mini ${state.multiSelectMode?'active':''}" id="toggleMulti">${state.multiSelectMode?'结束多选':'多选'}</button></div>
+    <div id="stickerRecommendRoot"></div>
+    <div class="category-tabs sticker-cats">${STICKER_CATEGORIES.map(c=>`<button class="${state.stickerCategory===c.key?'selected':''}" data-cat="${c.key}">${c.label}</button>`).join('')}</div>
+    <div class="sticker-count-row"><span id="stickerCount"></span><span id="stickerSelectedCount"></span></div>
+    <div class="sticker-library" id="stickerResults"></div>
+    <div id="multiSelectBarRoot"></div>`;
+  const input=document.getElementById('stickerSearch');
+  input?.addEventListener('compositionstart',()=>{state.stickerSearchComposing=true;});
+  input?.addEventListener('compositionend',e=>{state.stickerSearchComposing=false;state.stickerSearch=e.target.value;updateStickerPanelResults();});
+  input?.addEventListener('input',e=>{state.stickerSearch=e.target.value;if(!state.stickerSearchComposing)updateStickerPanelResults();});
+  input?.addEventListener('search',e=>{state.stickerSearch=e.target.value;updateStickerPanelResults();});
+  document.getElementById('toggleMulti')?.addEventListener('click',()=>{state.multiSelectMode=!state.multiSelectMode;if(!state.multiSelectMode)state.selectedLibrary.clear();renderStickerPanel();});
+  document.querySelectorAll('[data-cat]').forEach(btn=>btn.addEventListener('click',()=>{state.stickerCategory=btn.dataset.cat;document.querySelectorAll('[data-cat]').forEach(x=>x.classList.toggle('selected',x===btn));updateStickerPanelResults();}));
+  updateStickerPanelResults();
+}
+function updateStickerPanelResults(){
+  const panel=document.getElementById('stickerPanel'); if(!panel)return;
   state.recommendedIds=recommendationIds();
   const filtered=filteredStickers();
   const showRec=state.stickerCategory==='recommended';
-  const multiCount=state.selectedLibrary.size;
-  panel.innerHTML=`
-    <div class="sticker-search-row"><div class="search-wrap"><span>⌕</span><input id="stickerSearch" value="${sanitizeText(state.stickerSearch)}" placeholder="搜索贴纸 / 例如：咖啡、旅行、下雨" /></div><button class="ghost-mini ${state.multiSelectMode?'active':''}" id="toggleMulti">${state.multiSelectMode?'取消多选':'多选'}</button></div>
-    ${state.recommendedIds.length&&!showRec&&state.stickerSearch===''?`<div class="recommend-strip"><div class="recommend-title"><span>根据这一天的文字推荐</span><button id="showRecommendations">查看全部 ${state.recommendedIds.length}</button></div><div class="recommend-row">${state.recommendedIds.slice(0,6).map(id=>stickerTileHtml(STICKERS.find(s=>s.id===id))).join('')}</div></div>`:''}
-    <div class="category-tabs sticker-cats">${STICKER_CATEGORIES.map(c=>`<button class="${state.stickerCategory===c.key?'selected':''}" data-cat="${c.key}">${c.label}</button>`).join('')}</div>
-    <div class="sticker-count-row"><span>${showRec?'相关推荐':`${filtered.length} 枚贴纸`}</span><span>${state.multiSelectMode&&multiCount?`已选 ${multiCount} 枚`:''}</span></div>
-    <div class="sticker-library">${filtered.length?filtered.map(stickerTileHtml).join(''):`<div class="empty-stickers">没有找到相关贴纸。试试“海边 / 工作 / 开心 / 早餐”。</div>`}</div>
-    ${state.multiSelectMode?`<div class="multi-select-bar"><span>选择多枚贴纸后一次加入，系统会自动错开位置。</span><button class="save-button mini" id="addSelected" ${multiCount?'':'disabled'}>加入所选 ${multiCount||''}</button></div>`:''}
-  `;
-  document.getElementById('stickerSearch')?.addEventListener('input',e=>{state.stickerSearch=e.target.value;renderStickerPanel();const input=document.getElementById('stickerSearch');input?.focus();input?.setSelectionRange(input.value.length,input.value.length);});
-  document.getElementById('toggleMulti')?.addEventListener('click',()=>{state.multiSelectMode=!state.multiSelectMode;if(!state.multiSelectMode)state.selectedLibrary.clear();renderStickerPanel();});
-  document.getElementById('showRecommendations')?.addEventListener('click',()=>{state.stickerCategory='recommended';renderStickerPanel();});
-  document.querySelectorAll('[data-cat]').forEach(btn=>btn.addEventListener('click',()=>{state.stickerCategory=btn.dataset.cat;renderStickerPanel();}));
-  document.querySelectorAll('[data-sticker]').forEach(btn=>btn.addEventListener('click',()=>{const sticker=STICKERS.find(x=>x.id===btn.dataset.sticker);if(!sticker)return;state.multiSelectMode?toggleLibrarySticker(sticker.id):addSticker(sticker);}));
+  const count=document.getElementById('stickerCount'); if(count)count.textContent=showRec?`相关推荐 · ${filtered.length} 枚`:`${filtered.length} 枚贴纸`;
+  const selectedCount=document.getElementById('stickerSelectedCount'); if(selectedCount)selectedCount.textContent=state.multiSelectMode&&state.selectedLibrary.size?`已选 ${state.selectedLibrary.size} 枚`:'';
+  const recommendRoot=document.getElementById('stickerRecommendRoot');
+  if(recommendRoot){
+    const html=(state.recommendedIds.length&&!showRec&&!state.stickerSearch.trim())?`<div class="recommend-strip"><div class="recommend-title"><span>根据这一天的文字推荐</span><button id="showRecommendations">查看全部 ${state.recommendedIds.length}</button></div><div class="recommend-row">${state.recommendedIds.slice(0,8).map(id=>stickerTileHtml(STICKERS.find(s=>s.id===id))).join('')}</div></div>`:'';
+    if(recommendRoot.innerHTML!==html)recommendRoot.innerHTML=html;
+  }
+  const results=document.getElementById('stickerResults');
+  const resultHtml=filtered.length?filtered.map(stickerTileHtml).join(''):`<div class="empty-stickers">没有找到相关贴纸。试试“海边 / 工作 / 开心 / 早餐”。</div>`;
+  if(results && results.innerHTML!==resultHtml)results.innerHTML=resultHtml;
+  const bar=document.getElementById('multiSelectBarRoot');
+  const barHtml=state.multiSelectMode?`<div class="multi-select-bar"><span>可多选后一次加入，系统会自动错开放置；加入后可在画布中整体移动。</span><button class="save-button mini" id="addSelected" ${state.selectedLibrary.size?'':'disabled'}>加入所选 ${state.selectedLibrary.size||''}</button></div>`:'';
+  if(bar && bar.innerHTML!==barHtml)bar.innerHTML=barHtml;
+  if(recommendRoot){
+    document.getElementById('showRecommendations')?.addEventListener('click',()=>{state.stickerCategory='recommended';renderStickerPanel();});
+  }
+  if(results && !results.dataset.bound){
+    results.dataset.bound='1';
+    results.addEventListener('click',e=>{
+      const btn=e.target.closest('[data-sticker]'); if(!btn)return;
+      const sticker=STICKERS.find(x=>x.id===btn.dataset.sticker); if(!sticker)return;
+      if(state.multiSelectMode)toggleLibrarySticker(sticker.id);else addSticker(sticker);
+    });
+  }
   document.getElementById('addSelected')?.addEventListener('click',addSelectedStickers);
+  document.querySelectorAll('#stickerRecommendRoot [data-sticker]:not([data-bound])').forEach(btn=>{btn.dataset.bound='1';btn.addEventListener('click',()=>{const sticker=STICKERS.find(x=>x.id===btn.dataset.sticker);if(sticker){if(state.multiSelectMode)toggleLibrarySticker(sticker.id);else addSticker(sticker);}});});
 }
 function stickerTileHtml(sticker){
   const selected=state.selectedLibrary.has(sticker.id);
@@ -749,8 +2363,13 @@ function renderDrawer(){
   document.getElementById('drawerBackdrop').addEventListener('click',closeDrawer);document.getElementById('closeDrawer').addEventListener('click',closeDrawer);
   const titleInput=document.getElementById('entryTitle'),contentInput=document.getElementById('entryContent');
   titleInput.addEventListener('focus',()=>beginTextEdit('title'));contentInput.addEventListener('focus',()=>beginTextEdit('content'));
-  titleInput.addEventListener('input',e=>{state.entry.title=e.target.value;saveDraft(state.entry);renderCanvasOnly();renderStickerPanel();});
-  contentInput.addEventListener('input',e=>{state.entry.content=e.target.value;saveDraft(state.entry);renderCanvasOnly();renderStickerPanel();});
+  titleInput.addEventListener('compositionstart',()=>{state.inputComposing=true;});
+  contentInput.addEventListener('compositionstart',()=>{state.inputComposing=true;});
+  const handleTextInput=(kind,value)=>{state.entry[kind]=value;queueDraftSave(state.entry);renderCanvasOnly();if(!state.inputComposing)queueRecommendationUpdate();};
+  titleInput.addEventListener('compositionend',e=>{state.inputComposing=false;handleTextInput('title',e.target.value);});
+  contentInput.addEventListener('compositionend',e=>{state.inputComposing=false;handleTextInput('content',e.target.value);});
+  titleInput.addEventListener('input',e=>handleTextInput('title',e.target.value));
+  contentInput.addEventListener('input',e=>handleTextInput('content',e.target.value));
   titleInput.addEventListener('blur',endTextEdit);contentInput.addEventListener('blur',endTextEdit);
   document.querySelectorAll('[data-color]').forEach(btn=>btn.addEventListener('click',()=>mutateEntry(()=>{state.entry.background=btn.dataset.color;})));
   document.querySelectorAll('[data-color]').forEach(btn=>btn.addEventListener('click',()=>renderDrawer()));
@@ -794,9 +2413,24 @@ function toast(message){const el=document.getElementById('toast');if(!el)return;
 
 window.addEventListener('pagehide',()=>commitDraftBeforeNavigation());
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')commitDraftBeforeNavigation();});
-document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='s'){e.preventDefault();if(state.drawerOpen)saveEntry();} if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='z'){e.preventDefault();if(state.drawerOpen)(e.shiftKey?redoChange():undoChange());} if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='y'){e.preventDefault();if(state.drawerOpen)redoChange();}});
+document.addEventListener('keydown',e=>{
+  if(!state.drawerOpen)return;
+  const tag=document.activeElement?.tagName||'';
+  const typing=['INPUT','TEXTAREA'].includes(tag);
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='s'){e.preventDefault();endTextEdit();saveEntry();return;}
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='z'){e.preventDefault();endTextEdit();e.shiftKey?redoChange():undoChange();return;}
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='y'){e.preventDefault();endTextEdit();redoChange();return;}
+  if(typing||e.metaKey||e.ctrlKey||e.altKey)return;
+  const step=e.shiftKey?.02:.008;
+  if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)){
+    e.preventDefault();
+    const dx=e.key==='ArrowLeft'?-step:e.key==='ArrowRight'?step:0;
+    const dy=e.key==='ArrowUp'?-step:e.key==='ArrowDown'?step:0;
+    moveSelectionByKeyboard(dx,dy);
+  }
+});
 
-function injectStyle(){const link=document.createElement('link');link.rel='stylesheet';link.href='./styles.css?v=final2';document.head.appendChild(link);}
+function injectStyle(){const link=document.createElement('link');link.rel='stylesheet';link.href='./styles.css?v=final-release';document.head.appendChild(link);}
 injectStyle();
 renderShell();
 state.entry=emptyEntry(currentDateKey());
