@@ -1944,9 +1944,26 @@ function commitBeforeNavigation(){if(state.textEdit)finishInlineTextEdit();if(st
 function moveMonth(delta){commitBeforeNavigation();const current=state.year*12+state.month,next=current+delta;if(next<MIN_MONTH_INDEX)return;state.year=Math.floor(next/12);state.month=next%12;state.selectedDay=1;renderCalendar();loadCurrentMonth();loadSelectedEntry();}
 function goToday(){commitBeforeNavigation();state.year=currentYear;state.month=currentMonth;state.selectedDay=currentDay;state.viewMode='month';localStorage.setItem('in-days:view','month');state.drawerOpen=false;closeDrawer();renderCalendar();loadCurrentMonth();loadSelectedEntry();}
 
+function stickerInlineMarkup(sticker,size=54){
+  const src=String(sticker?.inlineSvg||'');
+  const comma=src.indexOf(',');
+  if(comma<0)return '';
+  try{
+    const raw=decodeURIComponent(src.slice(comma+1));
+    const trimmed=raw.trim();
+    if(!/^<svg\b/i.test(trimmed))return '';
+    const open=trimmed.match(/^<svg\b[^>]*>/i);
+    if(!open)return '';
+    let tag=open[0];
+    if(/\bwidth\s*=\s*['"][^'"]*['"]/i.test(tag))tag=tag.replace(/\bwidth\s*=\s*(['"]).*?\1/i,`width="${size}"`);else tag=tag.replace(/<svg\b/i,`<svg width="${size}"`);
+    if(/\bheight\s*=\s*['"][^'"]*['"]/i.test(tag))tag=tag.replace(/\bheight\s*=\s*(['"]).*?\1/i,`height="${size}"`);else tag=tag.replace(/<svg\b/i,`<svg height="${size}"`);
+    return tag+trimmed.slice(open[0].length);
+  }catch{return ''; }
+}
 function svgSticker(sticker,size=54){
   if (sticker?.inlineSvg) {
-    return `<img class="sticker-image" src="${sticker.inlineSvg}" width="${size}" height="${size}" alt="${sanitizeText(sticker.name||'贴纸')}" loading="lazy" draggable="false" />`;
+    const markup=stickerInlineMarkup(sticker,size);
+    if(markup)return markup;
   }
   const stroke='#3f3f3b', accent=sticker?.accent||'#b7c9ad';
   const common=`fill="none" stroke="${stroke}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"`;
@@ -2234,16 +2251,18 @@ function bindCanvasInteractions(canvas){
   const down=(kind,id,e)=>{
     if(e.button!==undefined&&e.button!==0)return;
     if((kind==='title'||kind==='content') && state.textEdit){
-      if(state.textEdit.kind===kind)return; // let the active contenteditable keep native focus
+      if(state.textEdit.kind===kind)return;
       finishInlineTextEdit();
     }
-    e.preventDefault();e.stopPropagation();
     const rect=canvas.getBoundingClientRect(),sx=(e.clientX-rect.left)/rect.width,sy=(e.clientY-rect.top)/rect.height;
     if(kind==='title'||kind==='content'){
+      // Do not cancel the browser's native pointer behavior here.
+      // A click enters inline editing on pointerup; a drag moves the text.
       state.selectedText=kind;state.selectedCanvas.clear();state.selectedPhoto.clear();
       candidate={kind,rect,startX:sx,startY:sy,moved:false,before:clone(state.entry)};
       renderCanvasSelectionState();return;
     }
+    e.preventDefault();e.stopPropagation();
     if(kind==='sticker'){
       const item=state.entry.stickers.find(x=>x.id===id);if(!item)return;
       if(item.locked&&!state.canvasMultiSelect){toggleCanvasSelection(id);return;}
@@ -2281,7 +2300,11 @@ function bindCanvasInteractions(canvas){
   const up=()=>{
     if(!candidate)return;
     const c=candidate;candidate=null;
-    if((c.kind==='title'||c.kind==='content')&&!c.moved){startInlineTextEdit(c.kind);return;}
+    if((c.kind==='title'||c.kind==='content')&&!c.moved){
+      startInlineTextEdit(c.kind);
+      requestAnimationFrame(()=>document.querySelector(`.canvas-text[data-drag-kind="${c.kind}"]`)?.focus());
+      return;
+    }
     recordChange(c.before);
   };
   canvas.addEventListener('pointermove',move);canvas.addEventListener('pointerup',up);canvas.addEventListener('pointercancel',up);
