@@ -2,3 +2,17 @@
 
 .day-card.has-entry > .day-number{opacity:0}
 .day-card.has-entry > .day-thumbnail{background:var(--day-bg,#fffdf7)}
+
+/* Final unified interaction polish */
+.canvas-text{z-index:6;caret-color:var(--ink);}
+.canvas-text.editing{user-select:text;-webkit-user-select:text;cursor:text;white-space:pre-wrap;overflow:auto;max-height:48%;min-height:1.4em;padding:7px 9px;}
+.canvas-text.placeholder{cursor:text;}
+.canvas-text.editing:focus{outline:1px solid rgba(141,166,132,.55);box-shadow:0 8px 24px rgba(42,42,36,.05);}
+.journal-canvas *{scrollbar-width:thin;}
+.mini-canvas{will-change:transform;}
+.mini-sticker{transform-origin:center center;}
+.export-backdrop{position:fixed;inset:0;z-index:31;border:0;background:rgba(33,33,29,.18);backdrop-filter:blur(3px)}
+.export-modal{position:fixed;z-index:32;left:50%;top:50%;transform:translate(-50%,-50%);width:min(470px,calc(100% - 32px));padding:30px;border:1px solid var(--line);border-radius:24px;background:var(--paper);box-shadow:0 30px 100px rgba(33,33,29,.18)}
+.export-modal h2{font-size:28px;font-weight:500;margin:14px 0 8px}.export-modal p{color:var(--muted);font-size:11px;line-height:1.7;margin:0 0 18px}.export-choice-list{display:grid;gap:8px}.export-choice{width:100%;text-align:left;border:1px solid var(--line);background:#fffefb;border-radius:16px;padding:14px 15px;cursor:pointer;transition:.18s ease}.export-choice:hover{border-color:var(--line-2);transform:translateY(-1px)}.export-choice strong{display:block;font-size:11px;font-weight:500}.export-choice span{display:block;margin-top:4px;color:var(--muted);font-size:9px;line-height:1.6}
+.sticker-tile{touch-action:manipulation}.sticker-library{contain:content;}
+@media (max-width:760px){.export-modal{padding:24px}.export-choice{padding:13px}.canvas-text{max-width:78%}.canvas-text.editing{max-height:56%;}}

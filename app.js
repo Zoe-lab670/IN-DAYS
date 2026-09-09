@@ -1888,24 +1888,33 @@ async function deleteEntry(){
   const date=currentDateKey();try{if(supabase){if(!state.user)throw new Error('请先登录。');const {error}=await supabase.from('journal_entries').delete().eq('entry_date',date).eq('user_id',state.user.id);if(error)throw error;}else localStorage.removeItem(LOCAL_PREFIX+date);clearDraft(date);delete state.monthEntries[date];state.entry=emptyEntry(date);resetHistory();state.status='已清空';renderCalendar();renderDrawer();toast('已清空');}catch(e){toast(e.message||'清空失败');}
 }
 
-function miniScale(){const grid=document.getElementById('calendarGrid');if(!grid)return .18;const gap=parseFloat(getComputedStyle(grid).columnGap)||10;return (grid.clientWidth-gap*6)/7/CANVAS_W;}
+function miniScale(){
+  const grid=document.getElementById('calendarGrid');
+  if(!grid)return .18;
+  const cs=getComputedStyle(grid),gap=parseFloat(cs.columnGap)||10;
+  const cardW=(grid.clientWidth-gap*6)/7;
+  return clamp(cardW/CANVAS_W,.08,.4);
+}
 function miniObjectHtml(e,scale){
   const parts=[];
-  const date=String(e.entry_date||'').slice(8,10);
   const title=String(e.title||'').trim(),content=String(e.content||'').trim();
-  if(date)parts.push(`<div class="mini-date">${escapeHtml(date)}</div>`);
-  if(title){parts.push(`<div class="mini-object mini-title" style="left:${e.titlePos.x*100}%;top:${e.titlePos.y*100}%;font-size:${(e.titleStyle.fontSize).toFixed(2)}px;text-align:${e.titleStyle.align};font-weight:${e.titleStyle.weight||500}">${escapeHtml(title)}</div>`);}
-  if(content){parts.push(`<div class="mini-object mini-content" style="left:${e.contentPos.x*100}%;top:${e.contentPos.y*100}%;font-size:${(e.contentStyle.fontSize).toFixed(2)}px;text-align:${e.contentStyle.align};font-weight:${e.contentStyle.weight||400}">${escapeHtml(content)}</div>`);}
-  (e.photos||[]).slice().sort((a,b)=>(a.z||0)-(b.z||0)).forEach(p=>parts.push(`<img class="mini-photo" src="${escapeHtml(p.src)}" alt="照片" style="left:${p.x*100}%;top:${p.y*100}%;transform:translate(-50%,-50%) rotate(${p.rotation||0}deg) scale(${p.scale||1})" />`));
-  (e.stickers||[]).slice().sort((a,b)=>(a.z||0)-(b.z||0)).forEach(p=>{const st=STICKERS.find(x=>x.id===p.stickerId);if(!st)return;parts.push(`<div class="mini-object mini-sticker" style="left:${p.x*100}%;top:${p.y*100}%;transform:translate(-50%,-50%) rotate(${p.rotation||0}deg) scale(${p.scale||1})">${svgSticker(st,64)}</div>`);});
+  const date=String(e.entry_date||'').slice(8,10);
+  if(date)parts.push(`<div class="mini-object mini-date" style="left:24px;top:21px;font-size:9px">${escapeHtml(date)}</div>`);
+  if(title){parts.push(`<div class="mini-object mini-title" style="left:${clamp(e.titlePos?.x??.10,.02,.90)*100}%;top:${clamp(e.titlePos?.y??.18,.08,.92)*100}%;font-size:${Number(e.titleStyle?.fontSize||25).toFixed(2)}px;text-align:${e.titleStyle?.align||'left'};font-weight:${e.titleStyle?.weight||500}">${escapeHtml(title)}</div>`);}
+  if(content){parts.push(`<div class="mini-object mini-content" style="left:${clamp(e.contentPos?.x??.10,.02,.90)*100}%;top:${clamp(e.contentPos?.y??.36,.12,.94)*100}%;font-size:${Number(e.contentStyle?.fontSize||12).toFixed(2)}px;text-align:${e.contentStyle?.align||'left'};font-weight:${e.contentStyle?.weight||400}">${escapeHtml(content)}</div>`);}
+  (e.photos||[]).slice().sort((a,b)=>(a.z||0)-(b.z||0)).forEach(p=>parts.push(`<img class="mini-object mini-photo" src="${escapeHtml(p.src)}" alt="照片" style="left:${p.x*100}%;top:${p.y*100}%;transform:translate(-50%,-50%) rotate(${p.rotation||0}deg) scale(${p.scale||1})" />`));
+  (e.stickers||[]).slice().sort((a,b)=>(a.z||0)-(b.z||0)).forEach(p=>{
+    const st=STICKERS.find(x=>x.id===p.stickerId); if(!st)return;
+    parts.push(`<div class="mini-object mini-sticker" style="left:${clamp(p.x,.02,.98)*100}%;top:${clamp(p.y,.02,.98)*100}%;transform:translate(-50%,-50%) rotate(${p.rotation||0}deg) scale(${p.scale||1});z-index:${p.z||2}">${svgSticker(st,64)}</div>`);
+  });
   return parts.join('');
 }
 function calendarDayHtml(entry,key,day,active,today){
   const e=entry||emptyEntry(key),has=hasEntryContent(entry),scale=miniScale();
-  const inner=has?miniObjectHtml(e,scale):'';
-  return `<button class="day-card ${active?'active':''} ${today?'today':''} ${has?'has-entry':''}" data-day="${day}" aria-label="${state.year}年${state.month+1}月${day}日" style="--day-bg:${e.background||'#fffdf7'}">
-    <div class="day-thumbnail">${has?`<div class="mini-canvas" style="background:${e.background||'#fffdf7'};--mini-scale:${scale}">${inner}</div>`:''}</div>
-    <span class="day-number">${String(day).padStart(2,'0')}</span>${today?'<span class="today-mark">TODAY</span>':''}
+  return `<button class="day-card ${active?'active':''} ${today?'today':''} ${has?'has-entry':''}" data-day="${day}" aria-label="${state.year}年${state.month+1}月${day}日" style="--day-bg:${escapeHtml(e.background||'#fffdf7')}">
+    <div class="day-thumbnail">${has?`<div class="mini-canvas" style="background:${escapeHtml(e.background||'#fffdf7')};--mini-scale:${scale}">${miniObjectHtml(e,scale)}</div>`:''}</div>
+    ${!has?`<span class="day-number">${String(day).padStart(2,'0')}</span>`:''}
+    ${today?'<span class="today-mark">TODAY</span>':''}
   </button>`;
 }
 function renderCalendar(){
@@ -1937,11 +1946,18 @@ function goToday(){commitBeforeNavigation();state.year=currentYear;state.month=c
 
 function renderShell(){
   app.innerHTML=`<main class="app-shell"><header class="topbar"><div class="brand-lockup"><div class="brand-mark" aria-hidden="true"><span></span><i></i></div><div><div class="brand-cn">一隅</div><div class="brand-en">IN DAYS</div></div></div><div class="top-actions"><button class="today-button" id="todayBtn">回到今天</button><span id="accountArea"></span></div></header>
-  <section class="hero"><div class="month-nav"><button class="nav-button" id="prevMonth" aria-label="上个月">←</button><div class="month-heading"><p class="eyebrow" id="yearLabel"></p><h1 id="monthLabel"></h1></div><button class="nav-button" id="nextMonth" aria-label="下个月">→</button></div><p class="subtitle">给每天留一隅。</p><div class="hero-tools"><div class="view-switcher">${VIEW_MODES.map(v=>`<button class="view-mode-btn ${state.viewMode===v.key?'selected':''}" data-view="${v.key}">${v.label}</button>`).join('')}</div><button class="subtle-action" id="reviewBtn">本月回顾</button><button class="subtle-action" id="exportMonthBtn">导出本月</button><button class="subtle-action" id="exportJsonBtn">导出数据</button></div></section>
+  <section class="hero"><div class="month-nav"><button class="nav-button" id="prevMonth" aria-label="上个月">←</button><div class="month-heading"><p class="eyebrow" id="yearLabel"></p><h1 id="monthLabel"></h1></div><button class="nav-button" id="nextMonth" aria-label="下个月">→</button></div><p class="subtitle">给每天留一隅。</p><div class="hero-tools"><div class="view-switcher">${VIEW_MODES.map(v=>`<button class="view-mode-btn ${state.viewMode===v.key?'selected':''}" data-view="${v.key}">${v.label}</button>`).join('')}</div><button class="subtle-action" id="reviewBtn">本月回顾</button><button class="subtle-action" id="exportMonthBtn">导出本月</button></div></section>
   <section class="calendar-card"><div class="weekday-row" id="weekdayRow">${weekdayLabels.map(label=>`<div>${label}</div>`).join('')}</div><div class="calendar-grid" id="calendarGrid"></div></section>
-  <section class="selected-summary"><div><p class="section-kicker">TODAY'S CORNER</p><h2 id="selectedDate"></h2><p id="selectedPreview"></p></div><div class="summary-actions"><button class="open-editor" id="openEditor">进入这一隅 <span>↗</span></button><button class="open-editor light" id="capsuleBtn">写给未来</button></div></section><footer>一隅 · IN DAYS</footer></main><div id="drawerRoot"></div><div id="authRoot"></div><div id="profileRoot"></div><div id="reviewRoot"></div><div id="capsuleRoot"></div><div class="toast" id="toast"></div>`;
-  document.getElementById('prevMonth').addEventListener('click',()=>moveMonth(-1));document.getElementById('nextMonth').addEventListener('click',()=>moveMonth(1));document.getElementById('todayBtn').addEventListener('click',goToday);document.getElementById('openEditor').addEventListener('click',openDrawer);document.getElementById('reviewBtn').addEventListener('click',openReview);document.getElementById('exportMonthBtn').addEventListener('click',()=>exportMonthPng());document.getElementById('exportJsonBtn').addEventListener('click',exportMonthJson);document.getElementById('capsuleBtn').addEventListener('click',openCapsule);
-  document.querySelectorAll('.view-mode-btn').forEach(b=>b.addEventListener('click',()=>{state.viewMode=b.dataset.view;localStorage.setItem('in-days:view',state.viewMode);renderCalendar();}));renderAccount();
+  <section class="selected-summary"><div><p class="section-kicker">TODAY'S CORNER</p><h2 id="selectedDate"></h2><p id="selectedPreview"></p></div><div class="summary-actions"><button class="open-editor" id="openEditor">进入这一隅 <span>↗</span></button><button class="open-editor light" id="capsuleBtn">写给未来</button></div></section><footer>一隅 · IN DAYS</footer></main><div id="drawerRoot"></div><div id="authRoot"></div><div id="profileRoot"></div><div id="reviewRoot"></div><div id="capsuleRoot"></div><div id="exportMonthRoot"></div><div class="toast" id="toast"></div>`;
+  document.getElementById('prevMonth').addEventListener('click',()=>moveMonth(-1));
+  document.getElementById('nextMonth').addEventListener('click',()=>moveMonth(1));
+  document.getElementById('todayBtn').addEventListener('click',goToday);
+  document.getElementById('openEditor').addEventListener('click',openDrawer);
+  document.getElementById('reviewBtn').addEventListener('click',openReview);
+  document.getElementById('exportMonthBtn').addEventListener('click',openMonthExport);
+  document.getElementById('capsuleBtn').addEventListener('click',openCapsule);
+  document.querySelectorAll('.view-mode-btn').forEach(b=>b.addEventListener('click',()=>{state.viewMode=b.dataset.view;localStorage.setItem('in-days:view',state.viewMode);renderCalendar();}));
+  renderAccount();
 }
 function toast(message){const el=document.getElementById('toast');if(!el)return;el.textContent=message;el.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>el.classList.remove('show'),2300);}
 function renderAccount(){const area=document.getElementById('accountArea');if(!supabase){area.innerHTML='<span class="local-badge">本地模式</span>';return;}if(state.user){const name=escapeHtml(getDisplayName(state.user));area.innerHTML=`<button class="account-button" id="profileBtn"><span class="account-avatar">${getInitial(getDisplayName(state.user))}</span><span class="account-name" title="${name}">${name}</span><span class="account-chevron">⌄</span></button>`;document.getElementById('profileBtn').addEventListener('click',openProfile);}else{area.innerHTML='<button class="account-button primary-outline" id="loginBtn">登录 / 注册</button>';document.getElementById('loginBtn').addEventListener('click',openAuth);}}
@@ -2072,27 +2088,102 @@ function renderTools(){const wrap=document.getElementById('objectTools');if(!wra
 function renderCanvasSelectionState(){document.querySelectorAll('.placed-sticker').forEach(el=>el.classList.toggle('selected',state.selectedCanvas.has(el.dataset.id)));document.querySelectorAll('.placed-photo').forEach(el=>el.classList.toggle('selected',state.selectedPhoto.has(el.dataset.id)));document.querySelectorAll('.canvas-text').forEach(el=>el.classList.toggle('text-selected',state.selectedText===el.dataset.dragKind));const info=document.getElementById('canvasSelectionInfo');if(info)info.textContent=state.selectedText?`已选${state.selectedText==='title'?'标题':'正文'}`:(state.selectedCanvas.size+state.selectedPhoto.size?`已选 ${state.selectedCanvas.size+state.selectedPhoto.size} 个`:'未选择');}
 function renderCanvasOnly(){const c=document.getElementById('journalCanvas');if(!c)return;c.style.background=state.entry.background||'#fffdf7';const t=c.querySelector('[data-drag-kind="title"]'),ct=c.querySelector('[data-drag-kind="content"]');if(t&&!state.textEdit){t.textContent=state.entry.title||'双击这里写标题';t.classList.toggle('placeholder',!state.entry.title);t.style.left=`${state.entry.titlePos.x*100}%`;t.style.top=`${state.entry.titlePos.y*100}%`;t.style.fontSize=`${state.entry.titleStyle.fontSize}px`;t.style.textAlign=state.entry.titleStyle.align;t.style.fontWeight=state.entry.titleStyle.weight||500;}if(ct&&!state.textEdit){ct.textContent=state.entry.content||'双击这里写下今天发生了什么…';ct.classList.toggle('placeholder',!state.entry.content);ct.style.left=`${state.entry.contentPos.x*100}%`;ct.style.top=`${state.entry.contentPos.y*100}%`;ct.style.fontSize=`${state.entry.contentStyle.fontSize}px`;ct.style.textAlign=state.entry.contentStyle.align;ct.style.fontWeight=state.entry.contentStyle.weight||400;}state.entry.stickers?.forEach(p=>{const el=c.querySelector(`[data-id="${CSS.escape(p.id)}"]`);if(el){el.style.left=`${p.x*100}%`;el.style.top=`${p.y*100}%`;el.style.transform=`translate(-50%,-50%) rotate(${p.rotation||0}deg) scale(${p.scale||1})`;el.style.zIndex=p.z||2;}});state.entry.photos?.forEach(p=>{const el=c.querySelector(`[data-id="${CSS.escape(p.id)}"]`);if(el){el.style.left=`${p.x*100}%`;el.style.top=`${p.y*100}%`;el.style.transform=`translate(-50%,-50%) rotate(${p.rotation||0}deg) scale(${p.scale||1})`;el.style.zIndex=p.z||2;}});renderCanvasSelectionState();renderTools();}
 
-function bindCanvasInteractions(canvas){if(!canvas)return;let candidate=null;
-  const down=(kind,id,e)=>{if(e.button!==undefined&&e.button!==0)return;e.stopPropagation();const rect=canvas.getBoundingClientRect(),sx=(e.clientX-rect.left)/rect.width,sy=(e.clientY-rect.top)/rect.height;
-    if(kind==='title'||kind==='content'){state.selectedText=kind;state.selectedCanvas.clear();state.selectedPhoto.clear();candidate={kind,rect,startX:sx,startY:sy,moved:false,before:clone(state.entry),startedAt:performance.now()};renderCanvasSelectionState();return;}
-    if(kind==='sticker'){const item=state.entry.stickers.find(x=>x.id===id);if(!item)return;if(item.locked&&!state.canvasMultiSelect){toggleCanvasSelection(id);return;}toggleCanvasSelection(id);candidate={kind,id,rect,startX:sx,startY:sy,starts:Object.fromEntries([...state.selectedCanvas].map(i=>{const it=state.entry.stickers.find(x=>x.id===i);return[i,{x:it.x,y:it.y}]})),before:clone(state.entry),moved:false};e.currentTarget.setPointerCapture?.(e.pointerId);}
-    if(kind==='photo'){const item=state.entry.photos.find(x=>x.id===id);if(!item)return;if(item.locked)return;state.selectedPhoto=state.canvasMultiSelect?new Set([...state.selectedPhoto,id]):new Set([id]);state.selectedCanvas.clear();state.selectedText=null;renderCanvasSelectionState();candidate={kind,id,rect,startX:sx,startY:sy,starts:{[id]:{x:item.x,y:item.y}},before:clone(state.entry),moved:false};e.currentTarget.setPointerCapture?.(e.pointerId);}
+function bindCanvasInteractions(canvas){
+  if(!canvas)return;
+  let candidate=null;
+  const down=(kind,id,e)=>{
+    if(e.button!==undefined&&e.button!==0)return;
+    if((kind==='title'||kind==='content') && state.textEdit){
+      if(state.textEdit.kind===kind)return; // let the active contenteditable keep native focus
+      finishInlineTextEdit();
+    }
+    e.preventDefault();e.stopPropagation();
+    const rect=canvas.getBoundingClientRect(),sx=(e.clientX-rect.left)/rect.width,sy=(e.clientY-rect.top)/rect.height;
+    if(kind==='title'||kind==='content'){
+      state.selectedText=kind;state.selectedCanvas.clear();state.selectedPhoto.clear();
+      candidate={kind,rect,startX:sx,startY:sy,moved:false,before:clone(state.entry)};
+      renderCanvasSelectionState();return;
+    }
+    if(kind==='sticker'){
+      const item=state.entry.stickers.find(x=>x.id===id);if(!item)return;
+      if(item.locked&&!state.canvasMultiSelect){toggleCanvasSelection(id);return;}
+      toggleCanvasSelection(id);
+      candidate={kind,id,rect,startX:sx,startY:sy,starts:Object.fromEntries([...state.selectedCanvas].map(i=>{const it=state.entry.stickers.find(x=>x.id===i);return[it?i:null,it?{x:it.x,y:it.y}:null]}).filter(x=>x[0])),before:clone(state.entry),moved:false};
+      e.currentTarget.setPointerCapture?.(e.pointerId);return;
+    }
+    if(kind==='photo'){
+      const item=state.entry.photos.find(x=>x.id===id);if(!item||item.locked)return;
+      state.selectedPhoto=state.canvasMultiSelect?new Set([...state.selectedPhoto,id]):new Set([id]);state.selectedCanvas.clear();state.selectedText=null;
+      renderCanvasSelectionState();candidate={kind,id,rect,startX:sx,startY:sy,starts:{[id]:{x:item.x,y:item.y}},before:clone(state.entry),moved:false};e.currentTarget.setPointerCapture?.(e.pointerId);
+    }
   };
-  canvas.querySelectorAll('[data-drag-kind="sticker"]').forEach(el=>{el.addEventListener('pointerdown',e=>down('sticker',el.dataset.id,e));el.addEventListener('dblclick',()=>{if(!el.classList.contains('locked')){const before=clone(state.entry);state.entry.stickers=state.entry.stickers.filter(x=>x.id!==el.dataset.id);state.selectedCanvas.delete(el.dataset.id);recordChange(before,'已删除贴纸');renderDrawer();}});});
+  canvas.querySelectorAll('[data-drag-kind="sticker"]').forEach(el=>{
+    el.addEventListener('pointerdown',e=>down('sticker',el.dataset.id,e));
+    el.addEventListener('dblclick',()=>{if(el.classList.contains('locked'))return;const before=clone(state.entry);state.entry.stickers=state.entry.stickers.filter(x=>x.id!==el.dataset.id);state.selectedCanvas.delete(el.dataset.id);recordChange(before,'已删除贴纸');renderDrawer();});
+  });
   canvas.querySelectorAll('[data-drag-kind="photo"]').forEach(el=>el.addEventListener('pointerdown',e=>down('photo',el.dataset.id,e)));
-  canvas.querySelector('[data-drag-kind="title"]')?.addEventListener('pointerdown',e=>down('title',null,e));canvas.querySelector('[data-drag-kind="content"]')?.addEventListener('pointerdown',e=>down('content',null,e));
+  canvas.querySelector('[data-drag-kind="title"]')?.addEventListener('pointerdown',e=>down('title',null,e));
+  canvas.querySelector('[data-drag-kind="content"]')?.addEventListener('pointerdown',e=>down('content',null,e));
   canvas.addEventListener('wheel',e=>{if(!state.selectedCanvas.size&&!state.selectedPhoto.size)return;e.preventDefault();if(e.shiftKey)rotateSelected(e.deltaY>0?5:-5);else adjustSelectedScale(e.deltaY>0?-.05:.05);},{passive:false});
-  const move=e=>{if(!candidate)return;const rect=canvas.getBoundingClientRect(),nx=(e.clientX-rect.left)/rect.width,ny=(e.clientY-rect.top)/rect.height,dx=nx-candidate.startX,dy=ny-candidate.startY;if(Math.hypot(dx,dy)>.008)candidate.moved=true;
-    if(candidate.kind==='sticker'){for(const id of state.selectedCanvas){const it=state.entry.stickers.find(x=>x.id===id);if(!it||it.locked)continue;const s=candidate.starts[id];if(s){it.x=clamp(s.x+dx,.04,.96);it.y=clamp(s.y+dy,.14,.94);const el=canvas.querySelector(`[data-id="${CSS.escape(id)}"]`);if(el){el.style.left=`${it.x*100}%`;el.style.top=`${it.y*100}%`;}}}}
-    else if(candidate.kind==='photo'){for(const id of state.selectedPhoto){const it=state.entry.photos.find(x=>x.id===id);if(!it||it.locked)continue;const s=candidate.starts[id];if(s){it.x=clamp(s.x+dx,.04,.96);it.y=clamp(s.y+dy,.18,.94);const el=canvas.querySelector(`[data-id="${CSS.escape(id)}"]`);if(el){el.style.left=`${it.x*100}%`;el.style.top=`${it.y*100}%`;}}}}
-    else {const posKey=candidate.kind==='title'?'titlePos':'contentPos';const s=candidate.before[posKey]||state.entry[posKey];state.entry[posKey]={x:clamp(s.x+dx,.04,.86),y:clamp(s.y+dy,.10,.90)};const el=canvas.querySelector(`[data-drag-kind="${candidate.kind}"]`);if(el){el.style.left=`${state.entry[posKey].x*100}%`;el.style.top=`${state.entry[posKey].y*100}%`;}}state.autosaveStatus='正在保存草稿…';updateDrawerFooter();
+  const move=e=>{
+    if(!candidate)return;
+    const rect=canvas.getBoundingClientRect(),nx=(e.clientX-rect.left)/rect.width,ny=(e.clientY-rect.top)/rect.height,dx=nx-candidate.startX,dy=ny-candidate.startY;
+    if(Math.hypot(dx,dy)>.008)candidate.moved=true;
+    if(candidate.kind==='sticker'){
+      for(const id of state.selectedCanvas){const it=state.entry.stickers.find(x=>x.id===id),st=candidate.starts[id];if(!it||it.locked||!st)continue;it.x=clamp(st.x+dx,.04,.96);it.y=clamp(st.y+dy,.14,.94);const el=canvas.querySelector(`[data-id="${CSS.escape(id)}"]`);if(el){el.style.left=`${it.x*100}%`;el.style.top=`${it.y*100}%`;}}
+    }else if(candidate.kind==='photo'){
+      for(const id of state.selectedPhoto){const it=state.entry.photos.find(x=>x.id===id),st=candidate.starts[id];if(!it||it.locked||!st)continue;it.x=clamp(st.x+dx,.04,.96);it.y=clamp(st.y+dy,.18,.94);const el=canvas.querySelector(`[data-id="${CSS.escape(id)}"]`);if(el){el.style.left=`${it.x*100}%`;el.style.top=`${it.y*100}%`;}}
+    }else{
+      const posKey=candidate.kind==='title'?'titlePos':'contentPos',base=candidate.before[posKey]||state.entry[posKey];state.entry[posKey]={x:clamp(base.x+dx,.04,.86),y:clamp(base.y+dy,.10,.90)};const el=canvas.querySelector(`[data-drag-kind="${candidate.kind}"]`);if(el){el.style.left=`${state.entry[posKey].x*100}%`;el.style.top=`${state.entry[posKey].y*100}%`;}
+    }
+    state.autosaveStatus='正在保存草稿…';updateDrawerFooter();
   };
-  const up=()=>{if(!candidate)return;const c=candidate;candidate=null;if((c.kind==='title'||c.kind==='content')&&!c.moved){startInlineTextEdit(c.kind);return;}recordChange(c.before);};
-  canvas.addEventListener('pointermove',move);canvas.addEventListener('pointerup',up);canvas.addEventListener('pointercancel',up);canvas.addEventListener('click',e=>{if(e.target===canvas)clearSelection();});
+  const up=()=>{
+    if(!candidate)return;
+    const c=candidate;candidate=null;
+    if((c.kind==='title'||c.kind==='content')&&!c.moved){startInlineTextEdit(c.kind);return;}
+    recordChange(c.before);
+  };
+  canvas.addEventListener('pointermove',move);canvas.addEventListener('pointerup',up);canvas.addEventListener('pointercancel',up);
+  canvas.addEventListener('click',e=>{if(e.target===canvas)clearSelection();});
 }
-function startInlineTextEdit(kind){if(state.textEdit)return;const el=document.querySelector(`.canvas-text[data-drag-kind="${kind}"]`);if(!el)return;state.textEdit={kind,before:state.entry[kind]||''};state.selectedText=kind;el.contentEditable='true';el.classList.add('editing');if(!state.entry[kind])el.textContent='';el.focus();const range=document.createRange();range.selectNodeContents(el);range.collapse(false);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);renderCanvasSelectionState();}
-function finishInlineTextEdit(cancel=false){const edit=state.textEdit;if(!edit)return;const el=document.querySelector(`.canvas-text[data-drag-kind="${edit.kind}"]`);if(!el){state.textEdit=null;return;}if(cancel){state.entry[edit.kind]=edit.before;}else{state.entry[edit.kind]=el.innerText.replace(/\u00a0/g,' ').trimEnd();}el.contentEditable='false';el.classList.remove('editing');state.textEdit=null;saveDraft(state.entry);scheduleCloudSave();updateSidebarInput(edit.kind);updateStickerPanelResults();renderCanvasOnly();renderTools();}
-function updateSidebarInput(kind){const el=document.getElementById(kind==='title'?'entryTitle':'entryContent');if(el)el.value=state.entry[kind]||'';}
+function startInlineTextEdit(kind){
+  if(kind!=='title'&&kind!=='content')return;
+  if(state.textEdit){
+    if(state.textEdit.kind===kind){document.querySelector(`.canvas-text[data-drag-kind="${kind}"]`)?.focus();return;}
+    finishInlineTextEdit();
+  }
+  const el=document.querySelector(`.canvas-text[data-drag-kind="${kind}"]`);if(!el)return;
+  state.textEdit={kind,beforeText:state.entry[kind]||'',beforeEntry:clone(state.entry)};
+  state.selectedText=kind;state.selectedCanvas.clear();state.selectedPhoto.clear();
+  el.contentEditable='true';el.classList.add('editing');el.dataset.editing='true';
+  if(!state.entry[kind])el.textContent='';
+  el.focus();
+  const range=document.createRange();range.selectNodeContents(el);range.collapse(false);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);
+  if(!el.dataset.inlineBound){
+    el.dataset.inlineBound='1';
+    el.addEventListener('input',()=>{
+      if(!state.textEdit||state.textEdit.kind!==el.dataset.dragKind)return;
+      state.entry[el.dataset.dragKind]=el.innerText.replace(/\u00a0/g,' ').replace(/\r/g,'');
+      queueDraftSaveAndCloud();
+    });
+  }
+  renderCanvasSelectionState();
+}
+function queueDraftSaveAndCloud(){
+  saveDraft(state.entry);state.autosaveStatus='正在保存草稿…';updateDrawerFooter();
+  clearTimeout(state.recoTimer);state.recoTimer=setTimeout(()=>{if(state.drawerOpen&&!state.textEdit)updateStickerPanelResults();},180);
+  scheduleCloudSave();
+}
+function finishInlineTextEdit(cancel=false){
+  const edit=state.textEdit;if(!edit)return;
+  const el=document.querySelector(`.canvas-text[data-drag-kind="${edit.kind}"]`);
+  if(cancel){state.entry=clone(edit.beforeEntry);}else if(el){state.entry[edit.kind]=el.innerText.replace(/\u00a0/g,' ').replace(/\r/g,'').trimEnd();}
+  state.textEdit=null;
+  if(el){el.contentEditable='false';el.classList.remove('editing');delete el.dataset.editing;}
+  if(JSON.stringify(edit.beforeEntry)!==JSON.stringify(state.entry))pushHistory(edit.beforeEntry);
+  saveDraft(state.entry);scheduleCloudSave();updateSidebarInput(edit.kind);updateStickerPanelResults();renderCanvasOnly();renderTools();
+}
 function setTextSize(kind,delta){const before=clone(state.entry),style=state.entry[`${kind}Style`]||{};style.fontSize=clamp((style.fontSize|| (kind==='title'?25:12))+delta,kind==='title'?16:9,kind==='title'?46:22);state.entry[`${kind}Style`]=style;recordChange(before);renderCanvasOnly();renderTools();}
 function toggleTextAlign(kind){const before=clone(state.entry),style=state.entry[`${kind}Style`]||{};style.align=style.align==='left'?'center':style.align==='center'?'right':'left';state.entry[`${kind}Style`]=style;recordChange(before);renderCanvasOnly();renderTools();}
 function moveSelectionByKeyboard(dx,dy){const before=clone(state.entry);if(state.selectedText){const k=state.selectedText+'Pos',p=state.entry[k];state.entry[k]={x:clamp(p.x+dx,.04,.86),y:clamp(p.y+dy,.10,.90)};}else{state.entry.stickers.forEach(it=>{if(state.selectedCanvas.has(it.id)&&!it.locked){it.x=clamp(it.x+dx,.04,.96);it.y=clamp(it.y+dy,.14,.94);}});state.entry.photos.forEach(it=>{if(state.selectedPhoto.has(it.id)&&!it.locked){it.x=clamp(it.x+dx,.04,.96);it.y=clamp(it.y+dy,.18,.94);}});}recordChange(before);renderCanvasOnly();}
@@ -2122,17 +2213,41 @@ async function svgToPng(svg,w,h,filename){return await new Promise((resolve,reje
 function compositionSvg(e,w=1200,h=900){const sx=w/CANVAS_W,sy=h/CANVAS_H,tx=x=>x*CANVAS_W*sx,ty=y=>y*CANVAS_H*sy;let body='';if(e.title){body+=`<text x="${tx(e.titlePos.x)}" y="${ty(e.titlePos.y)}" font-size="${e.titleStyle.fontSize*sx}" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif" font-weight="${e.titleStyle.weight||500}" fill="#3f403b" text-anchor="${e.titleStyle.align==='center'?'middle':e.titleStyle.align==='right'?'end':'start'}">${escapeHtml(e.title)}</text>`;}if(e.content){const lines=textLinesSvg(e.content,Math.max(14,Math.floor(38/(e.contentStyle.fontSize/12))));lines.forEach((line,i)=>body+=`<text x="${tx(e.contentPos.x)}" y="${ty(e.contentPos.y)+i*e.contentStyle.fontSize*1.45*sy}" font-size="${e.contentStyle.fontSize*sx}" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif" fill="#66645c" text-anchor="${e.contentStyle.align==='center'?'middle':e.contentStyle.align==='right'?'end':'start'}">${escapeHtml(line)}</text>`);}for(const p of e.photos||[]){body+=`<image href="${escapeHtml(p.src)}" x="${tx(p.x)-80*p.scale*sx}" y="${ty(p.y)-60*p.scale*sy}" width="${160*p.scale*sx}" height="${120*p.scale*sy}" preserveAspectRatio="xMidYMid slice" transform="rotate(${p.rotation||0} ${tx(p.x)} ${ty(p.y)})"/>`;}for(const p of e.stickers||[]){const st=STICKERS.find(x=>x.id===p.stickerId);body+=exportSvgForSticker(st,tx(p.x),ty(p.y),64*sx,p.scale||1,p.rotation||0);}return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><rect width="100%" height="100%" rx="44" fill="${e.background||'#fffdf7'}"/><rect x="24" y="24" width="${w-48}" height="${h-48}" rx="34" fill="none" stroke="#ded9ce" stroke-dasharray="5 7"/><text x="48" y="55" font-size="18" fill="#9b9991" letter-spacing="3">${e.entry_date}</text>${body}</svg>`;}
 async function exportDayPng(){await svgToPng(compositionSvg(state.entry,1200,900),1200,900,`in-days-${currentDateKey()}.png`);toast('这一日已导出。');}
 async function shareDay(){const fileName=`in-days-${currentDateKey()}.png`;try{const svg=compositionSvg(state.entry,1200,900),blob=new Blob([svg],{type:'image/svg+xml'}),url=URL.createObjectURL(blob),img=await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=url;});const c=document.createElement('canvas');c.width=1200;c.height=900;c.getContext('2d').drawImage(img,0,0);const png=await new Promise(r=>c.toBlob(r,'image/png'));URL.revokeObjectURL(url);const file=new File([png],fileName,{type:'image/png'});if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]})))await navigator.share({title:'一隅｜IN DAYS',files:[file]});else{const a=document.createElement('a');a.href=URL.createObjectURL(png);a.download=fileName;a.click();} }catch{toast('分享不可用，已改为导出图片。');await exportDayPng();}}
+function downloadBlob(blob,filename){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200);}
 function exportMonthJson(){
   const days=Object.entries(state.monthEntries).filter(([,e])=>hasEntryContent(e)).map(([k,e])=>({date:k,design:serializeForStorage(e)}));
   const payload={product:'IN DAYS',year:state.year,month:state.month+1,days};
-  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`in-days-${state.year}-${String(state.month+1).padStart(2,'0')}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1200);toast('本月数据已导出。');
+  downloadBlob(new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'}),`in-days-${state.year}-${String(state.month+1).padStart(2,'0')}.json`);toast('本月数据已导出。');
 }
+function buildMonthSvg({onlyRecorded=false}={}){
+  const W=1680,H=1320,cols=7,cardW=210,cardH=168,gapX=24,gapY=24,left=64,top=220;
+  const total=new Date(state.year,state.month+1,0).getDate(),first=(new Date(state.year,state.month,1).getDay()+6)%7,rows=Math.ceil((first+total)/7);
+  let s=[`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`,`<rect width="100%" height="100%" fill="#fbfaf6"/>`,`<text x="64" y="70" font-size="18" fill="#9b9991" letter-spacing="4">${state.year}</text>`,`<text x="64" y="148" font-size="72" fill="#3f403b" font-family="Arial, sans-serif">${escapeHtml(monthNames[state.month])}</text>`];
+  for(let d=1;d<=total;d++){
+    const key=dateKey(state.year,state.month,d),e=state.monthEntries[key],has=hasEntryContent(e);if(onlyRecorded&&!has)continue;
+    const idx=first+d-1,col=idx%7,row=Math.floor(idx/7),x=left+col*(cardW+gapX),y=top+row*(cardH+gapY),bg=e?.background||'#fffdf7';
+    s.push(`<rect x="${x}" y="${y}" width="${cardW}" height="${cardH}" rx="22" fill="${escapeHtml(bg)}" stroke="#e8e4da"/>`);
+    if(has){s.push(`<g transform="translate(${x} ${y}) scale(${cardW/CANVAS_W})">${miniObjectHtml(e,cardW/CANVAS_W)}</g>`);}else{s.push(`<text x="${x+16}" y="${y+24}" font-size="13" fill="#9b9991">${String(d).padStart(2,'0')}</text>`);}
+  }
+  s.push('</svg>');return s.join('');
+}
+async function exportMonthPng({onlyRecorded=false}={}){const W=1680,H=1320;await svgToPng(buildMonthSvg({onlyRecorded}),W,H,`in-days-${state.year}-${String(state.month+1).padStart(2,'0')}${onlyRecorded?'-records':''}.png`);toast(onlyRecorded?'有记录的日子已导出。':'本月完整月历已导出。');}
+function openMonthExport(){
+  const root=document.getElementById('exportMonthRoot');if(!root)return;
+  root.innerHTML=`<button class="export-backdrop" id="exportBackdrop"></button><section class="export-modal" role="dialog" aria-modal="true"><button class="close-button" id="closeMonthExport">×</button><div class="section-kicker">EXPORT MONTH</div><h2>导出本月</h2><p>选择一种你想留下的格式，不会一次导出全部内容。</p><div class="export-choice-list"><button class="export-choice" id="exportMonthFull"><strong>完整月历 PNG</strong><span>保留整个${monthCN[state.month]}的日期布局与已记录内容。</span></button><button class="export-choice" id="exportMonthRecords"><strong>仅有记录的日子 PNG</strong><span>只整理本月真正留下内容的日期。</span></button><button class="export-choice" id="exportMonthData"><strong>本月数据 JSON</strong><span>导出文字、贴纸位置、样式等可恢复数据。</span></button></div></section>`;
+  document.getElementById('exportBackdrop').addEventListener('click',closeMonthExport);document.getElementById('closeMonthExport').addEventListener('click',closeMonthExport);
+  document.getElementById('exportMonthFull').addEventListener('click',async()=>{closeMonthExport();await exportMonthPng({onlyRecorded:false});});
+  document.getElementById('exportMonthRecords').addEventListener('click',async()=>{closeMonthExport();await exportMonthPng({onlyRecorded:true});});
+  document.getElementById('exportMonthData').addEventListener('click',()=>{closeMonthExport();exportMonthJson();});
+}
+function closeMonthExport(){document.getElementById('exportMonthRoot').innerHTML='';}
 
-async function exportMonthPng(){const W=1680,H=1180,cols=7,rows=5,cardW=210,cardH=168,sv=[];sv.push(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><rect width="100%" height="100%" fill="#fbfaf6"/><text x="64" y="72" font-size="18" fill="#9b9991" letter-spacing="4">${state.year}</text><text x="64" y="150" font-size="72" fill="#3f403b" font-family="Arial, sans-serif">${monthNames[state.month]}</text>`);for(let d=1;d<=new Date(state.year,state.month+1,0).getDate();d++){const k=dateKey(state.year,state.month,d),e=state.monthEntries[k];if(!hasEntryContent(e))continue;const first=(new Date(state.year,state.month,1).getDay()+6)%7,idx=first+d-1,col=idx%cols,row=Math.floor(idx/cols),x=64+col*228,y=210+row*180;sv.push(`<g transform="translate(${x} ${y})"><rect width="${cardW}" height="${cardH}" rx="22" fill="${e.background||'#fffdf7'}" stroke="#e8e4da"/><text x="16" y="24" font-size="13" fill="#9b9991">${String(d).padStart(2,'0')}</text><g transform="scale(${cardW/CANVAS_W})">${miniObjectHtml(e,cardW/CANVAS_W)}</g></g>`);}sv.push('</svg>');await svgToPng(sv.join(''),W,H,`in-days-${state.year}-${String(state.month+1).padStart(2,'0')}.png`);toast('本月已导出。');}
+function injectStyle(){const link=document.createElement('link');link.rel='stylesheet';link.href='./styles.css?v=ultimate-final';document.head.appendChild(link);}
+function boot(){
+  try{
+    renderShell();state.entry=emptyEntry(currentDateKey());renderCalendar();
+    Promise.resolve(initAuth()).then(async()=>{if(!supabase){await loadCurrentMonth();await loadSelectedEntry();}}).catch(async()=>{await loadCurrentMonth();await loadSelectedEntry();});
+  }catch(error){console.error(error);app.innerHTML='<main class="app-shell"><section class="selected-summary"><div><p class="section-kicker">IN DAYS</p><h2>页面加载失败</h2><p>请刷新页面重试。</p></div></section></main>';}
+}
+boot();
 
-function injectStyle(){const link=document.createElement('link');link.rel='stylesheet';link.href='./styles.css?v=ultimate-2';document.head.appendChild(link);}
-window.addEventListener('pagehide',()=>{if(state.drawerOpen&&state.entry){if(state.textEdit)finishInlineTextEdit();saveDraft(state.entry);}});document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&state.drawerOpen&&state.entry){if(state.textEdit)finishInlineTextEdit();saveDraft(state.entry);}});
-document.addEventListener('keydown',e=>{if(state.textEdit){if(e.key==='Escape'){e.preventDefault();finishInlineTextEdit(true);}else if(e.key==='Enter'&&state.textEdit.kind==='title'&&!e.shiftKey){e.preventDefault();finishInlineTextEdit(false);}return;}if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='s'){e.preventDefault();saveEntry();return;}if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='z'){e.preventDefault();undo();return;}if((e.metaKey||e.ctrlKey)&&((e.shiftKey&&e.key.toLowerCase()==='z')||e.key.toLowerCase()==='y')){e.preventDefault();redo();return;}if(!state.drawerOpen)return;const tag=document.activeElement?.tagName||'';if(['INPUT','TEXTAREA'].includes(tag))return;const step=e.shiftKey?.02:.008;if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)){e.preventDefault();moveSelectionByKeyboard(e.key==='ArrowLeft'?-step:e.key==='ArrowRight'?step:0,e.key==='ArrowUp'?-step:e.key==='ArrowDown'?step:0);}});
-window.addEventListener('resize',()=>{clearTimeout(window.__resizeTimer);window.__resizeTimer=setTimeout(()=>renderCalendar(),120);});
-
-injectStyle();renderShell();state.entry=emptyEntry(currentDateKey());renderCalendar();loadCurrentMonth();loadSelectedEntry();initAuth();
