@@ -155,7 +155,7 @@ const SUPPLEMENT_STICKERS = [
       "出门",
       "消费"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M14%2019h32a5%205%200%200%201%205%205v23H14z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M14%2022h34M14%2028h30%22%2F%3E%3Cpath%20d%3D%22M41%2037h12v9H41a4%204%200%200%201%200-9Z%22%2F%3E%3Ccircle%20cx%3D%2244%22%20cy%3D%2241.5%22%20r%3D%221.5%22%20fill%3D%22%233f3f3b%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2213%22%20y%3D%2219%22%20width%3D%2238%22%20height%3D%2229%22%20rx%3D%225%22%20fill%3D%22%23b3ada2%22%20opacity%3D%220.22%22%20%2F%3E%3Cpath%20d%3D%22M13%2024h39M39%2034h14v10H39a5%205%200%200%201%200-10Z%22%20%2F%3E%3Ccircle%20cx%3D%2244%22%20cy%3D%2239%22%20r%3D%221.5%22%20fill%3D%22%233f3f3b%22%20opacity%3D%221%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "bottle",
@@ -167,7 +167,7 @@ const SUPPLEMENT_STICKERS = [
       "水杯",
       "健康"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M23%2013h18v8l3%206v22H20V27l3-6Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M27%2013h10v7H27zM20%2034h24%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M25%2011h14v9l3%206v27H22V26l3-6Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.24%22%20%2F%3E%3Cpath%20d%3D%22M28%2011h8v6h-8M22%2034h20%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "thermos",
@@ -179,7 +179,7 @@ const SUPPLEMENT_STICKERS = [
       "通勤",
       "办公室"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2222%22%20y%3D%2215%22%20width%3D%2220%22%20height%3D%2238%22%20rx%3D%225%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.25%22%2F%3E%3Cpath%20d%3D%22M27%2010h10v7H27zM22%2025h20%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2222%22%20y%3D%2214%22%20width%3D%2220%22%20height%3D%2239%22%20rx%3D%225%22%20fill%3D%22%23d6a47f%22%20opacity%3D%220.24%22%20%2F%3E%3Cpath%20d%3D%22M27%2010h10v5H27M22%2025h20%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "tissue",
@@ -191,7 +191,7 @@ const SUPPLEMENT_STICKERS = [
       "日常",
       "清洁"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2024c7-5%2021-5%2028%200v29H18Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M18%2024c7-5%2021-5%2028%200M24%2018c4-3%2012-3%2016%200M25%2033h14M25%2039h9%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2215%22%20y%3D%2222%22%20width%3D%2234%22%20height%3D%2224%22%20rx%3D%224%22%20fill%3D%22%23b3ada2%22%20opacity%3D%220.2%22%20%2F%3E%3Cpath%20d%3D%22M20%2028h24M25%2022c1-4%207-6%2011-2%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "flashlight",
@@ -203,7 +203,7 @@ const SUPPLEMENT_STICKERS = [
       "露营",
       "照明"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M24%2014h16l-2%2010-12%2024H22l4-24Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M24%2014h16M22%2048h6M27%2024h10%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M22%2016h20l4%207-4%209v18H22V32l-4-9Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%220.22%22%20%2F%3E%3Cpath%20d%3D%22M27%2016v-5h10v5M22%2039h20%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "charger",
@@ -215,7 +215,7 @@ const SUPPLEMENT_STICKERS = [
       "手机",
       "数据线"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2218%22%20y%3D%2213%22%20width%3D%2217%22%20height%3D%2221%22%20rx%3D%224%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M35%2025h8c6%200%206%208%201%208h-9M24%2034v10c0%206%205%209%209%209%22%2F%3E%3Cpath%20d%3D%22M24%2016v5M29%2016v5%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2223%22%20y%3D%2213%22%20width%3D%2218%22%20height%3D%2224%22%20rx%3D%224%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.22%22%20%2F%3E%3Cpath%20d%3D%22M28%2037v8M36%2037v8M29%2045h7M32%2024v7M32%2027h-4%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "powerbank",
@@ -227,7 +227,7 @@ const SUPPLEMENT_STICKERS = [
       "电量",
       "出门"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2221%22%20y%3D%229%22%20width%3D%2222%22%20height%3D%2246%22%20rx%3D%226%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M26%2018h12M29%2047h6%22%2F%3E%3Cpath%20d%3D%22M31%2026h2v12h-2z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.6%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2220%22%20y%3D%2212%22%20width%3D%2224%22%20height%3D%2240%22%20rx%3D%225%22%20fill%3D%22%23b3ada2%22%20opacity%3D%220.22%22%20%2F%3E%3Cpath%20d%3D%22M27%2020h10M28%2027h8M29%2034h6%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "remote",
@@ -239,7 +239,7 @@ const SUPPLEMENT_STICKERS = [
       "遥控",
       "家里"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2222%22%20y%3D%228%22%20width%3D%2220%22%20height%3D%2248%22%20rx%3D%226%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.18%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2218%22%20r%3D%223%22%2F%3E%3Ccircle%20cx%3D%2227%22%20cy%3D%2227%22%20r%3D%222%22%2F%3E%3Ccircle%20cx%3D%2237%22%20cy%3D%2227%22%20r%3D%222%22%2F%3E%3Ccircle%20cx%3D%2227%22%20cy%3D%2235%22%20r%3D%222%22%2F%3E%3Ccircle%20cx%3D%2237%22%20cy%3D%2235%22%20r%3D%222%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2220%22%20y%3D%2210%22%20width%3D%2224%22%20height%3D%2245%22%20rx%3D%226%22%20fill%3D%22%23b3ada2%22%20opacity%3D%220.18%22%20%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2220%22%20r%3D%224%22%20fill%3D%22%23b3ada2%22%20opacity%3D%220.4%22%20%2F%3E%3Cpath%20d%3D%22M27%2033h10M27%2040h10M32%2047v2%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "umbrella_folded",
@@ -251,7 +251,7 @@ const SUPPLEMENT_STICKERS = [
       "出门",
       "雨伞"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M27%2012h10v29c0%204-2%207-5%207s-5-3-5-7Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.3%22%2F%3E%3Cpath%20d%3D%22M27%2012h10M32%2048c0%205%205%205%206%201%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M27%2010v43M37%2018v35M24%2016h16M30%2022h4%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M27%2010c7%202%2013%207%2014%2014%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "shoes",
@@ -263,7 +263,7 @@ const SUPPLEMENT_STICKERS = [
       "出门",
       "运动"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2038c8%200%2010%208%2018%208h13c5%200%206%207%201%208H23c-7%200-12-5-7-16Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M18%2040c5%203%209%203%2015%203M29%2034c3%203%205%205%209%207%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M15%2041c7%200%2011-6%2014-13l7%203c0%207%204%2011%2013%2013v7H15Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%220.2%22%20%2F%3E%3Cpath%20d%3D%22M20%2044h28M23%2039l8%201%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "scarf",
@@ -275,7 +275,7 @@ const SUPPLEMENT_STICKERS = [
       "保暖",
       "穿搭"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2013c7%206%2017%206%2024%200v12c-7%205-17%205-24%200Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.32%22%2F%3E%3Cpath%20d%3D%22M20%2025v27l10-7%208%207V25%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M21%2014c10%208%2017%208%2022%200M21%2014v24c0%206%205%2011%2011%2011s11-5%2011-11V14%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M24%2038l-6%2013M40%2038l6%2013%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "hat",
@@ -287,7 +287,7 @@ const SUPPLEMENT_STICKERS = [
       "穿搭",
       "出门"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M13%2044c2-10%208-16%2019-16s17%206%2019%2016H13Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M10%2044h44M25%2028c0-6%2014-6%2014%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2038c0-12%206-22%2014-22s14%2010%2014%2022%22%20fill%3D%22%23b3ada2%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M14%2038h36v7H14z%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "banana",
@@ -299,7 +299,7 @@ const SUPPLEMENT_STICKERS = [
       "早餐",
       "零食"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2039c8%209%2018%208%2027-2%205-6%207-13%206-18-1-3-5-2-6%201-1%205-3%208-7%2011-6%205-12%204-18-1%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.5%22%2F%3E%3Cpath%20d%3D%22M18%2039c8%209%2018%208%2027-2M49%2019l3-2%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2040c8%208%2025%208%2033-8%22%20fill%3D%22%23d7b86e%22%20opacity%3D%220.2%22%20%2F%3E%3Cpath%20d%3D%22M17%2039c9%202%2023-1%2028-11M47%2031l2-3%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "grapes",
@@ -311,7 +311,7 @@ const SUPPLEMENT_STICKERS = [
       "零食",
       "聚会"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M31%2019c6-6%2011-4%2013%201-5%202-9%202-13-1Z%22%20fill%3D%22%239fb29b%22%20opacity%3D%22.65%22%2F%3E%3Ccircle%20cx%3D%2226%22%20cy%3D%2228%22%20r%3D%225%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.55%22%2F%3E%3Ccircle%20cx%3D%2237%22%20cy%3D%2228%22%20r%3D%225%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.55%22%2F%3E%3Ccircle%20cx%3D%2231%22%20cy%3D%2238%22%20r%3D%225%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.55%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2238%22%20r%3D%225%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.55%22%2F%3E%3Ccircle%20cx%3D%2240%22%20cy%3D%2238%22%20r%3D%225%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.55%22%2F%3E%3Ccircle%20cx%3D%2227%22%20cy%3D%2247%22%20r%3D%225%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.55%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2227%22%20cy%3D%2229%22%20r%3D%224%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.28%22%20%2F%3E%3Ccircle%20cx%3D%2236%22%20cy%3D%2229%22%20r%3D%224%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.28%22%20%2F%3E%3Ccircle%20cx%3D%2231%22%20cy%3D%2237%22%20r%3D%224%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.28%22%20%2F%3E%3Ccircle%20cx%3D%2240%22%20cy%3D%2237%22%20r%3D%224%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.28%22%20%2F%3E%3Ccircle%20cx%3D%2227%22%20cy%3D%2245%22%20r%3D%224%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.28%22%20%2F%3E%3Ccircle%20cx%3D%2236%22%20cy%3D%2245%22%20r%3D%224%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.28%22%20%2F%3E%3Cpath%20d%3D%22M31%2023c3-5%208-6%2012-3M36%2020c-2-4-6-5-9-3%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "peach",
@@ -323,7 +323,7 @@ const SUPPLEMENT_STICKERS = [
       "夏天",
       "甜"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2020c-10-7-18%201-16%2011%202%2011%209%2021%2016%2022%207-1%2014-11%2016-22%202-10-6-18-16-11Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.48%22%2F%3E%3Cpath%20d%3D%22M32%2020c1-6%205-9%2010-9-2%206-5%209-10%209Z%22%2F%3E%3Cpath%20d%3D%22M32%2025v28%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2235%22%20r%3D%2216%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.2%22%20%2F%3E%3Cpath%20d%3D%22M32%2020c2%206%202%2013%200%2017M32%2020c5-4%209-4%2013%200%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "cherry",
@@ -335,7 +335,7 @@ const SUPPLEMENT_STICKERS = [
       "甜",
       "夏天"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2225%22%20cy%3D%2240%22%20r%3D%227%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.5%22%2F%3E%3Ccircle%20cx%3D%2241%22%20cy%3D%2240%22%20r%3D%227%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.5%22%2F%3E%3Cpath%20d%3D%22M25%2033c2-11%205-17%209-21M41%2033c-2-10-5-16-7-21%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%2237%22%20r%3D%228%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.26%22%20%2F%3E%3Ccircle%20cx%3D%2240%22%20cy%3D%2237%22%20r%3D%228%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.26%22%20%2F%3E%3Cpath%20d%3D%22M24%2030c0-10%206-15%208-18M40%2030c0-8-4-13-8-18M28%2015c5-3%209-2%2012%202%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "pineapple",
@@ -347,7 +347,7 @@ const SUPPLEMENT_STICKERS = [
       "夏天",
       "热带"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M22%2024c-2%207-2%2019%202%2028%205%206%2011%206%2016%200%204-9%204-20%202-28Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.45%22%2F%3E%3Cpath%20d%3D%22M23%2023c-3-5%200-10%205-8%201-7%206-10%209-4%204-4%208%201%205%207M28%2030l8%2018M38%2030l-9%2018%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M25%2020c-4%207-5%2017%200%2030h14c5-13%204-23%200-30Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%220.2%22%20%2F%3E%3Cpath%20d%3D%22M27%2020l5-9%205%209M23%2031h18M25%2038h14%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "yogurt",
@@ -359,7 +359,7 @@ const SUPPLEMENT_STICKERS = [
       "乳制品",
       "健康"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2022h24l-2%2030H22Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M20%2022h24l-2-7H22Z%22%2F%3E%3Cpath%20d%3D%22M25%2030h14M25%2037h11%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2221%22%20y%3D%2218%22%20width%3D%2222%22%20height%3D%2231%22%20rx%3D%224%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.22%22%20%2F%3E%3Cpath%20d%3D%22M23%2024h18M25%2031h14%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "milk",
@@ -371,7 +371,7 @@ const SUPPLEMENT_STICKERS = [
       "饮品",
       "健康"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M22%2016h20l-2%2039H24Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M22%2016h20M28%2010h8v6h-8zM25%2030h14%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2220%22%20y%3D%2216%22%20width%3D%2224%22%20height%3D%2235%22%20rx%3D%223%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M20%2022h24M27%2016l4-5h6l7%205%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "bubbletea",
@@ -383,7 +383,7 @@ const SUPPLEMENT_STICKERS = [
       "饮料",
       "下午茶"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M21%2022h22l-3%2030H24Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.3%22%2F%3E%3Cpath%20d%3D%22M22%2022h20M26%2014h12M32%2014v-5M26%2043l3%203M34%2042l3%204M39%2041l-1%205%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2220%22%20y%3D%2224%22%20width%3D%2224%22%20height%3D%2227%22%20rx%3D%225%22%20fill%3D%22%23d6a47f%22%20opacity%3D%220.22%22%20%2F%3E%3Cpath%20d%3D%22M27%2024l3-12h7l4%2012M27%2017h12M25%2033h14M29%2052v4M35%2052v4%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "dumpling",
@@ -395,7 +395,7 @@ const SUPPLEMENT_STICKERS = [
       "早餐",
       "吃饭"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M14%2039c5-12%2031-12%2036%200-8%208-28%209-36%200Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.45%22%2F%3E%3Cpath%20d%3D%22M14%2039c5-12%2031-12%2036%200M20%2036c3%202%206%202%209%200s6%202%209%200%205%201%207%203%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2037c6-15%2022-19%2028-8%203%205%201%2010-2%2012H22c-3-1-5-2-4-4Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%220.24%22%20%2F%3E%3Cpath%20d%3D%22M22%2035c6-4%2014-4%2020%200%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "hotpot",
@@ -407,7 +407,7 @@ const SUPPLEMENT_STICKERS = [
       "冬天",
       "吃饭"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2028h32l-4%2020c-6%207-18%207-24%200Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.24%22%2F%3E%3Cpath%20d%3D%22M16%2028h32M21%2023c5-6%209%206%2014%200%204-5%206%204%209%201M24%2036h16M24%2042h16%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2027h32v17c0%207-7%2012-16%2012s-16-5-16-12V27Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.2%22%20%2F%3E%3Cpath%20d%3D%22M21%2020c-3-5%204-6%202-11M31%2020c-3-5%204-6%202-11M41%2020c-3-5%204-6%202-11%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "friedegg",
@@ -419,7 +419,7 @@ const SUPPLEMENT_STICKERS = [
       "蛋",
       "吃饭"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2036c3-10%2015-10%2020-6%205%204%2016-2%2020%204%205%209-5%2016-14%2016-10%200-29-3-26-14Z%22%20fill%3D%22%23fffdf7%22%2F%3E%3Ccircle%20cx%3D%2235%22%20cy%3D%2240%22%20r%3D%226%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.75%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M17%2039c0-8%207-15%2015-14%208-1%2016%205%2015%2014-1%208-9%2013-16%2011-8%202-14-3-14-11Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%220.18%22%20%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2238%22%20r%3D%226%22%20fill%3D%22%23d7b86e%22%20opacity%3D%220.45%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "salad",
@@ -431,7 +431,7 @@ const SUPPLEMENT_STICKERS = [
       "午餐",
       "蔬菜"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2031h32c-2%2013-8%2022-16%2022s-14-9-16-22Z%22%20fill%3D%22%239fb29b%22%20opacity%3D%22.4%22%2F%3E%3Cpath%20d%3D%22M18%2030c5-7%2010-4%2014%200%204-8%2010-7%2014%200M23%2036h18%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M17%2029h30l-3%2020H20Z%22%20fill%3D%22%239fb29b%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M22%2029c2-8%208-9%2011-3%202-6%208-5%2010%203M25%2036h14%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "blanket",
@@ -443,7 +443,7 @@ const SUPPLEMENT_STICKERS = [
       "休息",
       "保暖"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M15%2025h34v27H15Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.25%22%2F%3E%3Cpath%20d%3D%22M20%2025c4%205%208%205%2012%200%204%205%208%205%2012%200M20%2034h24M20%2042h24%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2019h32v34H16Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M21%2024c4%203%207-3%2011%200s7-3%2011%200M21%2032c4%203%207-3%2011%200s7-3%2011%200M21%2040c4%203%207-3%2011%200s7-3%2011%200%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "wardrobe",
@@ -455,7 +455,7 @@ const SUPPLEMENT_STICKERS = [
       "家居",
       "整理"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2215%22%20y%3D%2210%22%20width%3D%2234%22%20height%3D%2244%22%20rx%3D%223%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.2%22%2F%3E%3Cpath%20d%3D%22M32%2010v44M22%2031h4M38%2031h4%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2217%22%20y%3D%2211%22%20width%3D%2230%22%20height%3D%2243%22%20rx%3D%223%22%20fill%3D%22%23b3ada2%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M32%2011v43M25%2029h2M37%2029h2%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "bookshelf",
@@ -467,7 +467,7 @@ const SUPPLEMENT_STICKERS = [
       "阅读",
       "家居"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2010h28v44H18Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.2%22%2F%3E%3Cpath%20d%3D%22M18%2025h28M18%2040h28M24%2017v7M32%2029v11M41%2043v11%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2215%22%20y%3D%2214%22%20width%3D%2234%22%20height%3D%2240%22%20rx%3D%222%22%20fill%3D%22%23b3ada2%22%20opacity%3D%220.16%22%20%2F%3E%3Cpath%20d%3D%22M15%2024h34M15%2036h34M23%2017v7M32%2024v12M41%2036v18%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "laundry",
@@ -479,7 +479,7 @@ const SUPPLEMENT_STICKERS = [
       "家务",
       "日常"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%2236%22%20height%3D%2240%22%20rx%3D%225%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.22%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2237%22%20r%3D%2210%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2237%22%20r%3D%225%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.35%22%2F%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%2222%22%20r%3D%221.8%22%20fill%3D%22%233f3f3b%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2218%22%20y%3D%2223%22%20width%3D%2228%22%20height%3D%2229%22%20rx%3D%225%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.2%22%20%2F%3E%3Cpath%20d%3D%22M18%2029h28M25%2023c0-5%203-8%207-8s7%203%207%208M25%2043h14%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "vacuum",
@@ -490,7 +490,7 @@ const SUPPLEMENT_STICKERS = [
       "清洁",
       "家务"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M23%2013h12v22H23Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.25%22%2F%3E%3Cpath%20d%3D%22M35%2025c10%200%2013%205%2013%2012v8M20%2035c-5%200-8%204-8%209v9h8V37%22%2F%3E%3Cpath%20d%3D%22M28%2035v19%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M30%2012h8v24h-8z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.16%22%20%2F%3E%3Cpath%20d%3D%22M34%2036c-5%200-8%205-8%2010v7M38%2019l8-4v20%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "mop",
@@ -502,7 +502,7 @@ const SUPPLEMENT_STICKERS = [
       "家务",
       "打扫"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M39%2011%2030%2044%22%2F%3E%3Cpath%20d%3D%22M22%2043h23l-5%2011H27Z%22%20fill%3D%22%239fb29b%22%20opacity%3D%22.35%22%2F%3E%3Cpath%20d%3D%22M29%2044%2025%2055M36%2044l-2%2011M42%2044l-1%2011%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M42%2011L26%2044M18%2048c6-1%2012%201%2016%205H16Z%22%20fill%3D%22%239fb29b%22%20opacity%3D%220.18%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "trash",
@@ -514,7 +514,7 @@ const SUPPLEMENT_STICKERS = [
       "家务",
       "垃圾"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M19%2021h26l-3%2033H22Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M17%2021h30M25%2015h14M28%2012h8M26%2028v18M32%2028v18M38%2028v18%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M19%2020h26v33H19Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M16%2020h32M26%2015h12M25%2027v18M32%2027v18M39%2027v18%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "bathtub",
@@ -526,7 +526,7 @@ const SUPPLEMENT_STICKERS = [
       "浴室",
       "放松"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M13%2031h40c-2%2013-9%2022-20%2022s-18-9-20-22Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.24%22%2F%3E%3Cpath%20d%3D%22M13%2031h40M20%2027V18c0-6%209-6%209%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2028h32v12c0%209-7%2014-16%2014s-16-5-16-14V28Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M20%2022h8v6M23%2022v-5h6%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "shower",
@@ -538,7 +538,7 @@ const SUPPLEMENT_STICKERS = [
       "浴室",
       "清洁"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M17%2024c0-8%207-13%2015-13%209%200%2015%205%2015%2013%22%2F%3E%3Cpath%20d%3D%22M47%2024H30M37%2024v17M28%2041h18%22%2F%3E%3Cpath%20d%3D%22M22%2031v3M28%2031v3M34%2031v3%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M22%2030c0-10%208-17%2018-17%205%200%208%202%2010%205M43%2017v14M38%2031h10M40%2035v10M46%2035v10M35%2035v10%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "mirror",
@@ -550,7 +550,7 @@ const SUPPLEMENT_STICKERS = [
       "梳妆",
       "家里"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cellipse%20cx%3D%2232%22%20cy%3D%2229%22%20rx%3D%2216%22%20ry%3D%2221%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M32%2050v7M26%2057h12%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2218%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.15%22%20%2F%3E%3Cpath%20d%3D%22M23%2050h18M29%2050v4M35%2050v4%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "monitor",
@@ -562,7 +562,7 @@ const SUPPLEMENT_STICKERS = [
       "办公",
       "工作"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2211%22%20y%3D%2212%22%20width%3D%2242%22%20height%3D%2229%22%20rx%3D%224%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M28%2041v8M21%2052h22M18%2049h28%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2212%22%20y%3D%2215%22%20width%3D%2240%22%20height%3D%2227%22%20rx%3D%224%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M25%2042v7M18%2050h28%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "tablet",
@@ -574,7 +574,7 @@ const SUPPLEMENT_STICKERS = [
       "办公",
       "阅读"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2218%22%20y%3D%229%22%20width%3D%2228%22%20height%3D%2246%22%20rx%3D%225%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.2%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2249%22%20r%3D%222%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2218%22%20y%3D%2210%22%20width%3D%2228%22%20height%3D%2244%22%20rx%3D%224%22%20fill%3D%22%23b3ada2%22%20opacity%3D%220.16%22%20%2F%3E%3Cpath%20d%3D%22M27%2015h10M31%2050h2%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "document",
@@ -586,7 +586,7 @@ const SUPPLEMENT_STICKERS = [
       "工作",
       "资料"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2010h22l8%208v36H18Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.18%22%2F%3E%3Cpath%20d%3D%22M40%2010v10h8M24%2030h18M24%2037h15M24%2044h12%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M19%2011h22l7%207v35H19Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%220.12%22%20%2F%3E%3Cpath%20d%3D%22M41%2011v9h7M25%2029h17M25%2036h17M25%2043h12%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "paperclip",
@@ -598,7 +598,7 @@ const SUPPLEMENT_STICKERS = [
       "文件",
       "办公"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M25%2048%2043%2030c5-5-2-12-7-7L20%2039c-8%208%204%2020%2012%2012l13-13%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M25%2027l11-11c5-5%2014%202%209%208L31%2038c-5%205-13-1-8-6l13-13%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "sticky",
@@ -610,7 +610,7 @@ const SUPPLEMENT_STICKERS = [
       "记录",
       "工作"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M14%2014h36v27H32l-18%2012Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M32%2041v12M22%2023h20M22%2030h14%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2219%22%20y%3D%2218%22%20width%3D%2226%22%20height%3D%2226%22%20rx%3D%222%22%20fill%3D%22%23d7b86e%22%20opacity%3D%220.25%22%20%2F%3E%3Cpath%20d%3D%22M39%2044h6V38%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "ruler",
@@ -622,7 +622,7 @@ const SUPPLEMENT_STICKERS = [
       "学习",
       "画图"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M19%2051%2013%2045%2043%2015l6%206Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M22%2044l-4-4M27%2039l-4-4M32%2034l-4-4M37%2029l-4-4%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M17%2021h30v10H17Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%220.16%22%20%2F%3E%3Cpath%20d%3D%22M22%2021v10M27%2021v6M32%2021v10M37%2021v6M42%2021v10%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "calculator",
@@ -634,7 +634,7 @@ const SUPPLEMENT_STICKERS = [
       "工作",
       "学习"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2218%22%20y%3D%229%22%20width%3D%2228%22%20height%3D%2246%22%20rx%3D%224%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M24%2018h16v7H24zM24%2031h5M35%2031h5M24%2039h5M35%2039h5M24%2047h5M35%2047h5%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2217%22%20y%3D%2212%22%20width%3D%2230%22%20height%3D%2242%22%20rx%3D%224%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.16%22%20%2F%3E%3Crect%20x%3D%2222%22%20y%3D%2217%22%20width%3D%2220%22%20height%3D%229%22%20rx%3D%222%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M23%2033h3M31%2033h3M39%2033h3M23%2040h3M31%2040h3M39%2040h3M23%2047h3M31%2047h3M39%2047h3%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "presentation",
@@ -646,7 +646,7 @@ const SUPPLEMENT_STICKERS = [
       "会议",
       "工作"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2212%22%20y%3D%2214%22%20width%3D%2240%22%20height%3D%2230%22%20rx%3D%223%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.18%22%2F%3E%3Cpath%20d%3D%22M32%2044v11M24%2055h16M20%2036l8-8%206%205%2010-12%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2214%22%20y%3D%2217%22%20width%3D%2236%22%20height%3D%2223%22%20rx%3D%223%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.16%22%20%2F%3E%3Cpath%20d%3D%22M25%2040v9M32%2040v9M20%2050h24M21%2031h9l5-5%206%204%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "meeting",
@@ -658,7 +658,7 @@ const SUPPLEMENT_STICKERS = [
       "讨论",
       "工作"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2221%22%20cy%3D%2227%22%20r%3D%225%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.35%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2223%22%20r%3D%225%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.35%22%2F%3E%3Ccircle%20cx%3D%2243%22%20cy%3D%2227%22%20r%3D%225%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.35%22%2F%3E%3Cpath%20d%3D%22M14%2045c2-7%2011-7%2014%200M25%2043c2-8%2012-8%2014%200M36%2045c2-7%2011-7%2014%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2225%22%20r%3D%226%22%20fill%3D%22%23b3ada2%22%20opacity%3D%220.18%22%20%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2222%22%20r%3D%227%22%20fill%3D%22%23b3ada2%22%20opacity%3D%220.18%22%20%2F%3E%3Ccircle%20cx%3D%2243%22%20cy%3D%2225%22%20r%3D%226%22%20fill%3D%22%23b3ada2%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M14%2048c1-7%205-10%208-10s7%203%208%2010M24%2048c1-8%205-12%208-12s7%204%208%2012M36%2048c1-7%205-10%208-10s7%203%208%2010%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "graduation",
@@ -670,7 +670,7 @@ const SUPPLEMENT_STICKERS = [
       "学校",
       "学业"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M11%2025%2032%2014l21%2011-21%2011Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.35%22%2F%3E%3Cpath%20d%3D%22M20%2030v13c8%207%2016%207%2024%200V30M53%2025v14%22%2F%3E%3Cpath%20d%3D%22M49%2040v7M46%2047h6%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M15%2025l17-9%2017%209-17%209-17-9Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M22%2029v11c6%205%2014%205%2020%200V29M49%2026v14%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "metro",
@@ -682,7 +682,7 @@ const SUPPLEMENT_STICKERS = [
       "地铁",
       "交通"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2216%22%20y%3D%2210%22%20width%3D%2232%22%20height%3D%2244%22%20rx%3D%228%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M22%2022h20M22%2030h20M20%2047h24M27%2054l-5%206M37%2054l5%206%22%2F%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%2240%22%20r%3D%223%22%20fill%3D%22%233f3f3b%22%2F%3E%3Ccircle%20cx%3D%2240%22%20cy%3D%2240%22%20r%3D%223%22%20fill%3D%22%233f3f3b%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2220%22%20y%3D%2211%22%20width%3D%2224%22%20height%3D%2242%22%20rx%3D%225%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M20%2036h24M27%2018h10M25%2045h14%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "tram",
@@ -694,7 +694,7 @@ const SUPPLEMENT_STICKERS = [
       "城市",
       "出行"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2215%22%20y%3D%2214%22%20width%3D%2234%22%20height%3D%2236%22%20rx%3D%226%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.24%22%2F%3E%3Cpath%20d%3D%22M20%2022h24M21%2031h22M25%2050v6M39%2050v6M32%2014V8M25%208h14%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2217%22%20y%3D%2216%22%20width%3D%2230%22%20height%3D%2235%22%20rx%3D%225%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M17%2034h30M27%2016v-6M37%2016v-6M24%2047l-5%205M40%2047l5%205%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "taxi",
@@ -706,7 +706,7 @@ const SUPPLEMENT_STICKERS = [
       "城市",
       "出行"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M15%2036h34l-5-11c-1-3-4-5-7-5H27c-4%200-6%202-8%205l-4%2011Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.33%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2242%22%20r%3D%224%22%2F%3E%3Ccircle%20cx%3D%2242%22%20cy%3D%2242%22%20r%3D%224%22%2F%3E%3Cpath%20d%3D%22M19%2032h26%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M13%2042v-9l6-7h26l6%207v9Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M22%2026l4-8h12l4%208M20%2042h4M40%2042h4%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "bikeride",
@@ -718,7 +718,7 @@ const SUPPLEMENT_STICKERS = [
       "骑行",
       "城市"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2244%22%20r%3D%228%22%2F%3E%3Ccircle%20cx%3D%2245%22%20cy%3D%2244%22%20r%3D%228%22%2F%3E%3Cpath%20d%3D%22M20%2044h12l8-12h10M31%2044l-6-14h10M36%2030h-5%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2042a8%208%200%201%200%200%2016%208%208%200%200%200%200-16ZM44%2042a8%208%200%201%200%200%2016%208%208%200%200%200%200-16Z%22%20%2F%3E%3Cpath%20d%3D%22M18%2050l10-15h8l8%2015M28%2035l-4-6h7l5%206M37%2035h6%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "parking",
@@ -730,7 +730,7 @@ const SUPPLEMENT_STICKERS = [
       "开车",
       "出行"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2216%22%20y%3D%2210%22%20width%3D%2232%22%20height%3D%2244%22%20rx%3D%225%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M27%2045V19h9c9%200%209%2012%200%2012h-9%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2217%22%20y%3D%2213%22%20width%3D%2230%22%20height%3D%2240%22%20rx%3D%223%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M27%2045V21h8c10%200%2010%2014%200%2014h-8%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "landmark",
@@ -742,7 +742,7 @@ const SUPPLEMENT_STICKERS = [
       "景点",
       "城市"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2052h40M17%2052V28h30v24M13%2028%2032%2014l19%2014M23%2038h5M36%2038h5%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.22%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2053V29h24v24M17%2029h30M24%2029V21h16v8M28%2021v-7h8v7%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "ticket",
@@ -754,7 +754,7 @@ const SUPPLEMENT_STICKERS = [
       "旅行",
       "出行"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2021h40v22H12Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.2%22%2F%3E%3Cpath%20d%3D%22M18%2027h28M18%2034h18%22%2F%3E%3Cpath%20d%3D%22M16%2020l3-3M44%2020l3-3%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2214%22%20y%3D%2222%22%20width%3D%2236%22%20height%3D%2220%22%20rx%3D%224%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M24%2022v20M34%2022v20M28%2028h4M28%2034h4%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "luggage_tag",
@@ -766,7 +766,7 @@ const SUPPLEMENT_STICKERS = [
       "旅行",
       "机场"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2017h29v31H18Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.25%22%2F%3E%3Cpath%20d%3D%22M28%2017v-5h9v5M24%2025h17M24%2033h12%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2218%22%20y%3D%2219%22%20width%3D%2228%22%20height%3D%2230%22%20rx%3D%223%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M24%2019v-5h12v5M25%2028h14M25%2034h10%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "guitar",
@@ -778,7 +778,7 @@ const SUPPLEMENT_STICKERS = [
       "乐器",
       "弹琴"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M27%2045c-8%203-12-6-8-12%203-4%207-5%2010-2l16-16%206%206-16%2016c3%203%202%208-2%2010-2%202-4%202-6-2Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M40%2025l6%206M29%2029l-8%208%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M31%2017c-4%200-6%203-6%207%200%203%202%204%202%207%200%202-2%205-5%207-5%203-5%209%200%2011%204%202%207-1%207-5%200-4%202-5%204-5%203%200%206%203%208%200%202-3%200-8-4-10-2-1-2-4%200-6%202-4-1-6-6-6Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%220.17%22%20%2F%3E%3Cpath%20d%3D%22M31%2018v34%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "crochet",
@@ -790,7 +790,7 @@ const SUPPLEMENT_STICKERS = [
       "钩织",
       "兴趣"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2047c8%204%2020-3%2027-12%205-6%202-14-4-13-4%201-5%207-2%2010M18%2047l-5%204M41%2022l8-8%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M19%2042c7-11%2020-11%2027%200M22%2042c5%205%2015%205%2020%200M24%2028c6-4%2012-4%2016%200%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "knitting",
@@ -802,7 +802,7 @@ const SUPPLEMENT_STICKERS = [
       "毛线",
       "兴趣"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M14%2020l36%2024M50%2020%2014%2044%22%2F%3E%3Cpath%20d%3D%22M20%2024c5%209%2019%2016%2024%207M44%2040c-6-8-18-14-24-6%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2024l28%2028M46%2024L18%2052M26%2016l20%2036M38%2016L18%2036%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "novel",
@@ -814,7 +814,7 @@ const SUPPLEMENT_STICKERS = [
       "小说",
       "周末"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M14%2015c9-4%2018-4%2018%202v38c0-6-9-7-18-2Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.18%22%2F%3E%3Cpath%20d%3D%22M50%2015c-9-4-18-4-18%202v38c0-6%209-7%2018-2Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.18%22%2F%3E%3Cpath%20d%3D%22M19%2025h9M19%2032h9M37%2025h9M37%2032h9%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M14%2017c10-4%2016-2%2018%201v37c-3-3-9-5-18-3V17ZM50%2017c-10-4-16-2-18%201v37c3-3%209-5%2018-3V17Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%220.16%22%20%2F%3E%3Cpath%20d%3D%22M21%2026h7M21%2033h7M36%2026h7M36%2033h7%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "puzzle",
@@ -826,7 +826,7 @@ const SUPPLEMENT_STICKERS = [
       "益智",
       "兴趣"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M15%2017h18v10c6-4%2011%201%207%206h9v18H31V41c-7%204-12-3-6-8h-10Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.25%22%2F%3E%3Cpath%20d%3D%22M33%2017v10c6-4%2011%201%207%206h9%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2018h13c-2%205%201%208%205%208%204%200%206-3%204-8h6v13c-5-2%208%201-8%205s3%206%208%204v12H34c2-5-1-8-5-8-4%200-6%203-4%208H18Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.18%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "skateboard",
@@ -838,7 +838,7 @@ const SUPPLEMENT_STICKERS = [
       "运动",
       "兴趣"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2039c7%208%2033%208%2040%200%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2247%22%20r%3D%224%22%2F%3E%3Ccircle%20cx%3D%2244%22%20cy%3D%2247%22%20r%3D%224%22%2F%3E%3Cpath%20d%3D%22M20%2039h24%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M17%2039c4%205%2010%207%2015%207s11-2%2015-7%22%20fill%3D%22%23d6a47f%22%20opacity%3D%220.2%22%20%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2247%22%20r%3D%223%22%20fill%3D%22%23d6a47f%22%20opacity%3D%220.25%22%20%2F%3E%3Ccircle%20cx%3D%2242%22%20cy%3D%2247%22%20r%3D%223%22%20fill%3D%22%23d6a47f%22%20opacity%3D%220.25%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "badminton",
@@ -850,7 +850,7 @@ const SUPPLEMENT_STICKERS = [
       "运动",
       "兴趣"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2025v28M19%2025c7%204%2019%204%2026%200M22%2020l-7-6M27%2020l-3-8M37%2020l3-8M42%2020l7-6%22%2F%3E%3Cpath%20d%3D%22M26%2013c-4%202-5%207-2%2011M38%2013c4%202%205%207%202%2011%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2036c-8%200-14-5-14-12%200-6%205-10%2010-10%206%200%2010%205%2010%2011%200%206-3%2010-6%2011ZM37%2037l10%2010M47%2047l4-4%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "fishing",
@@ -862,7 +862,7 @@ const SUPPLEMENT_STICKERS = [
       "户外",
       "休闲"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2016v24M16%2040c0%208%207%2010%2013%205s8-11%208-18M37%2027c7-4%2013-1%2013%206%200%206-6%2010-12%207%22%2F%3E%3Cpath%20d%3D%22M37%2027l6-7%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2018h10v18M28%2018h12M40%2018v22M38%2040c0%207%205%208%209%209M47%2049c4%201%204%205%201%207-3%202-7%200-7-3%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "baking",
@@ -874,7 +874,7 @@ const SUPPLEMENT_STICKERS = [
       "厨房",
       "兴趣"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2034h32v19H16Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M21%2029c-4-3-1-8%204-7%203-7%2010-6%2012%200%206-3%2010%203%205%207M16%2040h32%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M17%2034h30v18H17Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M24%2034c0-7%204-11%208-11s8%204%208%2011M21%2041h22%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "planting",
@@ -886,7 +886,7 @@ const SUPPLEMENT_STICKERS = [
       "植物",
       "园艺"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2036h24l-3%2018H23Z%22%20fill%3D%22%239fb29b%22%20opacity%3D%22.3%22%2F%3E%3Cpath%20d%3D%22M32%2036V17M32%2025c-8-3-10-8-7-11%204-4%208%200%207%206%201-8%208-11%2011-7%202%203-1%207-7%2010%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2050V30M32%2037c-8%200-14-4-14-10%208-1%2014%203%2014%2010ZM32%2041c8%200%2014-4%2014-10-8-1-14%203-14%2010Z%22%20fill%3D%22%239fb29b%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M22%2053h20%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "swim",
@@ -898,7 +898,7 @@ const SUPPLEMENT_STICKERS = [
       "运动",
       "夏天"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2042c6-6%2012%206%2018%200%206-6%2012%206%2022%200M12%2051c6-6%2012%206%2018%200%206-6%2012%206%2022%200M24%2016c7-6%2014%202%209%209-5%207-13%203-12-4%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M15%2035c6%200%206%206%2012%206s6-6%2012-6%206%206%2012%206M15%2045c6%200%206%206%2012%206s6-6%2012-6%206%206%2012%206%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "basketball",
@@ -910,7 +910,7 @@ const SUPPLEMENT_STICKERS = [
       "运动",
       "打球"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2219%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M18%2023c7%204%2021%204%2028-2M18%2041c7-4%2021-4%2028%202M26%2014c3%206%203%2018%200%2036M38%2014c-3%206-3%2018%200%2036%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2218%22%20fill%3D%22%23d6a47f%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M14%2032h36M32%2014v36M19%2019c8%207%2018%207%2026%200M19%2045c8-7%2018-7%2026%200%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "football",
@@ -922,7 +922,7 @@ const SUPPLEMENT_STICKERS = [
       "运动",
       "球类"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2219%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22m32%2024%207%205-3%208h-8l-3-8%207-5ZM18%2035l9%202M46%2035l-9%202M23%2020l5%207M41%2020l-5%207%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2027l8-8%2012%204%208%209-6%2010-13%202-7-9Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M26%2027l12%208M31%2032l2-6M33%2040l-2-8%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "tennis",
@@ -934,7 +934,7 @@ const SUPPLEMENT_STICKERS = [
       "运动",
       "球类"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2218%22%20fill%3D%22%239fb29b%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M19%2023c6%205%2020%201%2026-6M19%2041c6-5%2020-1%2026%206%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2217%22%20fill%3D%22%239fb29b%22%20opacity%3D%220.16%22%20%2F%3E%3Cpath%20d%3D%22M21%2020c8%206%209%2015%202%2024M43%2020c-8%206-9%2015-2%2024%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "jump_rope",
@@ -946,7 +946,7 @@ const SUPPLEMENT_STICKERS = [
       "运动",
       "健身"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2217%22%20r%3D%225%22%2F%3E%3Cpath%20d%3D%22M32%2022v13M32%2027l-10-6M32%2027l10-6M32%2035l-10%2015M32%2035l10%2015%22%2F%3E%3Cpath%20d%3D%22M16%2049c6%208%2026%208%2032%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M17%2021c7%205%2023%205%2030%200M18%2021v12M46%2021v12M18%2033l8%2015M46%2033l-8%2015M26%2048l12-1%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "mat",
@@ -958,7 +958,7 @@ const SUPPLEMENT_STICKERS = [
       "健身",
       "放松"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2045h28v9H18Z%22%20fill%3D%22%239fb29b%22%20opacity%3D%22.3%22%2F%3E%3Cpath%20d%3D%22M23%2045c0-8%2018-8%2018%200M32%2019v15M25%2025l7%205%207-5%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2219%22%20y%3D%2220%22%20width%3D%2226%22%20height%3D%2228%22%20rx%3D%223%22%20fill%3D%22%239fb29b%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M23%2027h18M23%2034h18M23%2041h18%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "dumbbell",
@@ -970,7 +970,7 @@ const SUPPLEMENT_STICKERS = [
       "力量",
       "运动"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2028v8M18%2024v16M24%2028v8M40%2028v8M46%2024v16M52%2028v8M24%2032h16%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M17%2026v12M22%2022v20M42%2022v20M47%2026v12M22%2032h20%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "hiking",
@@ -982,7 +982,7 @@ const SUPPLEMENT_STICKERS = [
       "登山",
       "户外"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2237%22%20cy%3D%2214%22%20r%3D%225%22%2F%3E%3Cpath%20d%3D%22M34%2021l-4%2012%2010%206M30%2029l10%202M34%2033l-10%208M40%2039l10%2010%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2050l10-17%205%205%207-12M32%2033l-4-8M40%2026l4%204M17%2053h30%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "wind",
@@ -994,7 +994,7 @@ const SUPPLEMENT_STICKERS = [
       "天气",
       "散步"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M11%2025h31c7%200%207-9%201-10-4-1-7%202-8%205M11%2035h38c5%200%206%208%201%209-4%201-6-1-7-4M11%2045h20%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2027h27c5%200%206-7%201-8M12%2035h35c4%200%205-6%201-8M12%2043h22c5%200%206%207%201%208%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "fog",
@@ -1006,7 +1006,7 @@ const SUPPLEMENT_STICKERS = [
       "天气",
       "清晨"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M13%2026h38M10%2035h44M16%2044h33%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M15%2027h34M12%2035h40M15%2043h34%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "lake",
@@ -1018,7 +1018,7 @@ const SUPPLEMENT_STICKERS = [
       "自然",
       "旅行"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M10%2037c8-8%2015%208%2022%200%207-8%2014%208%2022%200M10%2047c8-8%2015%208%2022%200%207-8%2014%208%2022%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M13%2042c6-4%2012-4%2019%200s13%204%2019%200M13%2050c6-4%2012-4%2019%200s13%204%2019%200%22%20%2F%3E%3Cpath%20d%3D%22M21%2027c3-6%209-9%2015-7%204%201%207%204%208%207%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "maple",
@@ -1030,7 +1030,7 @@ const SUPPLEMENT_STICKERS = [
       "落叶",
       "自然"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2014%2037%2024l10-3-5%2010%208%205-10%202%201%2010-9-6-9%206%201-10-10-2%208-5-5-10%2010%203Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.38%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2015l5%209%2010-3-6%2011%208%206-11%201%202%2011-8-7-8%207%202-11-11-1%208-6-6-11%2010%203Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%220.2%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "cherry_blossom",
@@ -1042,7 +1042,7 @@ const SUPPLEMENT_STICKERS = [
       "樱花",
       "自然"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2049V34M32%2034c-4-8-12-4-10%202%202%205%209%205%2010%200M32%2034c4-8%2012-4%2010%202-2%205-9%205-10%200M32%2031c-7-3-10-11-4-13%205-1%208%205%204%2013M32%2031c7-3%2010-11%204-13-5-1-8%205-4%2013%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2231%22%20r%3D%223%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.8%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2048V25M32%2027c-7-2-12-7-12-13M32%2031c7-2%2012-7%2012-13M22%2014c-2-5-8-3-8%201s5%206%208%202M42%2014c2-5%208-3%208%201s-5%206-8%202%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "grass",
@@ -1054,7 +1054,7 @@ const SUPPLEMENT_STICKERS = [
       "公园",
       "自然"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2050c5-8%208-17%208-25M20%2050c1-9%205-15%209-21M28%2050c3-8%208-14%2013-20M38%2050c2-7%206-11%2012-16%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2050c3-12%206-18%208-23M24%2050c2-11%205-20%208-26M32%2050c2-11%206-18%2010-24M40%2050c1-8%204-15%208-21M14%2052h36%22%20fill%3D%22%239fb29b%22%20opacity%3D%220.2%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "rainboots",
@@ -1066,7 +1066,7 @@ const SUPPLEMENT_STICKERS = [
       "雨天",
       "出门"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2013h13v27c0%206-4%2010-10%2010H14c-3%200-4-4-2-6l6-7Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.35%22%2F%3E%3Cpath%20d%3D%22M36%2013h13v27c0%206-4%2010-10%2010h-7c-3%200-4-4-2-6l6-7Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.35%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2018h12v23l5%208c2%204-1%207-6%207H19c-4%200-6-4-4-7l5-8V18Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.2%22%20%2F%3E%3Cpath%20d%3D%22M20%2026h12%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "kite",
@@ -1078,7 +1078,7 @@ const SUPPLEMENT_STICKERS = [
       "春天",
       "户外"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2013%2048%2030%2032%2047%2016%2030Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.25%22%2F%3E%3Cpath%20d%3D%22M32%2013v34M16%2030h32M32%2047c0%207%205%2010%2010%2010%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2013l17%2018-17%2018-17-18Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.16%22%20%2F%3E%3Cpath%20d%3D%22M32%2013v36M15%2031h34M20%2050l-5%207M42%2050l5%207%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "hamster",
@@ -1090,7 +1090,7 @@ const SUPPLEMENT_STICKERS = [
       "可爱",
       "动物"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2233%22%20r%3D%2218%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.28%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2220%22%20r%3D%226%22%2F%3E%3Ccircle%20cx%3D%2242%22%20cy%3D%2220%22%20r%3D%226%22%2F%3E%3Ccircle%20cx%3D%2226%22%20cy%3D%2233%22%20r%3D%222%22%2F%3E%3Ccircle%20cx%3D%2238%22%20cy%3D%2233%22%20r%3D%222%22%2F%3E%3Cpath%20d%3D%22M29%2041c2%202%204%202%206%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2233%22%20r%3D%2216%22%20fill%3D%22%23d6a47f%22%20opacity%3D%220.18%22%20%2F%3E%3Ccircle%20cx%3D%2223%22%20cy%3D%2227%22%20r%3D%225%22%20fill%3D%22%23d6a47f%22%20opacity%3D%220.16%22%20%2F%3E%3Ccircle%20cx%3D%2241%22%20cy%3D%2227%22%20r%3D%225%22%20fill%3D%22%23d6a47f%22%20opacity%3D%220.16%22%20%2F%3E%3Ccircle%20cx%3D%2226%22%20cy%3D%2233%22%20r%3D%221.5%22%20fill%3D%22%233f3f3b%22%20opacity%3D%221%22%20%2F%3E%3Ccircle%20cx%3D%2238%22%20cy%3D%2233%22%20r%3D%221.5%22%20fill%3D%22%233f3f3b%22%20opacity%3D%221%22%20%2F%3E%3Cpath%20d%3D%22M29%2039c2%202%204%202%206%200%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "squirrel",
@@ -1102,7 +1102,7 @@ const SUPPLEMENT_STICKERS = [
       "秋天",
       "动物"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M19%2039c-4-11%205-19%2013-12%207-10%2018-3%2015%206-2%208-10%2015-19%2015-5%200-8-4-9-9Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.25%22%2F%3E%3Cpath%20d%3D%22M39%2029c4-7%2010-10%2011-4%201%206-4%2010-9%2011%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M22%2045c-7-5-7-15%201-18%202-6%2010-8%2014-2%2010-4%2016%203%2013%2010-2%205-6%208-13%2010Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M42%2035c-3-6-8-7-11-4%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "otter",
@@ -1114,7 +1114,7 @@ const SUPPLEMENT_STICKERS = [
       "河边",
       "可爱"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2039c1-11%2010-17%2018-15%207%202%2012%209%2010%2016-2%2010-11%2014-20%2011-6-2-9-7-8-12Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.24%22%2F%3E%3Ccircle%20cx%3D%2228%22%20cy%3D%2233%22%20r%3D%222%22%2F%3E%3Ccircle%20cx%3D%2238%22%20cy%3D%2233%22%20r%3D%222%22%2F%3E%3Cpath%20d%3D%22M31%2040c2%202%204%202%206%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2039c0-10%206-17%2014-17s14%207%2014%2017c0%208-6%2012-14%2012s-14-4-14-12Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.16%22%20%2F%3E%3Ccircle%20cx%3D%2227%22%20cy%3D%2235%22%20r%3D%221.5%22%20fill%3D%22%233f3f3b%22%20opacity%3D%221%22%20%2F%3E%3Ccircle%20cx%3D%2237%22%20cy%3D%2235%22%20r%3D%221.5%22%20fill%3D%22%233f3f3b%22%20opacity%3D%221%22%20%2F%3E%3Cpath%20d%3D%22M29%2041h6%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "deer_head",
@@ -1126,7 +1126,7 @@ const SUPPLEMENT_STICKERS = [
       "秋天",
       "动物"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2234%22%20r%3D%2215%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M23%2020l-6-8M41%2020l6-8M21%2015l-5-2M43%2015l5-2M32%2019v-8%22%2F%3E%3Ccircle%20cx%3D%2227%22%20cy%3D%2233%22%20r%3D%222%22%2F%3E%3Ccircle%20cx%3D%2237%22%20cy%3D%2233%22%20r%3D%222%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M24%2025l-6-8M40%2025l6-8%22%20%2F%3E%3Cpath%20d%3D%22M25%2024c-6%204-7%2013-3%2020%203%206%2017%206%2020%200%204-7%203-16-3-20%22%20fill%3D%22%23b3ada2%22%20opacity%3D%220.16%22%20%2F%3E%3Ccircle%20cx%3D%2227%22%20cy%3D%2232%22%20r%3D%221.2%22%20fill%3D%22%233f3f3b%22%20opacity%3D%221%22%20%2F%3E%3Ccircle%20cx%3D%2237%22%20cy%3D%2232%22%20r%3D%221.2%22%20fill%3D%22%233f3f3b%22%20opacity%3D%221%22%20%2F%3E%3Cpath%20d%3D%22M29%2041h6%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "horse",
@@ -1138,7 +1138,7 @@ const SUPPLEMENT_STICKERS = [
       "农场",
       "旅行"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2046c-4-9%202-20%2011-20%208%200%2015%207%2013%2015-2%2010-17%2015-24%205Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M25%2025c-2-6%200-10%205-13M31%2025c2-4%206-6%209-5%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M23%2050c-2-12-2-24%204-31%203-4%208-5%2012-2%204%203%204%208%201%2012l-5%206%202%2015Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%220.15%22%20%2F%3E%3Cpath%20d%3D%22M31%2020c-5-5-9-6-13-2M28%2037h9%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "pig",
@@ -1150,7 +1150,7 @@ const SUPPLEMENT_STICKERS = [
       "可爱",
       "动物"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2235%22%20r%3D%2218%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.25%22%2F%3E%3Cpath%20d%3D%22M18%2027c-5-6-1-9%204-5M46%2027c5-6%201-9-4-5%22%2F%3E%3Cellipse%20cx%3D%2232%22%20cy%3D%2241%22%20rx%3D%228%22%20ry%3D%226%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.55%22%2F%3E%3Ccircle%20cx%3D%2229%22%20cy%3D%2241%22%20r%3D%221.5%22%2F%3E%3Ccircle%20cx%3D%2235%22%20cy%3D%2241%22%20r%3D%221.5%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2233%22%20r%3D%2216%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.2%22%20%2F%3E%3Cpath%20d%3D%22M20%2023l-3-7%208%204M44%2023l3-7-8%204%22%20%2F%3E%3Crect%20x%3D%2226%22%20y%3D%2234%22%20width%3D%2212%22%20height%3D%228%22%20rx%3D%224%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.18%22%20%2F%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2238%22%20r%3D%221.2%22%20fill%3D%22%233f3f3b%22%20opacity%3D%221%22%20%2F%3E%3Ccircle%20cx%3D%2234%22%20cy%3D%2238%22%20r%3D%221.2%22%20fill%3D%22%233f3f3b%22%20opacity%3D%221%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "cow",
@@ -1162,7 +1162,7 @@ const SUPPLEMENT_STICKERS = [
       "动物",
       "牛奶"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M17%2028c0-9%207-14%2015-14s15%205%2015%2014v13c0%208-6%2012-15%2012s-15-4-15-12Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M20%2022l-6-5M44%2022l6-5M25%2033c3-3%205%202%208-1%203-3%205%202%208-1%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M21%2026c-2-5-1-10%203-12%204-2%208%200%208%205%200-5%204-7%208-5%204%202%205%207%203%2012%202%205%200%2013-3%2017-4%205-12%205-16%200-3-4-5-12-3-17Z%22%20fill%3D%22%23b3ada2%22%20opacity%3D%220.14%22%20%2F%3E%3Ccircle%20cx%3D%2227%22%20cy%3D%2233%22%20r%3D%221.2%22%20fill%3D%22%233f3f3b%22%20opacity%3D%221%22%20%2F%3E%3Ccircle%20cx%3D%2237%22%20cy%3D%2233%22%20r%3D%221.2%22%20fill%3D%22%233f3f3b%22%20opacity%3D%221%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "duck",
@@ -1174,7 +1174,7 @@ const SUPPLEMENT_STICKERS = [
       "水边",
       "可爱"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2038c0-10%208-16%2017-16%207%200%2012%204%2014%209%204%207-1%2016-10%2018H24c-4%200-6-4-6-11Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M46%2031h8M36%2036c2%202%204%202%206%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2035c0-9%208-15%2017-13%205%201%207%206%207%2010%207%200%208%208%202%2011-3%202-7%202-10%202H25c-4%200-7-4-7-10Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M41%2035h8l-6%204%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "dolphin",
@@ -1186,7 +1186,7 @@ const SUPPLEMENT_STICKERS = [
       "游泳",
       "海洋"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M11%2036c10-12%2025-14%2039-6l-7%203%205%206c-12%204-27%203-37-3Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.28%22%2F%3E%3Cpath%20d%3D%22M31%2028c2-7%207-10%2012-8-4%204-7%207-12%208Z%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2035c7-10%2018-14%2030-7%204%202%205%207%208%209-5%203-10%202-14-1-4%207-13%209-24%204Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M44%2028l4-9M31%2029l-4-6%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "seagull",
@@ -1198,7 +1198,7 @@ const SUPPLEMENT_STICKERS = [
       "旅行",
       "天空"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2032c7-8%2014-8%2020%200%206-8%2013-8%2020%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2035c8-9%2014-9%2020%200%206-9%2012-9%2020%200%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.16%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "butterfly2",
@@ -1210,7 +1210,7 @@ const SUPPLEMENT_STICKERS = [
       "春天",
       "可爱"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2031c-9-14-20-10-17-2%202%207%2010%208%2017%204M32%2031c9-14%2020-10%2017-2-2%207-10%208-17%204M32%2031v19%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2230%22%20r%3D%223%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.6%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2031c-8-15-20-11-17-2%202%206%208%2010%2017%2012%209-2%2015-6%2017-12%203-9-9-13-17%202Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.17%22%20%2F%3E%3Cpath%20d%3D%22M32%2031v23%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "comfort",
@@ -1222,7 +1222,7 @@ const SUPPLEMENT_STICKERS = [
       "治愈",
       "陪伴"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2036c4-8%2010-12%2014-12s10%204%2014%2012c-4%207-10%2012-14%2012s-10-5-14-12Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M24%2035c2%203%204%203%206%200M34%2035c2%203%204%203%206%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2216%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M27%2032h10M25%2038c4%203%2010%203%2014%200%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "energy",
@@ -1234,7 +1234,7 @@ const SUPPLEMENT_STICKERS = [
       "活力",
       "开心"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2212%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.5%22%2F%3E%3Cpath%20d%3D%22M32%208v7M32%2049v7M8%2032h7M49%2032h7M15%2015l5%205M44%2044l5%205M49%2015l-5%205M20%2044l-5%205%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2217%22%20fill%3D%22%23d7b86e%22%20opacity%3D%220.2%22%20%2F%3E%3Cpath%20d%3D%22M34%2016l-8%2017h8l-4%2015%2010-19h-8Z%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "focus",
@@ -1246,7 +1246,7 @@ const SUPPLEMENT_STICKERS = [
       "工作",
       "学习"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2219%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M22%2035c5-10%2015-10%2020%200M25%2026h14%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2217%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.16%22%20%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%226%22%20%2F%3E%3Cpath%20d%3D%22M32%2015v8M32%2041v8M15%2032h8M41%2032h8%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "relaxed",
@@ -1258,7 +1258,7 @@ const SUPPLEMENT_STICKERS = [
       "治愈",
       "休息"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M13%2039c7-8%2014%208%2021%200%207-8%2014%208%2017%200M19%2049h26%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M22%2031c3-6%208-9%2010-9s7%203%2010%209c-3%208-7%2012-10%2012s-7-4-10-12Z%22%20fill%3D%22%239fb29b%22%20opacity%3D%220.16%22%20%2F%3E%3Cpath%20d%3D%22M27%2033h10%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "anxious",
@@ -1270,7 +1270,7 @@ const SUPPLEMENT_STICKERS = [
       "压力",
       "心情"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2218%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.18%22%2F%3E%3Cpath%20d%3D%22M24%2028c3%203%205%203%208%200M34%2028c3%203%205%203%208%200M25%2042c4-4%2010-4%2014%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2217%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.14%22%20%2F%3E%3Cpath%20d%3D%22M25%2026l4%204M39%2026l-4%204M27%2040c3-2%207-2%2010%200%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "surprise",
@@ -1282,7 +1282,7 @@ const SUPPLEMENT_STICKERS = [
       "意外",
       "心情"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2218%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.18%22%2F%3E%3Ccircle%20cx%3D%2226%22%20cy%3D%2228%22%20r%3D%222%22%2F%3E%3Ccircle%20cx%3D%2238%22%20cy%3D%2228%22%20r%3D%222%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2240%22%20r%3D%223%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2217%22%20fill%3D%22%23d7b86e%22%20opacity%3D%220.18%22%20%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2236%22%20r%3D%223%22%20%2F%3E%3Ccircle%20cx%3D%2226%22%20cy%3D%2227%22%20r%3D%221.3%22%20fill%3D%22%233f3f3b%22%20opacity%3D%221%22%20%2F%3E%3Ccircle%20cx%3D%2238%22%20cy%3D%2227%22%20r%3D%221.3%22%20fill%3D%22%233f3f3b%22%20opacity%3D%221%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "newyear",
@@ -1294,7 +1294,7 @@ const SUPPLEMENT_STICKERS = [
       "新年",
       "一月"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2012h24v40H20Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.2%22%2F%3E%3Cpath%20d%3D%22M26%208v8M38%208v8M20%2022h24M27%2030h10M27%2038h6%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2218%22%20y%3D%2220%22%20width%3D%2228%22%20height%3D%2225%22%20rx%3D%223%22%20fill%3D%22%23d7b86e%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M25%2013v7M39%2013v7M25%2029h14M32%2023v14%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "newyear_firework",
@@ -1306,7 +1306,7 @@ const SUPPLEMENT_STICKERS = [
       "跨年",
       "烟花"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2035V12M32%2019l-8-8M32%2019l8-8M32%2019v-8M32%2019l8%202M32%2019l-8%202M32%2035l-7%207M32%2035l7%207%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2212%22%20r%3D%222%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.7%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2031V12M32%2031l13-13M32%2031h20M32%2031l13%2013M32%2031V50M32%2031L19%2044M32%2031H12M32%2031L19%2018%22%20%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2231%22%20r%3D%224%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.2%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "spring_lantern",
@@ -1318,7 +1318,7 @@ const SUPPLEMENT_STICKERS = [
       "灯笼",
       "过年"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M22%2019c6-5%2014-5%2020%200l3%2022c-7%207-19%207-26%200Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.38%22%2F%3E%3Cpath%20d%3D%22M22%2019h20M25%2030h14M27%2045v7M37%2045v7%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2222%22%20y%3D%2216%22%20width%3D%2220%22%20height%3D%2230%22%20rx%3D%228%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.2%22%20%2F%3E%3Cpath%20d%3D%22M27%2011c3-3%207-3%2010%200M27%2046v7M37%2046v7M19%2029h26%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "red_envelope",
@@ -1330,7 +1330,7 @@ const SUPPLEMENT_STICKERS = [
       "红包",
       "过年"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2218%22%20y%3D%2213%22%20width%3D%2228%22%20height%3D%2240%22%20rx%3D%223%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.3%22%2F%3E%3Cpath%20d%3D%22M18%2030h28M25%2023l7-6%207%206M32%2022v16%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2019h32v31H16Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M16%2028l16%208%2016-8M32%2036v14%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "spring_couplet",
@@ -1342,7 +1342,7 @@ const SUPPLEMENT_STICKERS = [
       "春联",
       "过年"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2215%22%20y%3D%2214%22%20width%3D%2212%22%20height%3D%2238%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.22%22%2F%3E%3Crect%20x%3D%2237%22%20y%3D%2214%22%20width%3D%2212%22%20height%3D%2238%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M21%2020v24M43%2020v24M30%2018h4v28h-4z%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2218%22%20y%3D%2214%22%20width%3D%2211%22%20height%3D%2238%22%20rx%3D%221%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.16%22%20%2F%3E%3Crect%20x%3D%2235%22%20y%3D%2214%22%20width%3D%2211%22%20height%3D%2238%22%20rx%3D%221%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.16%22%20%2F%3E%3Cpath%20d%3D%22M23%2020v26M40%2020v26%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "qingming_kite",
@@ -1354,7 +1354,7 @@ const SUPPLEMENT_STICKERS = [
       "风筝",
       "踏青"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2012%2046%2027%2032%2042%2018%2027Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M32%2012v30M18%2027h28M32%2042c1%208%207%2012%2012%2010%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2014l14%2017-14%2017-14-17Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.15%22%20%2F%3E%3Cpath%20d%3D%22M32%2014v34M18%2031h28M31%2048c2%206%207%207%209%2011%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "qingming_willow",
@@ -1366,7 +1366,7 @@ const SUPPLEMENT_STICKERS = [
       "柳树",
       "踏青"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2052c1-16%204-29%2013-39M32%2039c-7-4-11-9-13-16M35%2029c7-4%2010-8%2012-13M29%2034c-6-3-9-6-12-11%22%2F%3E%3Cpath%20d%3D%22M43%2015l-3-4M46%2020l4-3M20%2023l-5-1M23%2029l-5%201%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2051V17M32%2026c-8-4-13-10-14-15M32%2034c8-4%2013-10%2014-15M32%2042c-7-3-10-7-12-12M32%2045c7-3%2010-7%2012-12%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "mayday_tools",
@@ -1378,7 +1378,7 @@ const SUPPLEMENT_STICKERS = [
       "劳动",
       "工作"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2048h32M28%2048V19M22%2019h19M19%2026l8-8M45%2026l-8-8%22%2F%3E%3Cpath%20d%3D%22M16%2048v6M48%2048v6%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2045l28-28M39%2014l8%208M17%2051h18%22%20fill%3D%22%23d6a47f%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M20%2045l6%206%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "mayday_luggage",
@@ -1390,7 +1390,7 @@ const SUPPLEMENT_STICKERS = [
       "假期",
       "出游"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2219%22%20y%3D%2217%22%20width%3D%2226%22%20height%3D%2235%22%20rx%3D%225%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M27%2017v-6h10v6M27%2029h10M25%2040h14%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2222%22%20y%3D%2218%22%20width%3D%2220%22%20height%3D%2234%22%20rx%3D%224%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M27%2018v-6h10v6M22%2030h20%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "dragonboat",
@@ -1402,7 +1402,7 @@ const SUPPLEMENT_STICKERS = [
       "龙舟",
       "端午"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2039h40c-3%209-12%2013-20%2013S15%2048%2012%2039Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.25%22%2F%3E%3Cpath%20d%3D%22M26%2039l4-20%205%2020M30%2019l-4-5M30%2019l7-1%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2042c8-7%2017-7%2027-1%206%204%2010%203%2013-2-8%200-14-3-20-8-8%205-13%208-20%2011Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M32%2025l4-9%204%209%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "zongzi",
@@ -1414,7 +1414,7 @@ const SUPPLEMENT_STICKERS = [
       "粽子",
       "端午"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2012%2050%2035%2032%2055%2014%2035Z%22%20fill%3D%22%239fb29b%22%20opacity%3D%22.38%22%2F%3E%3Cpath%20d%3D%22M32%2012v43M20%2027l24%2016M44%2027%2020%2043%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2013l18%2022-18%2017-18-17Z%22%20fill%3D%22%239fb29b%22%20opacity%3D%220.22%22%20%2F%3E%3Cpath%20d%3D%22M21%2035h22M26%2029l12%2015%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "mugwort",
@@ -1426,7 +1426,7 @@ const SUPPLEMENT_STICKERS = [
       "艾草",
       "香包"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2052V21M32%2032c-9-3-13-9-10-13%204-4%2010%202%2010%209%201-9%207-14%2011-10%203%203-1%209-7%2012M32%2039c-8-2-12-6-11-10%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2050V22M32%2032c-8-3-13-8-14-14%208%200%2013%205%2014%2014M32%2040c8-3%2013-8%2014-14-8%200-13%205-14%2014%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "mooncake",
@@ -1438,7 +1438,7 @@ const SUPPLEMENT_STICKERS = [
       "月饼",
       "团圆"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2234%22%20r%3D%2218%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.35%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2234%22%20r%3D%229%22%2F%3E%3Cpath%20d%3D%22M32%2020v8M24%2028l8%205%208-5M24%2040l8-5%208%205M32%2040v8%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2233%22%20r%3D%2216%22%20fill%3D%22%23d6a47f%22%20opacity%3D%220.22%22%20%2F%3E%3Cpath%20d%3D%22M25%2027h14M24%2034h16M27%2041h10%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "fullmoon",
@@ -1450,7 +1450,7 @@ const SUPPLEMENT_STICKERS = [
       "月亮",
       "团圆"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2219%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.5%22%2F%3E%3Cpath%20d%3D%22M43%2019c-7%202-10%2010-7%2016%203%207%2010%2010%2016%207-4%208-14%2011-22%207-11-5-15-17-10-28%204-9%2014-14%2023-12Z%22%20fill%3D%22%23fffdf7%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2219%22%20fill%3D%22%23d7b86e%22%20opacity%3D%220.3%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "midautumn_lantern",
@@ -1462,7 +1462,7 @@ const SUPPLEMENT_STICKERS = [
       "灯笼",
       "赏月"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M24%2020c5-4%2011-4%2016%200l2%2020c-6%206-14%206-20%200Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.3%22%2F%3E%3Cpath%20d%3D%22M24%2020h16M27%2029h10M28%2044v8M36%2044v8%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2222%22%20y%3D%2217%22%20width%3D%2220%22%20height%3D%2228%22%20rx%3D%228%22%20fill%3D%22%23d6a47f%22%20opacity%3D%220.2%22%20%2F%3E%3Cpath%20d%3D%22M26%2011h12M26%2045v6M38%2045v6M18%2031h28%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "moonrabbit",
@@ -1474,7 +1474,7 @@ const SUPPLEMENT_STICKERS = [
       "玉兔",
       "月亮"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2231%22%20cy%3D%2235%22%20r%3D%2215%22%20fill%3D%22%23b3ada2%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M24%2023V12c0-5%205-6%207%200v10M39%2023V12c0-5-5-6-7%200M27%2035h0M37%2035h0M30%2042c2%202%204%202%206%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2236%22%20r%3D%2212%22%20fill%3D%22%23b3ada2%22%20opacity%3D%220.12%22%20%2F%3E%3Cpath%20d%3D%22M26%2022l-3-10%208%207M38%2022l3-10-8%207M28%2038h2M36%2038h2M30%2043h4%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "nationalflag",
@@ -1486,7 +1486,7 @@ const SUPPLEMENT_STICKERS = [
       "国庆",
       "假期"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2053V12M16%2014h30L37%2024l9%2010H16Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.35%22%2F%3E%3Ccircle%20cx%3D%2225%22%20cy%3D%2220%22%20r%3D%223%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M16%2053h34%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M19%2013v41M19%2016h27v16H19Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.18%22%20%2F%3E%3Ccircle%20cx%3D%2225%22%20cy%3D%2222%22%20r%3D%223%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.45%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "nationalfirework",
@@ -1498,7 +1498,7 @@ const SUPPLEMENT_STICKERS = [
       "烟花",
       "庆祝"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2043V12M32%2022l-9-9M32%2022l9-9M32%2022l11-1M32%2022l-11-1M32%2022l7%2010M32%2022l-7%2010%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2212%22%20r%3D%222.5%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.75%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2031V12M32%2031l12-12M32%2031h18M32%2031l12%2012M32%2031v18M32%2031L20%2043M32%2031H14M32%2031L20%2019%22%20%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2231%22%20r%3D%224%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.2%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "nationalribbon",
@@ -1510,7 +1510,7 @@ const SUPPLEMENT_STICKERS = [
       "庆祝",
       "中国"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M15%2018c12%208%2010%2020%200%2028M49%2018c-12%208-10%2020%200%2028M18%2024c8%204%209%209%209%2016M46%2024c-8%204-9%209-9%2016%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.18%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M17%2021c7%206%2014%206%2021%200%204-3%207-3%209%200M16%2037c8%206%2014%206%2021%200%204-3%208-3%2011%200M22%2049c7-8%2013-8%2020%200%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.18%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "festival_calendar",
@@ -1522,7 +1522,7 @@ const SUPPLEMENT_STICKERS = [
       "日历",
       "纪念"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2215%22%20y%3D%2212%22%20width%3D%2234%22%20height%3D%2242%22%20rx%3D%225%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.2%22%2F%3E%3Cpath%20d%3D%22M22%208v9M42%208v9M15%2024h34M24%2033h4M36%2033h4M24%2041h4M36%2041h4%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2217%22%20y%3D%2214%22%20width%3D%2230%22%20height%3D%2238%22%20rx%3D%223%22%20fill%3D%22%23d7b86e%22%20opacity%3D%220.16%22%20%2F%3E%3Cpath%20d%3D%22M24%2011v7M40%2011v7M22%2028h20M26%2035h4M34%2035h4M26%2042h4M34%2042h4%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "medicine",
@@ -1534,7 +1534,7 @@ const SUPPLEMENT_STICKERS = [
       "生病",
       "健康"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2216%22%20y%3D%2214%22%20width%3D%2232%22%20height%3D%2238%22%20rx%3D%225%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.2%22%2F%3E%3Cpath%20d%3D%22M32%2023v20M22%2033h20%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2218%22%20y%3D%2218%22%20width%3D%2228%22%20height%3D%2228%22%20rx%3D%225%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M32%2024v16M24%2032h16%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "firstaid",
@@ -1546,7 +1546,7 @@ const SUPPLEMENT_STICKERS = [
       "健康",
       "药箱"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2214%22%20y%3D%2222%22%20width%3D%2236%22%20height%3D%2229%22%20rx%3D%224%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M24%2022v-6h16v6M32%2029v13M25%2035h14%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2217%22%20y%3D%2220%22%20width%3D%2230%22%20height%3D%2226%22%20rx%3D%224%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M27%2020v-5h10v5M32%2025v16M24%2033h16%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "phonecall",
@@ -1558,7 +1558,7 @@ const SUPPLEMENT_STICKERS = [
       "联系",
       "消息"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M22%2014c-5%203-7%209-4%2016%204%2010%2012%2018%2022%2022%207%203%2013%200%2016-5l-8-7-6%204c-4-3-9-8-12-12l4-6Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.22%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M21%2016c-4%204-4%2010-1%2016%204%208%2010%2014%2018%2018%206%203%2012%203%2016-1l-5-7c-2-3-4-4-6-2l-3%202c-4-2-8-6-10-10l2-3c2-2%201-4-2-6Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.18%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "email",
@@ -1570,7 +1570,7 @@ const SUPPLEMENT_STICKERS = [
       "邮箱",
       "消息"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2211%22%20y%3D%2218%22%20width%3D%2242%22%20height%3D%2230%22%20rx%3D%224%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.2%22%2F%3E%3Cpath%20d%3D%22m13%2021%2019%2016%2019-16M13%2046l15-13M51%2046%2036%2033%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2214%22%20y%3D%2219%22%20width%3D%2236%22%20height%3D%2228%22%20rx%3D%224%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.16%22%20%2F%3E%3Cpath%20d%3D%22M14%2021l18%2015%2018-15%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "photo",
@@ -1582,7 +1582,7 @@ const SUPPLEMENT_STICKERS = [
       "回忆",
       "拍照"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2212%22%20y%3D%2218%22%20width%3D%2240%22%20height%3D%2233%22%20rx%3D%224%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.18%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2234%22%20r%3D%229%22%2F%3E%3Cpath%20d%3D%22M21%2018l4-6h14l4%206%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2214%22%20y%3D%2220%22%20width%3D%2236%22%20height%3D%2227%22%20rx%3D%224%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.16%22%20%2F%3E%3Cpath%20d%3D%22M22%2020l4-6h12l4%206%22%20%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2233%22%20r%3D%228%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.28%22%20%2F%3E%3Ccircle%20cx%3D%2242%22%20cy%3D%2225%22%20r%3D%222%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.4%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "cooking",
@@ -1594,7 +1594,7 @@ const SUPPLEMENT_STICKERS = [
       "厨房",
       "生活"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M15%2031h34v18a7%207%200%200%201-7%207H22a7%207%200%200%201-7-7V31Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%22.2%22%2F%3E%3Cpath%20d%3D%22M11%2031h42M22%2022c4-5%208%204%2012-1%204-5%208%204%2010%201%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M18%2028h28v19H18Z%22%20fill%3D%22%23d6a47f%22%20opacity%3D%220.16%22%20%2F%3E%3Cpath%20d%3D%22M24%2028v-7c0-4%203-7%208-7s8%203%208%207v7M25%2037h14%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "musicnote",
@@ -1606,7 +1606,7 @@ const SUPPLEMENT_STICKERS = [
       "演出",
       "兴趣"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M23%2018v27M23%2018l24-6v27%22%2F%3E%3Cellipse%20cx%3D%2218%22%20cy%3D%2247%22%20rx%3D%228%22%20ry%3D%226%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.45%22%2F%3E%3Cellipse%20cx%3D%2242%22%20cy%3D%2241%22%20rx%3D%228%22%20ry%3D%226%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.45%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M38%2015v25c0%207-6%2011-11%208-4-2-4-7%200-9%203-2%207-1%208%201V19l17-4v19c0%207-6%2011-11%208-4-2-4-7%200-9%203-2%207-1%208%201V15Z%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.18%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "plantcare",
@@ -1618,7 +1618,7 @@ const SUPPLEMENT_STICKERS = [
       "浇水",
       "园艺"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2038h24v16H20Z%22%20fill%3D%22%239fb29b%22%20opacity%3D%22.25%22%2F%3E%3Cpath%20d%3D%22M32%2038V21M32%2028c-7-2-10-7-7-10%204-3%207%201%207%206%201-8%207-11%2010-7%202%203-1%208-7%2011%22%2F%3E%3Cpath%20d%3D%22M15%2024h9v8c-2%205-7%205-9%200Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%22.25%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M32%2050V27M32%2035c-8-2-13-7-14-13%208%200%2013%205%2014%2013M32%2041c8-2%2013-7%2014-13-8%200-13%205-14%2013%22%20fill%3D%22%239fb29b%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M22%2052h20%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "sleep",
@@ -1630,7 +1630,7 @@ const SUPPLEMENT_STICKERS = [
       "晚安",
       "休息"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M16%2044c5-13%2027-13%2032%200%22%2F%3E%3Cpath%20d%3D%22M22%2044v8h20v-8%22%2F%3E%3Cpath%20d%3D%22M26%2029c2-3%204%201%206-1%202-2%204%201%206%200%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M17%2039c6-7%2014-9%2022-6%205%202%208%206%208%2011H17Z%22%20fill%3D%22%23a7b8c0%22%20opacity%3D%220.16%22%20%2F%3E%3Cpath%20d%3D%22M27%2025c0-5%203-8%207-8s7%203%207%208%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "raincoat",
@@ -1642,7 +1642,7 @@ const SUPPLEMENT_STICKERS = [
       "雨天",
       "穿衣"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M25%2014h14l8%2012-5%208v20H22V34l-5-8%208-12Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M25%2014c3%205%2011%205%2014%200M22%2034h20%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2018h24l5%2014-7%204v18H22V36l-7-4Z%22%20fill%3D%22%23d7b86e%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M32%2018v12M26%2044h12%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   },
   {
     "id": "notebook",
@@ -1654,7 +1654,7 @@ const SUPPLEMENT_STICKERS = [
       "笔记",
       "记录"
     ],
-    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2217%22%20y%3D%2210%22%20width%3D%2231%22%20height%3D%2245%22%20rx%3D%224%22%20fill%3D%22%23c89e9c%22%20opacity%3D%22.2%22%2F%3E%3Cpath%20d%3D%22M24%2010v45M29%2021h13M29%2030h13M29%2039h10%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+    "inlineSvg": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233f3f3b%22%20stroke-width%3D%222.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%2217%22%20y%3D%2210%22%20width%3D%2231%22%20height%3D%2245%22%20rx%3D%224%22%20fill%3D%22%23c89e9c%22%20opacity%3D%220.18%22%20%2F%3E%3Cpath%20d%3D%22M24%2010v45M29%2022h13M29%2031h13M29%2040h10%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"
   }
 ];
 STICKERS.push(...SUPPLEMENT_STICKERS.map(({body, ...rest}) => ({...rest, tags:[...new Set([rest.name,...(rest.tags||[])])]})));
@@ -1808,7 +1808,12 @@ function normalizeDesign(raw,date){
   if(Array.isArray(raw))return {...base,stickers:normalizeStickerItems(raw)};
   if(!raw||typeof raw!=='object')return base;
   return {...base,
-    stickers:normalizeStickerItems(raw.stickers||[]),photos:normalizePhotoItems(raw.photos||[]),mood:MOODS.some(m=>m.key===raw.mood)?raw.mood:null,
+    title:String(raw.title??''),
+    content:String(raw.content??''),
+    background:String(raw.background||base.background),
+    stickers:normalizeStickerItems(raw.stickers||[]),
+    photos:normalizePhotoItems(raw.photos||[]),
+    mood:MOODS.some(m=>m.key===raw.mood)?raw.mood:null,
     timeCapsule:raw.timeCapsule&&raw.timeCapsule.date&&raw.timeCapsule.note?{date:String(raw.timeCapsule.date),note:String(raw.timeCapsule.note)}:null,
     titlePos:normalizePos(raw.titlePos||raw.title_position,base.titlePos),contentPos:normalizePos(raw.contentPos||raw.content_position,base.contentPos),
     titleStyle:normalizeTextStyle(raw.titleStyle||raw.title_style,base.titleStyle),contentStyle:normalizeTextStyle(raw.contentStyle||raw.content_style,base.contentStyle)
@@ -1872,17 +1877,28 @@ function getLocal(key){try{const raw=localStorage.getItem(LOCAL_PREFIX+key);retu
 function setLocal(entry){localStorage.setItem(LOCAL_PREFIX+entry.entry_date,JSON.stringify({...entry,updated_at:new Date().toISOString()}));}
 async function currentUserId(){if(!supabase)return null;const {data}=await supabase.auth.getUser();return data?.user?.id||null;}
 async function saveEntry({quiet=false}={}){
-  if(supabase&&!state.user){openAuth();return;}
+  clearTimeout(state.cloudTimer);
+  if(state.textEdit) finishInlineTextEdit();
+  if(supabase&&!state.user){openAuth();return false;}
   const date=currentDateKey();const design=designPayload(state.entry,date);
   try{
     if(supabase){const userId=await currentUserId();if(!userId)throw new Error('请先登录后再保存。');const payload={user_id:userId,entry_date:date,title:design.title||'',content:design.content||'',background:design.background||'#fffdf7',stickers:design,updated_at:new Date().toISOString()};const {data,error}=await supabase.from('journal_entries').upsert(payload,{onConflict:'user_id,entry_date'}).select('id,user_id,entry_date,title,content,background,stickers,updated_at').single();if(error)throw error;state.entry=mergeRow(data);}
     else{setLocal({...design,entry_date:date});state.entry={...design,updated_at:new Date().toISOString(),_draft:false};}
     clearDraft(date);state.entry._draft=false;state.monthEntries[date]=state.entry;state.status='已保存';state.autosaveStatus='';
     if(!quiet){toast('这一隅已保存');renderCalendar();if(state.drawerOpen)renderDrawer();}
-  }catch(e){state.status=e.message||'保存失败';if(!quiet)toast(state.status);}
+    return true;
+  }catch(e){state.status=e.message||'保存失败';if(!quiet)toast(state.status);return false;}
 }
 function scheduleCloudSave(){
-  if(!supabase||!state.user)return;clearTimeout(state.cloudTimer);state.cloudTimer=setTimeout(async()=>{if(state.drawerOpen){state.status='自动保存中…';await saveEntry({quiet:true});state.status='已自动保存';updateDrawerFooter();}},1200);
+  if(!supabase||!state.user)return;
+  clearTimeout(state.cloudTimer);
+  state.cloudTimer=setTimeout(async()=>{
+    if(!state.drawerOpen)return;
+    state.status='自动保存中…';
+    const ok=await saveEntry({quiet:true});
+    if(ok)state.status='已自动保存';
+    updateDrawerFooter();
+  },1200);
 }
 async function deleteEntry(){
   const date=currentDateKey();try{if(supabase){if(!state.user)throw new Error('请先登录。');const {error}=await supabase.from('journal_entries').delete().eq('entry_date',date).eq('user_id',state.user.id);if(error)throw error;}else localStorage.removeItem(LOCAL_PREFIX+date);clearDraft(date);delete state.monthEntries[date];state.entry=emptyEntry(date);resetHistory();state.status='已清空';renderCalendar();renderDrawer();toast('已清空');}catch(e){toast(e.message||'清空失败');}
@@ -2222,16 +2238,21 @@ function renderDrawer(){
   bindDrawerEvents();renderStickerPanel();renderTools();renderCanvasSelectionState();bindCanvasInteractions(document.getElementById('journalCanvas'));checkCapsule();
 }
 function openDrawer(){state.drawerOpen=true;state.autosaveStatus='';state.selectedText=null;state.selectedCanvas.clear();state.selectedPhoto.clear();renderDrawer();}
-function closeDrawer(){state.drawerOpen=false;state.drag=null;state.textEdit=null;const root=document.getElementById('drawerRoot');if(root)root.innerHTML='';}
+function closeDrawer(){if(state.textEdit)finishInlineTextEdit();state.drawerOpen=false;state.drag=null;state.textEdit=null;const root=document.getElementById('drawerRoot');if(root)root.innerHTML='';}
 function updateDrawerFooter(){const s=document.getElementById('saveStatus');if(s)s.textContent=state.status;const a=document.getElementById('autosaveNote');if(a)a.textContent=state.autosaveStatus||'输入会自动保留；登录后会自动同步到云端。';}
 function bindDrawerEvents(){
   document.getElementById('drawerBackdrop').addEventListener('click',closeDrawer);document.getElementById('closeDrawer').addEventListener('click',closeDrawer);document.getElementById('saveEntry').addEventListener('click',()=>saveEntry());document.getElementById('deleteEntry').addEventListener('click',deleteEntry);document.getElementById('loginFromEditor')?.addEventListener('click',openAuth);
   const t=document.getElementById('entryTitle'),c=document.getElementById('entryContent');
   const onInput=(kind,el)=>{state.entry[kind]=el.value;queueDraftSaveAndRecommend();renderCanvasOnly();};
   const queueDraftSaveAndRecommend=()=>{saveDraft(state.entry);state.autosaveStatus='正在保存草稿…';clearTimeout(state.recoTimer);state.recoTimer=setTimeout(()=>{updateStickerPanelResults();},120);scheduleCloudSave();updateDrawerFooter();};
-  t.addEventListener('compositionstart',()=>state.inputComposing=true);c.addEventListener('compositionstart',()=>state.inputComposing=true);t.addEventListener('compositionend',()=>state.inputComposing=false);c.addEventListener('compositionend',()=>state.inputComposing=false);
-  t.addEventListener('input',()=>onInput('title',t));c.addEventListener('input',()=>onInput('content',c));
-  t.addEventListener('blur',()=>{});c.addEventListener('blur',()=>{});
+  t.addEventListener('focus',()=>{if(state.textEdit)finishInlineTextEdit();});
+  c.addEventListener('focus',()=>{if(state.textEdit)finishInlineTextEdit();});
+  t.addEventListener('compositionstart',()=>state.inputComposing=true);
+  c.addEventListener('compositionstart',()=>state.inputComposing=true);
+  t.addEventListener('compositionend',()=>{state.inputComposing=false;onInput('title',t);});
+  c.addEventListener('compositionend',()=>{state.inputComposing=false;onInput('content',c);});
+  t.addEventListener('input',()=>{if(!state.inputComposing)onInput('title',t);});
+  c.addEventListener('input',()=>{if(!state.inputComposing)onInput('content',c);});
   document.querySelectorAll('[data-color]').forEach(btn=>btn.addEventListener('click',()=>{const before=clone(state.entry);state.entry.background=btn.dataset.color;recordChange(before);renderDrawer();}));
   document.querySelectorAll('[data-mood]').forEach(btn=>btn.addEventListener('click',()=>{const before=clone(state.entry);state.entry.mood=state.entry.mood===btn.dataset.mood?null:btn.dataset.mood;recordChange(before);renderDrawer();}));
   document.getElementById('undoBtn').addEventListener('click',undo);document.getElementById('redoBtn').addEventListener('click',redo);document.getElementById('toggleCanvasMulti').addEventListener('click',()=>{state.canvasMultiSelect=!state.canvasMultiSelect;state.selectedCanvas.clear();state.selectedPhoto.clear();renderDrawer();});document.getElementById('autoArrange').addEventListener('click',autoArrangeStickers);
@@ -2327,9 +2348,13 @@ function startInlineTextEdit(kind){
     el.dataset.inlineBound='1';
     el.addEventListener('input',()=>{
       if(!state.textEdit||state.textEdit.kind!==el.dataset.dragKind)return;
-      state.entry[el.dataset.dragKind]=el.innerText.replace(/\u00a0/g,' ').replace(/\r/g,'');
+      const kind=el.dataset.dragKind;
+      state.entry[kind]=el.innerText.replace(/\u00a0/g,' ').replace(/\r/g,'');
+      updateSidebarInput(kind);
       queueDraftSaveAndCloud();
     });
+    el.addEventListener('compositionstart',()=>{state.inputComposing=true;});
+    el.addEventListener('compositionend',()=>{state.inputComposing=false;});
   }
   renderCanvasSelectionState();
 }
@@ -2338,14 +2363,25 @@ function queueDraftSaveAndCloud(){
   clearTimeout(state.recoTimer);state.recoTimer=setTimeout(()=>{if(state.drawerOpen&&!state.textEdit)updateStickerPanelResults();},180);
   scheduleCloudSave();
 }
+function updateSidebarInput(kind){
+  const id=kind==='title'?'entryTitle':'entryContent';
+  const el=document.getElementById(id);
+  if(el && document.activeElement!==el){ el.value=String(state.entry?.[kind]||''); }
+}
+
 function finishInlineTextEdit(cancel=false){
   const edit=state.textEdit;if(!edit)return;
-  const el=document.querySelector(`.canvas-text[data-drag-kind="${edit.kind}"]`);
+  const el=document.querySelector(`.canvas-text[data-drag-kind=\"${edit.kind}\"]`);
   if(cancel){state.entry=clone(edit.beforeEntry);}else if(el){state.entry[edit.kind]=el.innerText.replace(/\u00a0/g,' ').replace(/\r/g,'').trimEnd();}
   state.textEdit=null;
   if(el){el.contentEditable='false';el.classList.remove('editing');delete el.dataset.editing;}
+  updateSidebarInput(edit.kind);
   if(JSON.stringify(edit.beforeEntry)!==JSON.stringify(state.entry))pushHistory(edit.beforeEntry);
-  saveDraft(state.entry);scheduleCloudSave();updateSidebarInput(edit.kind);updateStickerPanelResults();renderCanvasOnly();renderTools();
+  saveDraft(state.entry);
+  scheduleCloudSave();
+  updateStickerPanelResults();
+  renderCanvasOnly();
+  renderTools();
 }
 function setTextSize(kind,delta){const before=clone(state.entry),style=state.entry[`${kind}Style`]||{};style.fontSize=clamp((style.fontSize|| (kind==='title'?25:12))+delta,kind==='title'?16:9,kind==='title'?46:22);state.entry[`${kind}Style`]=style;recordChange(before);renderCanvasOnly();renderTools();}
 function toggleTextAlign(kind){const before=clone(state.entry),style=state.entry[`${kind}Style`]||{};style.align=style.align==='left'?'center':style.align==='center'?'right':'left';state.entry[`${kind}Style`]=style;recordChange(before);renderCanvasOnly();renderTools();}
