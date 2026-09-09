@@ -1,4 +1,5 @@
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+let createClient = null;
+let supabase = null;
 
 const CONFIG = window.IN_DAYS_CONFIG || {};
 function normalizeSupabaseUrl(value) {
@@ -8,7 +9,7 @@ function normalizeSupabaseUrl(value) {
 }
 const SUPABASE_URL = normalizeSupabaseUrl(CONFIG.SUPABASE_URL);
 const SUPABASE_KEY = String(CONFIG.SUPABASE_PUBLISHABLE_KEY || '').trim();
-const supabase = SUPABASE_URL && SUPABASE_KEY ? createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
 
 const weekdayLabels = ['一','二','三','四','五','六','日'];
 const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -380,6 +381,19 @@ function svgSticker(sticker,size=54){
   return `<svg width="${size}" height="${size}" viewBox="0 0 64 64" aria-hidden="true">${content}</svg>`;
 }
 
+async function ensureSupabaseClient(){
+  if (supabase || !SUPABASE_URL || !SUPABASE_KEY) return supabase;
+  try {
+    const mod = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+    createClient = mod.createClient;
+    supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    return supabase;
+  } catch (error) {
+    console.warn('Supabase client load failed:', error);
+    return null;
+  }
+}
+
 function renderShell(){
   app.innerHTML=`
     <main class="app-shell">
@@ -738,7 +752,7 @@ function renderDrawer(){
   titleInput.addEventListener('input',e=>{state.entry.title=e.target.value;saveDraft(state.entry);renderCanvasOnly();renderStickerPanel();});
   contentInput.addEventListener('input',e=>{state.entry.content=e.target.value;saveDraft(state.entry);renderCanvasOnly();renderStickerPanel();});
   titleInput.addEventListener('blur',endTextEdit);contentInput.addEventListener('blur',endTextEdit);
-  document.querySelectorAll('[data-color]').forEach(btn=>btn.addEventListener('click',()=>mutateEntry(()=>state.entry.background=btn.dataset.color));
+  document.querySelectorAll('[data-color]').forEach(btn=>btn.addEventListener('click',()=>mutateEntry(()=>{state.entry.background=btn.dataset.color;})));
   document.querySelectorAll('[data-color]').forEach(btn=>btn.addEventListener('click',()=>renderDrawer()));
   document.getElementById('saveEntry').addEventListener('click',saveEntry);document.getElementById('deleteEntry').addEventListener('click',deleteEntry);document.getElementById('loginFromEditor')?.addEventListener('click',openAuth);
   document.getElementById('undoBtn').addEventListener('click',undoChange);document.getElementById('redoBtn').addEventListener('click',redoChange);
@@ -752,8 +766,9 @@ function renderDrawer(){
 function openDrawer(){state.drawerOpen=true;state.autosaveStatus='';state.selectedText=null;state.selectedCanvas.clear();renderDrawer();}
 function closeDrawer(){state.drawerOpen=false;state.drag=null;state.selectedText=null;state.selectedCanvas.clear();const root=document.getElementById('drawerRoot');if(root)root.innerHTML='';}
 
-function openAuth(){
-  if(!supabase){toast('当前是本地模式，先配置 Supabase 才能登录。');return;}
+async function openAuth(){
+  await ensureSupabaseClient();
+  if(!supabase){toast('暂时无法连接云端服务，请稍后刷新页面。');return;}
   state.authOpen=true;state.authStatus='';
   document.getElementById('authRoot').innerHTML=`<button class="auth-backdrop" id="authBackdrop"></button><section class="auth-modal"><button class="close-button" id="closeAuth">×</button><div class="section-kicker">IN DAYS ACCOUNT</div><h2>把你的一隅<br/>留在云端</h2><p>输入邮箱，我们会发送一封一次性登录链接。无需设置密码。</p><input class="auth-input" id="authEmail" type="email" autocomplete="email" placeholder="name@example.com" value="${sanitizeText(state.email)}"/><button class="save-button full" id="sendMagic">发送登录链接</button><div class="auth-status" id="authStatus"></div></section>`;
   document.getElementById('authBackdrop').addEventListener('click',closeAuth);document.getElementById('closeAuth').addEventListener('click',closeAuth);document.getElementById('sendMagic').addEventListener('click',sendMagicLink);
@@ -768,6 +783,8 @@ async function sendMagicLink(){
 }
 
 async function initAuth(){
+  await ensureSupabaseClient();
+  renderAccount();
   if(!supabase)return;
   const {data}=await supabase.auth.getSession();state.user=data.session?.user||null;renderAccount();await refreshAfterAuth();
   supabase.auth.onAuthStateChange(async(_event,session)=>{state.user=session?.user||null;renderAccount();await refreshAfterAuth();if(state.user)closeAuth();});
@@ -779,7 +796,7 @@ window.addEventListener('pagehide',()=>commitDraftBeforeNavigation());
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')commitDraftBeforeNavigation();});
 document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='s'){e.preventDefault();if(state.drawerOpen)saveEntry();} if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='z'){e.preventDefault();if(state.drawerOpen)(e.shiftKey?redoChange():undoChange());} if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='y'){e.preventDefault();if(state.drawerOpen)redoChange();}});
 
-function injectStyle(){const link=document.createElement('link');link.rel='stylesheet';link.href='./styles.css?v=final';document.head.appendChild(link);}
+function injectStyle(){const link=document.createElement('link');link.rel='stylesheet';link.href='./styles.css?v=final2';document.head.appendChild(link);}
 injectStyle();
 renderShell();
 state.entry=emptyEntry(currentDateKey());
