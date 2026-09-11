@@ -1795,7 +1795,7 @@ function normalizePhotoItems(items){
 }
 function normalizeStickerItems(items){
   if(!Array.isArray(items))return [];
-  return items.map((item,idx)=>({
+  const normalized=items.map((item,idx)=>({
     id:String(item?.id||uid('st')),
     stickerId:String(item?.stickerId||''),
     x:Number.isFinite(Number(item?.x))?(Number(item.x)>1?clamp(Number(item.x)/CANVAS_W,.04,.96):clamp(Number(item.x),.04,.96)):.5,
@@ -1803,6 +1803,9 @@ function normalizeStickerItems(items){
     scale:clamp(Number(item?.scale)||1,.35,2.15),rotation:clamp(Number(item?.rotation)||0,-180,180),
     z:Number.isFinite(Number(item?.z))?Number(item.z):idx+1,locked:!!item?.locked
   })).filter(x=>STICKERS.some(s=>s.id===x.stickerId));
+  normalized.sort((a,b)=>(Number(a.z)||0)-(Number(b.z)||0));
+  normalized.forEach((it,idx)=>it.z=idx+1);
+  return normalized;
 }
 function normalizeDesign(raw,date){
   const base=emptyEntry(date);
@@ -1918,8 +1921,9 @@ function miniScale(){
   const grid=document.getElementById('calendarGrid');
   if(!grid)return .18;
   const cs=getComputedStyle(grid),gap=parseFloat(cs.columnGap)||10;
-  const cardW=(grid.clientWidth-gap*6)/7;
-  return clamp(cardW/CANVAS_W,.08,.4);
+  const columns=state.viewMode==='mosaic'?4:7;
+  const cardW=(grid.clientWidth-gap*(columns-1))/columns;
+  return clamp(cardW/CANVAS_W,.08,.8);
 }
 function moodVisualMarkup(mood,mini=false){
   if(!mood)return '';const item=MOODS.find(m=>m.key===mood);if(!item)return '';const color={happy:'#d8b971',calm:'#9db5a2',full:'#b6a486',tired:'#9cabb6',sad:'#95a7b3',anxious:'#c39a9d'}[mood]||'#b7b5ae';return mini?`<div class="mini-object mini-mood" style="left:84%;top:10%;--mood-color:${color}"><i></i><span>${escapeHtml(item.label)}</span></div>`:`<div class="canvas-mood" style="left:84%;top:10%;--mood-color:${color}"><i></i><span>${escapeHtml(item.label)}</span></div>`;
@@ -2201,7 +2205,7 @@ function findOpenPosition(offset=0){
 }
 function addSticker(sticker){
   const before=clone(state.entry),p=findOpenPosition((state.entry.stickers||[]).length);
-  const item={id:uid(sticker.id),stickerId:sticker.id,x:p.x,y:p.y,scale:1,rotation:0,z:Date.now(),locked:false};
+  const maxZ=Math.max(0,...(state.entry.stickers||[]).map(x=>Number(x.z)||0));const item={id:uid(sticker.id),stickerId:sticker.id,x:p.x,y:p.y,scale:1,rotation:0,z:maxZ+1,locked:false};
   state.entry.stickers=[...(state.entry.stickers||[]),item];
   state.selectedCanvas=new Set([item.id]);
   state.selectedPhoto.clear();
@@ -2210,7 +2214,7 @@ function addSticker(sticker){
   recordChange(before,'已加入贴纸');
   renderDrawer();
 }
-function addSelectedStickers(){const chosen=STICKERS.filter(s=>state.selectedLibrary.has(s.id));if(!chosen.length)return;const before=clone(state.entry);chosen.forEach(s=>{const p=findOpenPosition((state.entry.stickers||[]).length);state.entry.stickers.push({id:uid(s.id),stickerId:s.id,x:p.x,y:p.y,scale:1,rotation:0,z:Date.now(),locked:false});markRecent(s.id);});state.selectedLibrary.clear();state.multiSelectMode=false;recordChange(before,`已加入 ${chosen.length} 枚贴纸`);renderDrawer();toast(`已加入 ${chosen.length} 枚贴纸`);}
+function addSelectedStickers(){const chosen=STICKERS.filter(s=>state.selectedLibrary.has(s.id));if(!chosen.length)return;const before=clone(state.entry);chosen.forEach(s=>{const p=findOpenPosition((state.entry.stickers||[]).length);const maxZ=Math.max(0,...(state.entry.stickers||[]).map(x=>Number(x.z)||0));state.entry.stickers.push({id:uid(s.id),stickerId:s.id,x:p.x,y:p.y,scale:1,rotation:0,z:maxZ+1,locked:false});markRecent(s.id);});state.selectedLibrary.clear();state.multiSelectMode=false;recordChange(before,`已加入 ${chosen.length} 枚贴纸`);renderDrawer();toast(`已加入 ${chosen.length} 枚贴纸`);}
 function removeSelected(){
   const ids=new Set([...state.selectedCanvas,...state.selectedPhoto]),before=clone(state.entry);
   if(!ids.size)return;
@@ -2224,7 +2228,7 @@ function duplicateSelected(){
   const ids=[...state.selectedCanvas],photos=[...state.selectedPhoto];
   if(!ids.length&&!photos.length)return;
   const before=clone(state.entry),newIds=[];
-  ids.forEach(id=>{const src=state.entry.stickers.find(x=>x.id===id);if(src){const n={...src,id:uid(src.stickerId),x:clamp(src.x+.06,.06,.94),y:clamp(src.y+.06,.18,.92),z:Date.now()};state.entry.stickers.push(n);newIds.push(n.id);}});
+  ids.forEach(id=>{const src=state.entry.stickers.find(x=>x.id===id);if(src){const maxZ=Math.max(0,...(state.entry.stickers||[]).map(x=>Number(x.z)||0));const n={...src,id:uid(src.stickerId),x:clamp(src.x+.06,.06,.94),y:clamp(src.y+.06,.18,.92),z:maxZ+1};state.entry.stickers.push(n);newIds.push(n.id);}});
   photos.forEach(id=>{const src=state.entry.photos.find(x=>x.id===id);if(src){const n={...src,id:uid('photo'),x:clamp(src.x+.06,.06,.94),y:clamp(src.y+.06,.18,.92),z:Date.now()};state.entry.photos.push(n);newIds.push(n.id);}});
   state.selectedCanvas=new Set(newIds);state.selectedPhoto=new Set();state.selectedText=null;
   recordChange(before,'已复制');
@@ -2333,8 +2337,12 @@ function renderCanvasSelectionState(){
   }
 
   const r=target.getBoundingClientRect(),cr=canvas.getBoundingClientRect();
+  const above=r.top-cr.top-40;
+  const below=r.bottom-cr.top+8;
+  const toolTop=above>=6?above:(below<=canvas.clientHeight-34?below:Math.max(6,canvas.clientHeight-40));
   wrap.style.left=`${clamp(r.left-cr.left+r.width/2-70,6,Math.max(6,canvas.clientWidth-140))}px`;
-  wrap.style.top=`${clamp(r.top-cr.top-36,6,Math.max(6,canvas.clientHeight-40))}px`;
+  wrap.style.top=`${toolTop}px`;
+  wrap.style.zIndex='1000';
   const common=`<button data-float="smaller" title="缩小">−</button><button data-float="larger" title="放大">＋</button>`;
   const extra=kind==='text'
     ? `<button data-float="align" title="对齐">${state.entry[`${state.selectedText}Style`]?.align==='left'?'↔':state.entry[`${state.selectedText}Style`]?.align==='center'?'≡':'↤'}</button>`
@@ -2369,7 +2377,7 @@ function renderCanvasSelectionState(){
   handles.dataset.kind=kind;
   handles.dataset.id=targetId||'';
   handles.dataset.text=state.selectedText||'';
-  handles.style.display='block';
+  handles.style.display='block';handles.style.zIndex='1001';
   handles.querySelector('.handle-rotate').style.display=kind==='text'?'none':'grid';
   handles.querySelectorAll('.transform-handle').forEach(h=>{
     h.onpointerdown=(ev)=>{
@@ -2500,18 +2508,18 @@ function startInlineTextEdit(kind){
   sel.removeAllRanges();
   sel.addRange(range);
   updateSidebarInput(kind);
-  el.addEventListener('input',()=>{
+  el.oninput=()=>{
     if(!state.textEdit||state.textEdit.kind!==kind)return;
     const value=el.innerText.replace(/\u00a0/g,' ').replace(/\r/g,'');
     state.entry[kind]=value;
     const side=document.getElementById(kind==='title'?'entryTitle':'entryContent');
     if(side && side.value!==value)side.value=value;
     queueDraftSaveAndCloud();
-  });
-  el.addEventListener('keydown',ev=>{
+  };
+  el.onkeydown=(ev)=>{
     if(ev.key==='Escape'){ev.preventDefault();finishInlineTextEdit(true);}
     else if(ev.key==='Tab'){ev.preventDefault();finishInlineTextEdit();startInlineTextEdit(kind==='title'?'content':'title');}
-  });
+  };
   renderCanvasSelectionState();
 }
 function queueDraftSaveAndCloud(){
