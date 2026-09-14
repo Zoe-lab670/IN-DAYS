@@ -2094,12 +2094,80 @@ function renderCalendar(){
     for(let d=1;d<=total;d++){const k=dateKey(state.year,state.month,d);const e=state.monthEntries[k];if(!hasEntryContent(e))continue;cells.push(timelineDayHtml(e,k,d,d===state.selectedDay,isTodayKey(k)));}
     grid.className='calendar-grid timeline-grid';
   }
-  grid.innerHTML=cells.join('');updateSidebarNav();
+  grid.innerHTML=cells.join('');renderMonthInsights();updateSidebarNav();
   grid.querySelectorAll('[data-day]').forEach(btn=>btn.addEventListener('click',()=>{commitBeforeNavigation();state.selectedDay=Number(btn.dataset.day);state.selectedKey=currentDateKey();loadSelectedEntry();openDrawer();}));
   document.querySelectorAll('.view-mode-btn').forEach(b=>b.classList.toggle('selected',b.dataset.view===state.viewMode));
   document.getElementById('prevMonth').disabled=state.year*12+state.month<=MIN_MONTH_INDEX;
 }
 function timelineDayHtml(e,key,day,active,today){return `<button class="timeline-card ${active?'active':''}" data-day="${day}"><div class="timeline-date"><b>${String(day).padStart(2,'0')}</b><span>${today?'TODAY':''}</span></div><div class="timeline-thumb" style="--day-bg:${e.background||'#fffdf7'}"><div class="mini-canvas" style="background:${e.background||'#fffdf7'}">${miniObjectHtml(e)}</div></div><div class="timeline-text"><strong>${escapeHtml(e.title||'这一天')}</strong><p>${escapeHtml(e.content||'')}</p></div></button>`;}
+function monthInsightData(){
+  const totalDays=new Date(state.year,state.month+1,0).getDate();
+  const entries=Object.entries(state.monthEntries).filter(([k,e])=>e&&hasEntryContent(e));
+  const stickerCounts=new Map(),moodCounts=new Map();
+  for(const [,e] of entries){
+    for(const st of (e.stickers||[])) stickerCounts.set(st.stickerId,(stickerCounts.get(st.stickerId)||0)+1);
+    if(e.mood)moodCounts.set(e.mood,(moodCounts.get(e.mood)||0)+1);
+  }
+  const topStickers=[...stickerCounts.entries()].sort((a,b)=>b[1]-a[1]).slice(0,10).map(([id,count])=>({st:STICKERS.find(x=>x.id===id),count})).filter(x=>x.st);
+  const topSticker=topStickers[0]||null;
+  const topMood=[...moodCounts.entries()].sort((a,b)=>b[1]-a[1])[0];
+  const scored=[];
+  for(let d=1;d<=totalDays;d++){const e=state.monthEntries[dateKey(state.year,state.month,d)];if(e?.mood)scored.push({d,score:moodScore(e.mood)});}
+  return {totalDays,entries,stickerTotal:entries.reduce((n,[,e])=>n+(e.stickers||[]).length,0),photoDays:entries.filter(([,e])=>e.photos?.length).length,topStickers,topSticker,topMood,scored};
+}
+function insightTrendSvg(scored){
+  if(!scored.length)return '<div class="insight-empty">这个月还没有足够的心情记录</div>';
+  const W=420,H=82,pad=7,maxX=Math.max(1,scored.length-1);
+  const pts=scored.map((p,i)=>`${pad+i*(W-pad*2)/maxX},${H-pad-p.score*(H-pad*2)/5}`).join(' ');
+  const dots=scored.map((p,i)=>`<circle cx="${pad+i*(W-pad*2)/maxX}" cy="${H-pad-p.score*(H-pad*2)/5}" r="2.6"/>`).join('');
+  return `<svg class="insight-trend" viewBox="0 0 ${W} ${H}" aria-hidden="true"><line x1="${pad}" y1="${H-pad}" x2="${W-pad}" y2="${H-pad}"/><polyline points="${pts}" fill="none"/><g>${dots}</g></svg>`;
+}
+function monthReportSentence(d,moodLabel){
+  if(!d.entries.length)return '还没有留下太多痕迹，但一个空白的月，也可以从今天开始。';
+  const parts=[];
+  if(d.entries.length>=20)parts.push('这个月的你，认真地留下了很多日子');
+  else if(d.entries.length>=10)parts.push('这个月的你，慢慢留下了一些日常');
+  else parts.push('这个月的你，偶尔停下来记录生活');
+  if(moodLabel)parts.push(`最常见的心情是「${moodLabel}」`);
+  if(d.topSticker?.st?.name)parts.push(`也常常用「${d.topSticker.st.name}」给日子留个小记号`);
+  return parts.join('，')+'。';
+}
+function renderMonthInsights(){
+  const root=document.getElementById('monthInsights'); if(!root)return;
+  if(state.viewMode!=='month'){root.innerHTML='';root.hidden=true;return;}
+  root.hidden=false;
+  const d=monthInsightData();
+  const moodLabel=d.topMood?(MOODS.find(m=>m.key===d.topMood[0])?.label||''):'—';
+  const top=d.topSticker;
+  const reportSentence=monthReportSentence(d,moodLabel);
+  const monthTitle=`${monthNames[state.month]} ${state.year}`;
+  const hotTotal=d.topStickers.reduce((n,x)=>n+x.count,0);
+  root.innerHTML=`<section class="monthly-report" aria-label="本月生活月报">
+    <div class="report-kicker"><span class="section-kicker">MONTHLY REPORT</span><span>${escapeHtml(monthTitle)}</span></div>
+    <div class="report-heading"><div><h3>这个月，也好好生活了一次</h3><p>${escapeHtml(reportSentence)}</p></div><button class="report-link" id="openInsightsReview">查看完整月报 ↗</button></div>
+    <div class="report-body">
+      <button class="report-story" id="insightMood">
+        <div class="report-story-head"><span>本月心情</span><small>${d.topMood?`最常见：${escapeHtml(moodLabel)}`:'还没有设置心情'}</small></div>
+        <div class="report-trend">${insightTrendSvg(d.scored)}</div>
+        <div class="report-trend-note"><span>低落</span><span>平稳</span><span>开心</span></div>
+      </button>
+      <div class="report-stats">
+        <button class="report-stat" id="insightDays"><span>记录了多少天</span><strong>${d.entries.length}<em>/ ${d.totalDays}</em></strong><small>${d.entries.length?`这个月有 ${d.entries.length} 天被认真记下`:'从今天开始记录'}</small></button>
+        <button class="report-stat" id="insightStickers"><span>留下的小记号</span><strong>${d.stickerTotal}</strong><small>${d.topStickers.length?`最常用的是「${escapeHtml(d.topStickers[0].st.name)}」`:'还没有贴纸记录'}</small></button>
+        <button class="report-featured" id="insightTopSticker"><span>本月最常出现</span><div class="featured-inner">${top?svgSticker(top.st,54):'<span class="insight-placeholder">♡</span>'}<div><b>${top?escapeHtml(top.st.name):'还没有'}</b><small>${top?`${top.count} 次出现`:'之后再慢慢填满它'}</small></div></div></button>
+      </div>
+    </div>
+    <div class="report-divider"></div>
+    <div class="hot-stickers-row"><div class="hot-stickers-head"><div><span class="section-kicker">LITTLE THINGS</span><h4>本月的小确幸</h4></div><span>${d.topStickers.length?`${hotTotal} 次贴纸记录`:'还没有使用记录'}</span></div><div class="hot-stickers-list">${d.topStickers.length?d.topStickers.slice(0,8).map((x,i)=>`<button class="hot-sticker ${i===0?'featured-hot':''}" data-hot-sticker="${escapeHtml(x.st.id)}" title="加入今天这一隅"><span>${svgSticker(x.st,i===0?40:34)}</span><b>${escapeHtml(x.st.name)}</b><i>${x.count} 次</i></button>`).join(''):'<span class="insight-empty inline">写下第一天后，这里会慢慢长出属于你的常用贴纸。</span>'}</div></div>
+  </section>`;
+  document.getElementById('openInsightsReview')?.addEventListener('click',openReview);
+  document.getElementById('insightMood')?.addEventListener('click',openReview);
+  document.getElementById('insightDays')?.addEventListener('click',()=>{state.viewMode='timeline';localStorage.setItem('in-days:view','timeline');renderCalendar();updateSidebarNav();});
+  document.getElementById('insightStickers')?.addEventListener('click',()=>{openDrawer();setTimeout(()=>document.getElementById('stickerPanel')?.scrollIntoView({behavior:'smooth',block:'center'}),100);});
+  document.getElementById('insightTopSticker')?.addEventListener('click',()=>{if(top){openDrawer();setTimeout(()=>addSticker(top.st),100);}});
+  root.querySelectorAll('[data-hot-sticker]').forEach(btn=>btn.addEventListener('click',()=>{const st=STICKERS.find(x=>x.id===btn.dataset.hotSticker);if(!st)return;openDrawer();setTimeout(()=>addSticker(st),100);}));
+}
+
 function commitBeforeNavigation(){if(state.textEdit)finishInlineTextEdit();if(state.drawerOpen&&state.entry)saveDraft(state.entry);}
 function moveMonth(delta){commitBeforeNavigation();const current=state.year*12+state.month,next=current+delta;if(next<MIN_MONTH_INDEX)return;state.year=Math.floor(next/12);state.month=next%12;state.selectedDay=1;renderCalendar();loadCurrentMonth();loadSelectedEntry();}
 function goToday(){commitBeforeNavigation();state.year=currentYear;state.month=currentMonth;state.selectedDay=currentDay;state.viewMode='month';localStorage.setItem('in-days:view','month');state.drawerOpen=false;closeDrawer();renderCalendar();loadCurrentMonth();loadSelectedEntry();}
@@ -2272,6 +2340,7 @@ function renderShell(){
       <header class="topbar"><div class="topbar-month-caption"><span class="eyebrow">A LITTLE CORNER, EVERY DAY</span></div><div class="top-actions"><button class="today-button" id="todayBtn">今天</button><span id="accountArea"></span></div></header>
       <section class="hero"><div class="month-nav"><button class="nav-button" id="prevMonth" aria-label="上个月">←</button><div class="month-heading"><p class="eyebrow" id="yearLabel"></p><h1 id="monthLabel"></h1></div><button class="nav-button" id="nextMonth" aria-label="下个月">→</button></div><p class="subtitle">把平凡的日子，过成喜欢的样子。</p><div class="hero-tools"><div class="view-switcher">${VIEW_MODES.map(v=>`<button class="view-mode-btn ${state.viewMode===v.key?'selected':''}" data-view="${v.key}">${v.label}</button>`).join('')}</div><button class="subtle-action" id="reviewBtn">本月回顾</button><button class="subtle-action" id="exportMonthBtn">导出本月</button></div></section>
       <section class="calendar-card"><div class="weekday-row" id="weekdayRow">${weekdayLabels.map(label=>`<div>${label}</div>`).join('')}</div><div class="calendar-grid" id="calendarGrid"></div></section>
+      <section class="month-insights" id="monthInsights" aria-label="本月生活摘要"></section>
       <section class="selected-summary"><div><p class="section-kicker">TODAY'S CORNER</p><h2 id="selectedDate"></h2><p id="selectedPreview"></p></div><div class="summary-actions"><button class="open-editor" id="openEditor">进入这一隅 <span>↗</span></button><button class="open-editor light" id="capsuleBtn">写给未来</button></div></section><footer>一隅 · IN DAYS</footer>
     </section>
   </main><div id="drawerRoot"></div><div id="authRoot"></div><div id="profileRoot"></div><div id="reviewRoot"></div><div id="capsuleRoot"></div><div id="exportMonthRoot"></div><div class="toast" id="toast"></div>`;
