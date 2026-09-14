@@ -20,6 +20,19 @@ const DRAFT_PREFIX = 'in-days:draft:';
 const CANVAS_W = 560;
 const CANVAS_H = 420;
 
+// 2026 mainland China statutory holiday / holiday-period map (official schedule).
+// The app uses these dates only for calendar cues and sticker recommendations;
+// it does not attempt to mark make-up workdays as holidays.
+const HOLIDAY_2026 = [
+  {start:'2026-01-01',end:'2026-01-03',name:'元旦',ids:['newyear','newyear_firework']},
+  {start:'2026-02-15',end:'2026-02-23',name:'春节',ids:['spring_lantern','red_envelope','dumpling']},
+  {start:'2026-04-04',end:'2026-04-06',name:'清明节',ids:['qingming_kite','qingming_willow']},
+  {start:'2026-05-01',end:'2026-05-05',name:'劳动节',ids:['mayday_tools','mayday_luggage']},
+  {start:'2026-06-19',end:'2026-06-21',name:'端午节',ids:['dragonboat','zongzi','mugwort']},
+  {start:'2026-09-25',end:'2026-09-27',name:'中秋节',ids:['mooncake','fullmoon','midautumn_lantern','moonrabbit']},
+  {start:'2026-10-01',end:'2026-10-07',name:'国庆节',ids:['nationalflag','nationalfirework','nationalribbon']}
+];
+
 const STICKER_CATEGORIES = [
   {key:'all',label:'全部'}, {key:'recommended',label:'推荐'}, {key:'daily',label:'日常'},
   {key:'food',label:'食物'}, {key:'nature',label:'自然'}, {key:'animals',label:'动物'},
@@ -1659,6 +1672,10 @@ const SUPPLEMENT_STICKERS = [
 ];
 const SUPPLEMENT_PALETTE = {daily:'#a99b8b',food:'#d0a096',home:'#aaa69b',work:'#9ba49f',travel:'#95a9b4',hobby:'#a69aa5',sports:'#91aba2',nature:'#97ad9b',animals:'#98a39a',mood:'#c39b9e',festival:'#d3b36b',life:'#b5a18e'};
 STICKERS.push(...SUPPLEMENT_STICKERS.map(({body, ...rest}) => ({...rest, source:'supplement', accent:SUPPLEMENT_PALETTE[rest.category]||'#aaa69b', tags:[...new Set([rest.name,...(rest.tags||[])])]})));
+if(STICKERS.length!==233){console.error('[IN DAYS] sticker library integrity check failed:',STICKERS.length);}
+
+const EXPECTED_STICKER_COUNT=233;
+if(STICKERS.length!==EXPECTED_STICKER_COUNT){console.warn(`[IN DAYS] sticker count mismatch: expected ${EXPECTED_STICKER_COUNT}, got ${STICKERS.length}`);}
 
 
 const RECOMMENDATION_RULES = [
@@ -1791,7 +1808,20 @@ function normalizeTextStyle(style,fallback){
 }
 function normalizePhotoItems(items){
   if(!Array.isArray(items))return [];
-  return items.map((p,i)=>({id:String(p?.id||uid('photo')),src:String(p?.src||''),x:clamp(Number(p?.x)||(.48+(i%3)*.12),.08,.92),y:clamp(Number(p?.y)||(.46+(i%3)*.10),.20,.90),scale:clamp(Number(p?.scale)||1,.35,1.8),rotation:clamp(Number(p?.rotation)||0,-180,180),z:Number.isFinite(Number(p?.z))?Number(p.z):i+1,locked:!!p?.locked})).filter(p=>p.src);
+  const normalized=items.map((p,i)=>({
+    id:String(p?.id||uid('photo')),
+    src:String(p?.src||''),
+    x:clamp(Number(p?.x)||(.48+(i%3)*.12),.08,.92),
+    y:clamp(Number(p?.y)||(.46+(i%3)*.10),.20,.90),
+    scale:clamp(Number(p?.scale)||1,.35,1.8),
+    rotation:clamp(Number(p?.rotation)||0,-180,180),
+    z:Number.isFinite(Number(p?.z))?Number(p.z):i+1,
+    locked:!!p?.locked,
+    ratio:clamp(Number(p?.ratio)||4/3,.55,2.2),
+    cropMode:['original','4:3'].includes(p?.cropMode)?p.cropMode:'original',
+    frame:['paper','tape','none','shadow'].includes(p?.frame)?p.frame:'paper'
+  })).filter(p=>p.src);
+  normalized.sort((a,b)=>(Number(a.z)||0)-(Number(b.z)||0)); normalized.forEach((it,idx)=>it.z=idx+1); return normalized;
 }
 function normalizeStickerItems(items){
   if(!Array.isArray(items))return [];
@@ -1811,7 +1841,7 @@ function normalizeDesign(raw,date){
   const base=emptyEntry(date);
   if(Array.isArray(raw))return {...base,stickers:normalizeStickerItems(raw)};
   if(!raw||typeof raw!=='object')return base;
-  return {...base,
+  const result={...base,
     title:String(raw.title??raw.title_text??''),
     content:String(raw.content??raw.body??''),
     background:String(raw.background||base.background),
@@ -1820,22 +1850,37 @@ function normalizeDesign(raw,date){
     titlePos:normalizePos(raw.titlePos||raw.title_position,base.titlePos),contentPos:normalizePos(raw.contentPos||raw.content_position,base.contentPos),
     titleStyle:normalizeTextStyle(raw.titleStyle||raw.title_style,base.titleStyle),contentStyle:normalizeTextStyle(raw.contentStyle||raw.content_style,base.contentStyle)
   };
+  normalizeLayerOrder(result.stickers,result.photos);
+  return result;
 }
 function mergeRow(row){
   if(!row)return null;
   const raw=row.stickers;
   const design=normalizeDesign(raw,row.entry_date);
   const legacyArray=Array.isArray(raw);
+  const rawObject=!!raw && typeof raw==='object' && !legacyArray;
   const merged={
     ...row,
     ...design,
-    title: legacyArray ? String(row.title||'') : design.title,
-    content: legacyArray ? String(row.content||'') : design.content,
-    background: legacyArray ? String(row.background||'#fffdf7') : design.background,
+    title: legacyArray
+      ? String(row.title||'')
+      : String((rawObject && String(raw.title||'').trim()) ? raw.title : (row.title||design.title||'')),
+    content: legacyArray
+      ? String(row.content||'')
+      : String((rawObject && String(raw.content||'').trim()) ? raw.content : (row.content||design.content||'')),
+    background: legacyArray
+      ? String(row.background||'#fffdf7')
+      : String((rawObject && raw.background) ? raw.background : (row.background||design.background||'#fffdf7')),
     stickers: design.stickers,
     photos: design.photos
   };
   return merged;
+}
+function normalizeLayerOrder(stickers,photos){
+  const layers=[...(stickers||[]).map((item,index)=>({item,index,z:Number(item?.z)||0,kind:'sticker'})),...(photos||[]).map((item,index)=>({item,index,z:Number(item?.z)||0,kind:'photo'}))];
+  layers.sort((a,b)=>a.z-b.z || a.index-b.index || (a.kind==='photo' ? -1 : 1));
+  layers.forEach((layer,index)=>{layer.item.z=index+1;});
+  return {stickers,photos};
 }
 function designPayload(e,date){ return normalizeDesign(e,date); }
 function serializeForStorage(e){ return designPayload(e,e.entry_date); }
@@ -1877,12 +1922,13 @@ async function loadEntry(date){
 }
 async function loadEntriesInRange(startDate,endDate){
   if(supabase){if(!state.user)return {};const {data,error}=await supabase.from('journal_entries').select('id,user_id,entry_date,title,content,background,stickers,updated_at').eq('user_id',state.user.id).gte('entry_date',startDate).lte('entry_date',endDate).order('entry_date',{ascending:true});if(error){toast('读取月份失败：'+error.message);return {};}return Object.fromEntries((data||[]).map(r=>[r.entry_date,chooseWithDraft(mergeRow(r),r.entry_date)]));}
-  const out={};let cur=new Date(`${startDate}T00:00:00`),end=new Date(`${endDate}T00:00:00`);while(cur<=end){const k=cur.toISOString().slice(0,10),e=chooseWithDraft(mergeRow(getLocal(k)),k);if(e)out[k]=e;cur.setDate(cur.getDate()+1);}return out;
+  const out={};const start=parseKey(startDate),end=parseKey(endDate);if(start.y===end.y&&start.m===end.m){for(let d=start.d;d<=end.d;d++){const k=dateKey(start.y,start.m,d),e=chooseWithDraft(mergeRow(getLocal(k)),k);if(e)out[k]=e;}return out;}
+  let cursor=new Date(start.y,start.m,start.d);const endLocal=new Date(end.y,end.m,end.d);while(cursor<=endLocal){const k=dateKey(cursor.getFullYear(),cursor.getMonth(),cursor.getDate()),e=chooseWithDraft(mergeRow(getLocal(k)),k);if(e)out[k]=e;cursor.setDate(cursor.getDate()+1);}return out;
 }
 async function loadSelectedEntry(){
   const key=currentDateKey();state.entry=await loadEntry(key)||emptyEntry(key);resetHistory();state.selectedCanvas.clear();state.selectedPhoto.clear();state.selectedText=null;
   state.status=state.entry._draft?'有未保存草稿':(state.entry.id?'已保存':(supabase&&!state.user?'登录后可云端保存':'还没有记录'));
-  renderCalendar();if(state.drawerOpen)renderDrawer();checkCapsule();
+  renderCalendar();updateSidebarNav();if(state.drawerOpen)renderDrawer();checkCapsule();
 }
 async function loadCurrentMonth(){
   const days=new Date(state.year,state.month+1,0).getDate();state.monthEntries=await loadEntriesInRange(dateKey(state.year,state.month,1),dateKey(state.year,state.month,days));renderCalendar();
@@ -1928,24 +1974,29 @@ function miniScale(){
 function moodVisualMarkup(mood,mini=false){
   if(!mood)return '';const item=MOODS.find(m=>m.key===mood);if(!item)return '';const color={happy:'#d8b971',calm:'#9db5a2',full:'#b6a486',tired:'#9cabb6',sad:'#95a7b3',anxious:'#c39a9d'}[mood]||'#b7b5ae';return mini?`<div class="mini-object mini-mood" style="left:84%;top:10%;--mood-color:${color}"><i></i><span>${escapeHtml(item.label)}</span></div>`:`<div class="canvas-mood" style="left:84%;top:10%;--mood-color:${color}"><i></i><span>${escapeHtml(item.label)}</span></div>`;
 }
-function miniObjectHtml(e,scale){
-  const parts=[];
-  const title=String(e.title||'').trim(),content=String(e.content||'').trim();
-  if(e.mood)parts.push(moodVisualMarkup(e.mood,true));
-  if(title){parts.push(`<div class="mini-object mini-title" style="left:${clamp(e.titlePos?.x??.10,.02,.90)*100}%;top:${clamp(e.titlePos?.y??.18,.08,.92)*100}%;font-size:${Number(e.titleStyle?.fontSize||25).toFixed(2)}px;text-align:${e.titleStyle?.align||'left'};font-weight:${e.titleStyle?.weight||500}">${escapeHtml(title)}</div>`);}
-  if(content){parts.push(`<div class="mini-object mini-content" style="left:${clamp(e.contentPos?.x??.10,.02,.90)*100}%;top:${clamp(e.contentPos?.y??.36,.12,.94)*100}%;font-size:${Number(e.contentStyle?.fontSize||12).toFixed(2)}px;text-align:${e.contentStyle?.align||'left'};font-weight:${e.contentStyle?.weight||400}">${escapeHtml(content)}</div>`);}
-  (e.photos||[]).slice().sort((a,b)=>(a.z||0)-(b.z||0)).forEach(p=>parts.push(`<img class="mini-object mini-photo" src="${escapeHtml(p.src)}" alt="照片" style="left:${p.x*100}%;top:${p.y*100}%;transform:translate(-50%,-50%) rotate(${p.rotation||0}deg) scale(${p.scale||1})" />`));
-  (e.stickers||[]).slice().sort((a,b)=>(a.z||0)-(b.z||0)).forEach(p=>{
-    const st=STICKERS.find(x=>x.id===p.stickerId); if(!st)return;
-    parts.push(`<div class="mini-object mini-sticker" style="left:${clamp(p.x,.02,.98)*100}%;top:${clamp(p.y,.02,.98)*100}%;transform:translate(-50%,-50%) rotate(${p.rotation||0}deg) scale(${p.scale||1});z-index:${p.z||2}">${svgSticker(st,64)}</div>`);
-  });
+function compositionDomHtml(e,{mode='mini'}={}){
+  const mini=mode==='mini',parts=[];
+  const title=String(e?.title||'').trim(), content=String(e?.content||'').trim();
+  const titlePos=e?.titlePos||{x:.10,y:.18}, contentPos=e?.contentPos||{x:.10,y:.36};
+  const titleStyle=e?.titleStyle||{fontSize:25,align:'left',weight:500}, contentStyle=e?.contentStyle||{fontSize:12,align:'left',weight:400};
+  const positionStyle=(pos,style)=>`left:${clamp(Number(pos?.x)||.1,.02,.94)*100}%;top:${clamp(Number(pos?.y)||.2,.06,.94)*100}%;font-size:${Number(style?.fontSize)||12}px;text-align:${style?.align||'left'};font-weight:${style?.weight||400};`;
+  if(title||!mini)parts.push(`<div class="${mini?'mini-object mini-title':'canvas-text title-canvas'} ${!title&&!mini?'placeholder':''} ${!mini&&state.selectedText==='title'?'text-selected':''}" ${mini?'':`data-drag-kind="title"`} style="${positionStyle(titlePos,titleStyle)}">${escapeHtml(title||'双击这里写标题')}</div>`);
+  if(content||!mini)parts.push(`<div class="${mini?'mini-object mini-content':'canvas-text content-canvas'} ${!content&&!mini?'placeholder':''} ${!mini&&state.selectedText==='content'?'text-selected':''}" ${mini?'':`data-drag-kind="content"`} style="${positionStyle(contentPos,contentStyle)}">${escapeHtml(content||'双击这里写下今天发生了什么…')}</div>`);
+  if(e?.mood)parts.push(moodVisualMarkup(e.mood,mini));
+  const layers=[...(e?.photos||[]).map(p=>({kind:'photo',item:p,z:Number(p.z)||0})),...(e?.stickers||[]).map(p=>({kind:'sticker',item:p,z:Number(p.z)||0}))].sort((a,b)=>a.z-b.z);
+  for(const layer of layers){const p=layer.item;
+    if(layer.kind==='photo') {const rawRatio=clamp(Number(p.ratio)||4/3,.55,2.2),cropMode=String(p.cropMode||'original'),ratio=cropMode==='4:3'?4/3:rawRatio,cls=mini?'mini-object mini-photo':'placed-photo',frame=String(p.frame||'paper'),ox=clamp(Number(p.objectPositionX)||50,0,100),oy=clamp(Number(p.objectPositionY)||50,0,100),frameClass=frame==='paper'?' photo-frame-paper':frame==='tape'?' photo-frame-tape':frame==='shadow'?' photo-frame-shadow':'';parts.push(`<div class="${cls}-wrap${frameClass} ${!mini&&state.selectedPhoto.has(p.id)?'selected':''}" ${mini?'':`data-drag-kind="photo" data-id="${escapeHtml(p.id)}"`} style="--photo-ratio:${ratio};left:${clamp(Number(p.x)||.5,.01,.99)*100}%;top:${clamp(Number(p.y)||.5,.01,.99)*100}%;transform:translate(-50%,-50%) rotate(${Number(p.rotation)||0}deg) scale(${Number(p.scale)||1});z-index:${Number(p.z)||1}"><img class="${cls}" src="${escapeHtml(p.src||'')}" alt="照片" style="object-fit:${cropMode==='4:3'?'cover':'contain'};object-position:${ox}% ${oy}%" /></div>`);}
+    else {const st=STICKERS.find(x=>x.id===p.stickerId);if(!st)continue;parts.push(`<div class="${mini?'mini-object mini-sticker':'placed-sticker'} ${!mini&&state.selectedCanvas.has(p.id)?'selected ':''}${!mini&&p.locked?'locked':''}" ${mini?'':`data-drag-kind="sticker" data-id="${escapeHtml(p.id)}"`} style="left:${clamp(Number(p.x)||.5,.01,.99)*100}%;top:${clamp(Number(p.y)||.5,.01,.99)*100}%;transform:translate(-50%,-50%) rotate(${Number(p.rotation)||0}deg) scale(${Number(p.scale)||1});z-index:${Number(p.z)||1}">${svgSticker(st,64)}</div>`);}
+  }
   return parts.join('');
 }
+function miniObjectHtml(e,scale){return compositionDomHtml(e,{mode:'mini'});}
 function calendarDayHtml(entry,key,day,active,today){
-  const e=entry||emptyEntry(key),has=hasEntryContent(entry),scale=miniScale();
-  return `<button class="day-card ${active?'active':''} ${today?'today':''} ${has?'has-entry':''}" data-day="${day}" aria-label="${state.year}年${state.month+1}月${day}日" style="--day-bg:${escapeHtml(e.background||'#fffdf7')}">
+  const e=entry||emptyEntry(key),has=hasEntryContent(entry),scale=miniScale(),holiday=holidayCueForDate(key);
+  return `<button class="day-card ${active?'active':''} ${today?'today':''} ${has?'has-entry':''} ${holiday?'holiday-day':''}" data-day="${day}" aria-label="${state.year}年${state.month+1}月${day}日${holiday?`，${holiday.name}`:''}" title="${holiday?escapeHtml(holiday.name):''}" style="--day-bg:${escapeHtml(e.background||'#fffdf7')}">
     <div class="day-thumbnail">${has?`<div class="mini-canvas" style="background:${escapeHtml(e.background||'#fffdf7')};--mini-scale:${scale}">${miniObjectHtml(e,scale)}</div>`:''}</div>
     <span class="day-number">${String(day).padStart(2,'0')}</span>
+    ${holiday?`<span class="holiday-mark">${escapeHtml(holiday.name.replace('节',''))}</span>`:''}
     ${today?'<span class="today-mark">TODAY</span>':''}
   </button>`;
 }
@@ -1966,7 +2017,7 @@ function renderCalendar(){
     for(let d=1;d<=total;d++){const k=dateKey(state.year,state.month,d);const e=state.monthEntries[k];if(!hasEntryContent(e))continue;cells.push(timelineDayHtml(e,k,d,d===state.selectedDay,isTodayKey(k)));}
     grid.className='calendar-grid timeline-grid';
   }
-  grid.innerHTML=cells.join('');
+  grid.innerHTML=cells.join('');updateSidebarNav();
   grid.querySelectorAll('[data-day]').forEach(btn=>btn.addEventListener('click',()=>{commitBeforeNavigation();state.selectedDay=Number(btn.dataset.day);state.selectedKey=currentDateKey();loadSelectedEntry();openDrawer();}));
   document.querySelectorAll('.view-mode-btn').forEach(b=>b.classList.toggle('selected',b.dataset.view===state.viewMode));
   document.getElementById('prevMonth').disabled=state.year*12+state.month<=MIN_MONTH_INDEX;
@@ -2124,10 +2175,29 @@ async function ensureSupabaseClient(){
 
 
 function renderShell(){
-  app.innerHTML=`<main class="app-shell"><header class="topbar"><div class="brand-lockup"><div class="brand-mark" aria-hidden="true"><span></span><i></i></div><div><div class="brand-cn">一隅</div><div class="brand-en">IN DAYS</div></div></div><div class="top-actions"><button class="today-button" id="todayBtn">回到今天</button><span id="accountArea"></span></div></header>
-  <section class="hero"><div class="month-nav"><button class="nav-button" id="prevMonth" aria-label="上个月">←</button><div class="month-heading"><p class="eyebrow" id="yearLabel"></p><h1 id="monthLabel"></h1></div><button class="nav-button" id="nextMonth" aria-label="下个月">→</button></div><p class="subtitle">给每天留一隅。</p><div class="hero-tools"><div class="view-switcher">${VIEW_MODES.map(v=>`<button class="view-mode-btn ${state.viewMode===v.key?'selected':''}" data-view="${v.key}">${v.label}</button>`).join('')}</div><button class="subtle-action" id="reviewBtn">本月回顾</button><button class="subtle-action" id="exportMonthBtn">导出本月</button></div></section>
-  <section class="calendar-card"><div class="weekday-row" id="weekdayRow">${weekdayLabels.map(label=>`<div>${label}</div>`).join('')}</div><div class="calendar-grid" id="calendarGrid"></div></section>
-  <section class="selected-summary"><div><p class="section-kicker">TODAY'S CORNER</p><h2 id="selectedDate"></h2><p id="selectedPreview"></p></div><div class="summary-actions"><button class="open-editor" id="openEditor">进入这一隅 <span>↗</span></button><button class="open-editor light" id="capsuleBtn">写给未来</button></div></section><footer>一隅 · IN DAYS</footer></main><div id="drawerRoot"></div><div id="authRoot"></div><div id="profileRoot"></div><div id="reviewRoot"></div><div id="capsuleRoot"></div><div id="exportMonthRoot"></div><div class="toast" id="toast"></div>`;
+  app.innerHTML=`<main class="app-shell">
+    <aside class="workspace-sidebar" aria-label="IN DAYS 导航">
+      <div class="sidebar-brand"><div class="brand-lockup"><div class="brand-mark" aria-hidden="true"><span></span><i></i></div><div><div class="brand-cn">一隅</div><div class="brand-en">IN DAYS</div></div></div></div>
+      <nav class="sidebar-nav">
+        <button class="sidebar-nav-item" data-nav="home"><span>⌂</span><b>首页</b></button>
+        <button class="sidebar-nav-item active" data-nav="month"><span>□</span><b>日历</b></button>
+        <button class="sidebar-nav-item" data-nav="mosaic"><span>▦</span><b>画册</b></button>
+        <button class="sidebar-nav-item" data-nav="timeline"><span>◷</span><b>时间轴</b></button>
+        <button class="sidebar-nav-item" data-nav="review"><span>☆</span><b>本月回顾</b></button>
+        <button class="sidebar-nav-item" data-nav="export"><span>↓</span><b>导出本月</b></button>
+      </nav>
+      <div class="sidebar-note"><div class="sidebar-doodle">⌁</div><p>在一隅的时光里，<br/>把平凡的日子<br/>过成喜欢的样子。♡</p></div>
+      <div class="sidebar-spacer"></div>
+      <button class="sidebar-mood" id="sidebarMoodBtn"><span class="sidebar-mood-dot">◡</span><span><small>今日心情</small><strong id="sidebarMoodLabel">未设置</strong></span><i>›</i></button>
+      <div class="sidebar-user" id="sidebarUser"><span class="sidebar-user-avatar">一</span><span>我的一隅</span></div>
+    </aside>
+    <section class="workspace-main">
+      <header class="topbar"><div class="topbar-month-caption"><span class="eyebrow">A LITTLE CORNER, EVERY DAY</span></div><div class="top-actions"><button class="today-button" id="todayBtn">今天</button><span id="accountArea"></span></div></header>
+      <section class="hero"><div class="month-nav"><button class="nav-button" id="prevMonth" aria-label="上个月">←</button><div class="month-heading"><p class="eyebrow" id="yearLabel"></p><h1 id="monthLabel"></h1></div><button class="nav-button" id="nextMonth" aria-label="下个月">→</button></div><p class="subtitle">把平凡的日子，过成喜欢的样子。</p><div class="hero-tools"><div class="view-switcher">${VIEW_MODES.map(v=>`<button class="view-mode-btn ${state.viewMode===v.key?'selected':''}" data-view="${v.key}">${v.label}</button>`).join('')}</div><button class="subtle-action" id="reviewBtn">本月回顾</button><button class="subtle-action" id="exportMonthBtn">导出本月</button></div></section>
+      <section class="calendar-card"><div class="weekday-row" id="weekdayRow">${weekdayLabels.map(label=>`<div>${label}</div>`).join('')}</div><div class="calendar-grid" id="calendarGrid"></div></section>
+      <section class="selected-summary"><div><p class="section-kicker">TODAY'S CORNER</p><h2 id="selectedDate"></h2><p id="selectedPreview"></p></div><div class="summary-actions"><button class="open-editor" id="openEditor">进入这一隅 <span>↗</span></button><button class="open-editor light" id="capsuleBtn">写给未来</button></div></section><footer>一隅 · IN DAYS</footer>
+    </section>
+  </main><div id="drawerRoot"></div><div id="authRoot"></div><div id="profileRoot"></div><div id="reviewRoot"></div><div id="capsuleRoot"></div><div id="exportMonthRoot"></div><div class="toast" id="toast"></div>`;
   document.getElementById('prevMonth').addEventListener('click',()=>moveMonth(-1));
   document.getElementById('nextMonth').addEventListener('click',()=>moveMonth(1));
   document.getElementById('todayBtn').addEventListener('click',goToday);
@@ -2135,9 +2205,14 @@ function renderShell(){
   document.getElementById('reviewBtn').addEventListener('click',openReview);
   document.getElementById('exportMonthBtn').addEventListener('click',openMonthExport);
   document.getElementById('capsuleBtn').addEventListener('click',openCapsule);
-  document.querySelectorAll('.view-mode-btn').forEach(b=>b.addEventListener('click',()=>{state.viewMode=b.dataset.view;localStorage.setItem('in-days:view',state.viewMode);renderCalendar();}));
+  document.querySelectorAll('.view-mode-btn').forEach(b=>b.addEventListener('click',()=>{state.viewMode=b.dataset.view;localStorage.setItem('in-days:view',state.viewMode);renderCalendar();updateSidebarNav();}));
+  document.querySelectorAll('.sidebar-nav-item').forEach(b=>b.addEventListener('click',()=>{const nav=b.dataset.nav;if(nav==='home'||nav==='month'){state.viewMode='month';localStorage.setItem('in-days:view','month');renderCalendar();}else if(nav==='mosaic'){state.viewMode='mosaic';localStorage.setItem('in-days:view','mosaic');renderCalendar();}else if(nav==='timeline'){state.viewMode='timeline';localStorage.setItem('in-days:view','timeline');renderCalendar();}else if(nav==='review'){openReview();}else if(nav==='export'){openMonthExport();}updateSidebarNav();}));
+  document.getElementById('sidebarMoodBtn').addEventListener('click',()=>{openDrawer();setTimeout(()=>document.querySelector('.mood-choice')?.scrollIntoView({behavior:'smooth',block:'center'}),80);});
   renderAccount();
+  updateSidebarNav();
 }
+function updateSidebarNav(){document.querySelectorAll('.sidebar-nav-item').forEach(b=>{const nav=b.dataset.nav;const active=(nav==='month'&&state.viewMode==='month')||(nav==='mosaic'&&state.viewMode==='mosaic')||(nav==='timeline'&&state.viewMode==='timeline');b.classList.toggle('active',active);});const e=state.entry||emptyEntry(currentDateKey());const mood=MOODS.find(m=>m.key===e.mood);const label=document.getElementById('sidebarMoodLabel');if(label)label.textContent=mood?.label||'未设置';const user=document.getElementById('sidebarUser');if(user&&state.user)user.querySelector('span:nth-child(2)').textContent=getDisplayName(state.user);}
+
 function toast(message){const el=document.getElementById('toast');if(!el)return;el.textContent=message;el.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>el.classList.remove('show'),2300);}
 function renderAccount(){const area=document.getElementById('accountArea');if(!area)return;if(state.user){const name=escapeHtml(getDisplayName(state.user));area.innerHTML=`<button class="account-button" id="profileBtn"><span class="account-avatar">${getInitial(getDisplayName(state.user))}</span><span class="account-name" title="${name}">${name}</span><span class="account-chevron">⌄</span></button>`;document.getElementById('profileBtn').addEventListener('click',openProfile);return;}if(SUPABASE_URL&&SUPABASE_KEY){area.innerHTML='<button class="account-button primary-outline" id="loginBtn">登录 / 注册</button>';document.getElementById('loginBtn').addEventListener('click',openAuth);}else{area.innerHTML='<span class="local-badge">未配置账号</span>';}}
 function openProfile(){if(!state.user)return openAuth();const display=getDisplayName(state.user),email=String(state.user.email||''),masked=email.length>18?`${email.slice(0,6)}…${email.slice(-10)}`:email;document.getElementById('profileRoot').innerHTML=`<button class="profile-backdrop" id="profileBackdrop"></button><section class="profile-modal"><button class="close-button" id="closeProfile">×</button><div class="section-kicker">IN DAYS ACCOUNT</div><h2>我的一隅</h2><p class="profile-email">${escapeHtml(masked)}</p><label class="field-label">显示名称<input id="displayNameInput" maxlength="20" value="${escapeHtml(display==='我的一隅'?'':display)}" placeholder="例如 Zoe、Momo…" /></label><p class="profile-hint">顶部只显示昵称，不直接展示邮箱前缀。</p><div class="profile-actions"><button class="danger-button" id="profileLogout">退出登录</button><button class="save-button" id="saveProfile">保存昵称</button></div><div class="auth-status" id="profileStatus"></div></section>`;document.getElementById('profileBackdrop').addEventListener('click',closeProfile);document.getElementById('closeProfile').addEventListener('click',closeProfile);document.getElementById('profileLogout').addEventListener('click',async()=>{await supabase.auth.signOut();closeProfile();});document.getElementById('saveProfile').addEventListener('click',saveProfile);}
@@ -2146,7 +2221,7 @@ async function saveProfile(){const input=document.getElementById('displayNameInp
 async function openAuth(){if(!supabase){await ensureSupabaseClient();renderAccount();}if(!supabase){toast('账号服务暂时不可用，请稍后重试。');return;}state.authOpen=true;document.getElementById('authRoot').innerHTML=`<button class="auth-backdrop" id="authBackdrop"></button><section class="auth-modal"><button class="close-button" id="closeAuth">×</button><div class="section-kicker">IN DAYS ACCOUNT</div><h2>把你的一隅<br/>留在云端</h2><p>输入邮箱，我们会发送一次性登录链接。</p><input class="auth-input" id="authEmail" type="email" autocomplete="email" placeholder="name@example.com" value="${escapeHtml(state.email)}"/><button class="save-button full" id="sendMagic">发送登录链接</button><div class="auth-status" id="authStatus"></div></section>`;document.getElementById('authBackdrop').addEventListener('click',closeAuth);document.getElementById('closeAuth').addEventListener('click',closeAuth);document.getElementById('sendMagic').addEventListener('click',sendMagicLink);}
 function closeAuth(){state.authOpen=false;document.getElementById('authRoot').innerHTML='';}
 async function sendMagicLink(){const email=document.getElementById('authEmail').value.trim(),st=document.getElementById('authStatus');if(!email)return;state.email=email;st.textContent='发送中…';const redirectTo=`${window.location.origin}${window.location.pathname.endsWith('/')?window.location.pathname:window.location.pathname+'/'}`;const {error}=await supabase.auth.signInWithOtp({email,options:{emailRedirectTo:redirectTo}});st.textContent=error?error.message:'登录链接已发送，请查看邮箱。';}
-async function initAuth(){await ensureSupabaseClient();renderAccount();if(!supabase)return;const {data}=await supabase.auth.getSession();state.user=data.session?.user||null;renderAccount();await refreshAfterAuth();supabase.auth.onAuthStateChange(async(_e,session)=>{state.user=session?.user||null;renderAccount();await refreshAfterAuth();if(state.user)closeAuth();});}
+async function initAuth(){await ensureSupabaseClient();renderAccount();if(!supabase)return;const {data}=await supabase.auth.getSession();state.user=data.session?.user||null;renderAccount();await refreshAfterAuth();supabase.auth.onAuthStateChange((_e,session)=>{state.user=session?.user||null;renderAccount();if(state.user)closeAuth();setTimeout(()=>{refreshAfterAuth().catch(error=>console.warn('[IN DAYS] auth refresh failed',error));},0);});}
 async function refreshAfterAuth(){await loadCurrentMonth();await loadSelectedEntry();}
 
 function getTextForRecommendations(){return `${state.entry?.title||''} ${state.entry?.content||''}`.trim();}
@@ -2160,6 +2235,10 @@ function getLunarMonthDay(key){
   }catch{return null;}
 }
 function festivalForDate(key){
+  if(String(key).startsWith('2026-')){
+    const exact=HOLIDAY_2026.find(h=>key>=h.start&&key<=h.end);
+    if(exact)return {name:exact.name,ids:exact.ids};
+  }
   const {m,d}=parseKey(key); const mm=m+1;
   const fixed={
     '1-1':['元旦',['newyear','newyear_firework']],
@@ -2168,7 +2247,7 @@ function festivalForDate(key){
   };
   const f=fixed[`${mm}-${d}`]; if(f)return {name:f[0],ids:f[1]};
   if(mm===10 && d>=1 && d<=7)return {name:'国庆节',ids:['nationalflag','nationalfirework','nationalribbon']};
-  if(mm===4 && d>=4 && d<=6)return {name:'清明',ids:['qingming_kite','qingming_willow']};
+  if(mm===4 && d>=4 && d<=6)return {name:'清明节',ids:['qingming_kite','qingming_willow']};
   const lunar=getLunarMonthDay(key);
   if(lunar){
     if(lunar.month===1 && lunar.day>=1 && lunar.day<=7)return {name:'春节',ids:['spring_lantern','red_envelope','dumpling']};
@@ -2177,6 +2256,7 @@ function festivalForDate(key){
   }
   return null;
 }
+function holidayCueForDate(key){return festivalForDate(key);}
 function recommendationIds(){
   const text=getTextForRecommendations().toLowerCase();const scores=new Map();if(!text)return [];
   for(const [pattern,ids] of (typeof RECOMMENDATION_RULES!=='undefined'?RECOMMENDATION_RULES:[]))if(pattern.test(text))ids.forEach(id=>scores.set(id,(scores.get(id)||0)+4));
@@ -2229,25 +2309,25 @@ function duplicateSelected(){
   if(!ids.length&&!photos.length)return;
   const before=clone(state.entry),newIds=[];
   ids.forEach(id=>{const src=state.entry.stickers.find(x=>x.id===id);if(src){const maxZ=Math.max(0,...(state.entry.stickers||[]).map(x=>Number(x.z)||0));const n={...src,id:uid(src.stickerId),x:clamp(src.x+.06,.06,.94),y:clamp(src.y+.06,.18,.92),z:maxZ+1};state.entry.stickers.push(n);newIds.push(n.id);}});
-  photos.forEach(id=>{const src=state.entry.photos.find(x=>x.id===id);if(src){const n={...src,id:uid('photo'),x:clamp(src.x+.06,.06,.94),y:clamp(src.y+.06,.18,.92),z:Date.now()};state.entry.photos.push(n);newIds.push(n.id);}});
+  photos.forEach(id=>{const src=state.entry.photos.find(x=>x.id===id);if(src){const maxZ=Math.max(0,...(state.entry.stickers||[]).map(x=>Number(x.z)||0),...(state.entry.photos||[]).map(x=>Number(x.z)||0));const n={...src,id:uid('photo'),x:clamp(src.x+.06,.06,.94),y:clamp(src.y+.06,.18,.92),z:maxZ+1};state.entry.photos.push(n);newIds.push(n.id);}});
   state.selectedCanvas=new Set(newIds);state.selectedPhoto=new Set();state.selectedText=null;
   recordChange(before,'已复制');
   renderDrawer();
 }
 function adjustSelectedScale(delta){const before=clone(state.entry);if(state.selectedText){const key=state.selectedText+'Style',style=state.entry[key]||{};style.fontSize=clamp((style.fontSize|| (state.selectedText==='title'?25:12))+(delta*28),state.selectedText==='title'?16:9,state.selectedText==='title'?54:28);state.entry[key]=style;}state.entry.stickers.forEach(x=>{if(state.selectedCanvas.has(x.id)&&!x.locked)x.scale=clamp((x.scale||1)+delta,.35,2.15);});state.entry.photos.forEach(x=>{if(state.selectedPhoto.has(x.id)&&!x.locked)x.scale=clamp((x.scale||1)+delta,.35,1.8);});recordChange(before);renderCanvasOnly();}
 function rotateSelected(delta){const before=clone(state.entry);state.entry.stickers.forEach(x=>{if(state.selectedCanvas.has(x.id)&&!x.locked)x.rotation=clamp((x.rotation||0)+delta,-180,180);});state.entry.photos.forEach(x=>{if(state.selectedPhoto.has(x.id)&&!x.locked)x.rotation=clamp((x.rotation||0)+delta,-180,180);});recordChange(before);renderCanvasOnly();}
-function layerSelected(dir){const ids=new Set(state.selectedCanvas);if(!ids.size)return;const before=clone(state.entry),list=state.entry.stickers||[];if(dir==='front'){let max=Math.max(0,...list.map(x=>Number(x.z)||0));for(const it of list){if(ids.has(it.id))it.z=++max;}}else{let min=Math.min(0,...list.map(x=>Number(x.z)||0));for(const it of list){if(ids.has(it.id))it.z=--min;}}recordChange(before);renderCanvasOnly();renderTools();}
-function toggleLockSelected(){const ids=new Set(state.selectedCanvas),before=clone(state.entry);state.entry.stickers.forEach(x=>{if(ids.has(x.id))x.locked=!x.locked;});recordChange(before);renderCanvasOnly();renderTools();}
+function layerSelected(dir){const ids=new Set([...state.selectedCanvas,...state.selectedPhoto]);if(!ids.size)return;const before=clone(state.entry);const list=[...(state.entry.stickers||[]),...(state.entry.photos||[])];if(dir==='front'){let max=Math.max(0,...list.map(x=>Number(x.z)||0));for(const it of list){if(ids.has(it.id))it.z=++max;}}else{let min=Math.min(0,...list.map(x=>Number(x.z)||0));for(const it of list){if(ids.has(it.id))it.z=--min;}}normalizeLayerOrder(state.entry.stickers,state.entry.photos);recordChange(before);renderCanvasOnly();renderTools();}
+function toggleLockSelected(){const ids=new Set([...state.selectedCanvas,...state.selectedPhoto]),before=clone(state.entry);state.entry.stickers.forEach(x=>{if(ids.has(x.id))x.locked=!x.locked;});state.entry.photos.forEach(x=>{if(ids.has(x.id))x.locked=!x.locked;});recordChange(before);renderCanvasOnly();renderTools();}
 function autoArrangeStickers(){const list=state.entry.stickers||[];if(!list.length)return;const before=clone(state.entry),anchors=[];for(let r=0;r<4;r++)for(let c=0;c<6;c++)anchors.push({x:.16+c*.14,y:.44+r*.11});list.forEach((it,i)=>{if(it.locked)return;const a=anchors[i%anchors.length];it.x=a.x;it.y=a.y;it.rotation=(i%5-2)*3;it.z=i+1;});recordChange(before,'已自动排版');renderCanvasOnly();}
 function toggleCanvasSelection(id){if(state.canvasMultiSelect){if(state.selectedCanvas.has(id))state.selectedCanvas.delete(id);else state.selectedCanvas.add(id);}else{state.selectedCanvas=new Set([id]);state.selectedPhoto.clear();}state.selectedText=null;renderTools();renderCanvasSelectionState();}
 function clearSelection(){state.selectedCanvas.clear();state.selectedPhoto.clear();state.selectedText=null;renderCanvasSelectionState();renderTools();}
 
 async function fileToDataUrl(file){return await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file);});}
-async function compressImage(file){const src=await fileToDataUrl(file);return await new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>{const max=900,scale=Math.min(1,max/Math.max(img.naturalWidth,img.naturalHeight)),c=document.createElement('canvas');c.width=Math.round(img.naturalWidth*scale);c.height=Math.round(img.naturalHeight*scale);const ctx=c.getContext('2d');ctx.drawImage(img,0,0,c.width,c.height);resolve(c.toDataURL('image/jpeg',.72));};img.onerror=reject;img.src=src;});}
+async function compressImage(file){const src=await fileToDataUrl(file);return await new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>{const ratio=clamp(img.naturalWidth/Math.max(1,img.naturalHeight),.55,2.2),max=1000,scale=Math.min(1,max/Math.max(img.naturalWidth,img.naturalHeight)),c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.naturalWidth*scale));c.height=Math.max(1,Math.round(img.naturalHeight*scale));const ctx=c.getContext('2d');ctx.drawImage(img,0,0,c.width,c.height);resolve({src:c.toDataURL('image/jpeg',.76),ratio});};img.onerror=reject;img.src=src;});}
 async function addPhoto(file){
   try{
-    const src=await compressImage(file),before=clone(state.entry),p=findOpenPosition((state.entry.photos||[]).length);
-    const photo={id:uid('photo'),src,x:p.x,y:p.y,scale:1,rotation:0,z:Date.now(),locked:false};
+    const prepared=await compressImage(file),before=clone(state.entry),p=findOpenPosition((state.entry.photos||[]).length);
+    const maxZ=Math.max(0,...(state.entry.stickers||[]).map(x=>Number(x.z)||0),...(state.entry.photos||[]).map(x=>Number(x.z)||0));const photo={id:uid('photo'),src:prepared.src,ratio:prepared.ratio,frame:'paper',cropMode:'original',objectPositionX:50,objectPositionY:50,x:p.x,y:p.y,scale:1,rotation:0,z:maxZ+1,locked:false};
     state.entry.photos=[...(state.entry.photos||[]),photo];
     state.selectedPhoto=new Set([photo.id]);state.selectedCanvas.clear();state.selectedText=null;
     recordChange(before,'已加入照片');
@@ -2257,18 +2337,14 @@ async function addPhoto(file){
 
 function renderDrawer(){
   if(!state.drawerOpen){closeDrawer();return;}const e=state.entry||emptyEntry(currentDateKey());
-  const canvasObjects=[];
-  (e.photos||[]).slice().sort((a,b)=>(a.z||0)-(b.z||0)).forEach(p=>canvasObjects.push(`<img class="placed-photo ${state.selectedPhoto.has(p.id)?'selected':''}" data-drag-kind="photo" data-id="${p.id}" src="${escapeHtml(p.src)}" alt="照片" style="left:${p.x*100}%;top:${p.y*100}%;transform:translate(-50%,-50%) rotate(${p.rotation||0}deg) scale(${p.scale||1});z-index:${p.z||2}" />`));
-  (e.stickers||[]).slice().sort((a,b)=>(a.z||0)-(b.z||0)).forEach(p=>{const st=STICKERS.find(x=>x.id===p.stickerId);if(!st)return;canvasObjects.push(`<div class="placed-sticker ${state.selectedCanvas.has(p.id)?'selected':''} ${p.locked?'locked':''}" data-drag-kind="sticker" data-id="${p.id}" style="left:${p.x*100}%;top:${p.y*100}%;transform:translate(-50%,-50%) rotate(${p.rotation||0}deg) scale(${p.scale||1});z-index:${p.z||2}">${svgSticker(st,64)}</div>`);});
-  const title=e.title||'',content=e.content||'';document.getElementById('drawerRoot').innerHTML=`<button class="drawer-backdrop" id="drawerBackdrop"></button><aside class="editor-drawer"><div class="drawer-head"><div><div class="section-kicker">A CORNER FOR</div><h2>${currentDateKey()}</h2><span class="draft-label ${e._draft?'show':''}">${e._draft?'未保存草稿':''}</span></div><button class="close-button" id="closeDrawer">×</button></div><div class="editor-body">
+  const canvasObjects=compositionDomHtml(e,{mode:'canvas'});
+  const title=e.title||'',content=e.content||'';document.getElementById('drawerRoot').innerHTML=`<button class="drawer-backdrop" id="drawerBackdrop"></button><aside class="editor-drawer"><div class="drawer-head"><div class="drawer-head-main"><button class="mobile-back-button" id="mobileBackMonth" aria-label="返回月历">← 返回月历</button><div><div class="section-kicker">A CORNER FOR</div><h2>${currentDateKey()}</h2><span class="draft-label ${e._draft?'show':''}">${e._draft?'未保存草稿':''}</span></div></div><button class="close-button" id="closeDrawer">×</button></div><div class="editor-body">
     ${supabase&&!state.user?'<div class="login-hint"><strong>云端记录</strong><span>当前输入会自动保留在本机，登录后再保存到云端。</span><button id="loginFromEditor">登录</button></div>':''}
     <div class="canvas-toolbar"><div><strong>一日画布</strong><span id="canvasSelectionInfo"></span></div><div class="canvas-actions"><button class="ghost-mini" id="undoBtn" ${state.historyPast.length?'':'disabled'}>撤销</button><button class="ghost-mini" id="redoBtn" ${state.historyFuture.length?'':'disabled'}>恢复</button><button class="ghost-mini ${state.canvasMultiSelect?'active':''}" id="toggleCanvasMulti">${state.canvasMultiSelect?'结束多选':'多选移动'}</button><button class="ghost-mini" id="autoArrange">自动排版</button></div></div>
     ${state.pendingCapsule?`<div class="capsule-alert"><strong>时间胶囊</strong><span>${escapeHtml(state.pendingCapsule.note)}</span></div>`:''}
-    <div class="journal-canvas" id="journalCanvas" style="background:${escapeHtml(e.background)}"><div class="canvas-date">${currentDateKey()}</div>
-      <div class="canvas-text title-canvas ${title?'':'placeholder'} ${state.selectedText==='title'?'text-selected':''}" data-drag-kind="title" style="left:${e.titlePos.x*100}%;top:${e.titlePos.y*100}%;font-size:${e.titleStyle.fontSize}px;text-align:${e.titleStyle.align};font-weight:${e.titleStyle.weight||500}">${escapeHtml(title||'双击这里写标题')}</div>
-      <div class="canvas-text content-canvas ${content?'':'placeholder'} ${state.selectedText==='content'?'text-selected':''}" data-drag-kind="content" style="left:${e.contentPos.x*100}%;top:${e.contentPos.y*100}%;font-size:${e.contentStyle.fontSize}px;text-align:${e.contentStyle.align};font-weight:${e.contentStyle.weight||400}">${escapeHtml(content||'双击这里写下今天发生了什么…')}</div>${e.mood?moodVisualMarkup(e.mood,false):''}${canvasObjects}<div id="canvasFloatingTools" class="canvas-floating-tools" aria-hidden="true"></div></div>
-    <div class="canvas-hint">点击文字后可直接编辑；拖动元素调整位置。滚轮缩放选中的贴纸，Shift + 滚轮旋转。双击贴纸删除。</div>
-    <div class="selection-tools" id="selectionTools"><div id="objectTools"></div><div id="textTools"></div></div>
+    <div class="journal-canvas" id="journalCanvas" style="background:${escapeHtml(e.background)}"><div class="canvas-date">${currentDateKey()}</div>${canvasObjects}<div id="canvasFloatingTools" class="canvas-floating-tools" aria-hidden="true"></div></div>
+    <div class="canvas-hint">点击文字后可直接编辑；拖动元素调整位置。拖动控制点可缩放/旋转；方向键微调位置，Shift + 方向键快速移动。</div>
+    <div class="selection-tools" id="selectionTools"><div id="objectTools"></div><div id="photoTools"></div><div id="textTools"></div></div>
     <div class="field-block"><label class="field-label">标题<input id="entryTitle" maxlength="80" value="${escapeHtml(title)}" placeholder="给这一天一个名字" /></label><label class="field-label">今天发生了什么？<textarea id="entryContent" rows="4" placeholder="写下一点点就好。">${escapeHtml(content)}</textarea></label><div class="autosave-note" id="autosaveNote">${escapeHtml(state.autosaveStatus||'输入会自动保留；登录后会自动同步到云端。')}</div></div>
     <div class="editor-section"><div class="section-title-row"><div><span>贴纸库</span><small>搜索 / 推荐 / 收藏 / 最近使用；支持多选加入。</small></div><span>${(e.stickers||[]).length} 枚已在画布</span></div><div id="stickerPanel"></div></div>
     <div class="editor-section"><div class="section-title-row"><div><span>心情</span><small>给这一天一个轻轻的标记。</small></div></div><div class="mood-row">${MOODS.map(m=>`<button class="mood-choice ${e.mood===m.key?'selected':''}" data-mood="${m.key}">${m.label}</button>`).join('')}</div></div>
@@ -2283,7 +2359,7 @@ function openDrawer(){state.drawerOpen=true;state.autosaveStatus='';state.select
 function closeDrawer(){state.drawerOpen=false;state.drag=null;state.textEdit=null;const root=document.getElementById('drawerRoot');if(root)root.innerHTML='';}
 function updateDrawerFooter(){const s=document.getElementById('saveStatus');if(s)s.textContent=state.status;const a=document.getElementById('autosaveNote');if(a)a.textContent=state.autosaveStatus||'输入会自动保留；登录后会自动同步到云端。';}
 function bindDrawerEvents(){
-  document.getElementById('drawerBackdrop').addEventListener('click',closeDrawer);document.getElementById('closeDrawer').addEventListener('click',closeDrawer);document.getElementById('saveEntry').addEventListener('click',()=>saveEntry());document.getElementById('deleteEntry').addEventListener('click',deleteEntry);document.getElementById('loginFromEditor')?.addEventListener('click',openAuth);
+  document.getElementById('drawerBackdrop').addEventListener('click',closeDrawer);document.getElementById('closeDrawer').addEventListener('click',closeDrawer);document.getElementById('mobileBackMonth')?.addEventListener('click',()=>{commitBeforeNavigation();closeDrawer();renderCalendar();});document.getElementById('saveEntry').addEventListener('click',()=>saveEntry());document.getElementById('deleteEntry').addEventListener('click',deleteEntry);document.getElementById('loginFromEditor')?.addEventListener('click',openAuth);
   const t=document.getElementById('entryTitle'),c=document.getElementById('entryContent');
   const onInput=(kind,el)=>{state.entry[kind]=el.value;queueDraftSaveAndRecommend();renderCanvasOnly();};
   const queueDraftSaveAndRecommend=()=>{saveDraft(state.entry);state.autosaveStatus='正在保存草稿…';clearTimeout(state.recoTimer);state.recoTimer=setTimeout(()=>{updateStickerPanelResults();},120);scheduleCloudSave();updateDrawerFooter();};
@@ -2301,8 +2377,34 @@ function updateSidebarInput(kind){
   const el=document.getElementById(kind==='title'?'entryTitle':'entryContent');
   if(el && el.value!==String(state.entry?.[kind]||'')) el.value=String(state.entry?.[kind]||'');
 }
-function renderTools(){const wrap=document.getElementById('objectTools');if(!wrap)return;let html='';const n=state.selectedCanvas.size+state.selectedPhoto.size;if(n){const locked=state.selectedCanvas.size&&[...state.selectedCanvas].some(id=>state.entry.stickers.find(x=>x.id===id)?.locked);html+=`<div class="tool-group"><span class="tool-label">选中 ${n} 个</span><button class="ghost-mini" id="scaleDown">缩小</button><button class="ghost-mini" id="scaleUp">放大</button><button class="ghost-mini" id="rotateLeft">↺</button><button class="ghost-mini" id="rotateRight">↻</button><button class="ghost-mini" id="sendBack">后置</button><button class="ghost-mini" id="bringFront">前置</button><button class="ghost-mini" id="duplicateSelected">复制</button><button class="ghost-mini" id="lockSelected">${locked?'解锁':'锁定'}</button><button class="ghost-mini danger-mini" id="deleteSelected">删除</button></div>`;}
+window.addEventListener('beforeunload',()=>{
+  try{if(state.drawerOpen&&state.entry){saveDraft(state.entry);}}catch(error){console.warn('[IN DAYS] beforeunload draft save failed',error);}
+});
+
+document.addEventListener('keydown',e=>{
+  if(!state.drawerOpen||state.textEdit)return;
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='s'){e.preventDefault();commitBeforeNavigation();saveEntry();return;}
+  if(e.key==='Escape'){clearSelection();return;}
+  if((e.key==='Delete'||e.key==='Backspace')&&(state.selectedCanvas.size||state.selectedPhoto.size)){e.preventDefault();removeSelected();return;}
+  if(e.key==='c'&&(e.metaKey||e.ctrlKey)&&(state.selectedCanvas.size||state.selectedPhoto.size)){e.preventDefault();duplicateSelected();return;}
+  const step=e.shiftKey ? 0.012 : 0.004;
+  if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)&& (state.selectedText||state.selectedCanvas.size||state.selectedPhoto.size)){
+    e.preventDefault();
+    const dx=e.key==='ArrowLeft'?-step:e.key==='ArrowRight'?step:0;
+    const dy=e.key==='ArrowUp'?-step:e.key==='ArrowDown'?step:0;
+    moveSelectionByKeyboard(dx,dy);
+  }
+});
+function renderTools(){const wrap=document.getElementById('objectTools');if(!wrap)return;let html='';const n=state.selectedCanvas.size+state.selectedPhoto.size;if(n){const locked=[...state.selectedCanvas].some(id=>state.entry.stickers.find(x=>x.id===id)?.locked)||[...state.selectedPhoto].some(id=>state.entry.photos.find(x=>x.id===id)?.locked);html+=`<div class="tool-group"><span class="tool-label">选中 ${n} 个</span><button class="ghost-mini" id="scaleDown">缩小</button><button class="ghost-mini" id="scaleUp">放大</button><button class="ghost-mini" id="rotateLeft">↺</button><button class="ghost-mini" id="rotateRight">↻</button><button class="ghost-mini" id="sendBack">后置</button><button class="ghost-mini" id="bringFront">前置</button><button class="ghost-mini" id="duplicateSelected">复制</button><button class="ghost-mini" id="lockSelected">${locked?'解锁':'锁定'}</button><button class="ghost-mini danger-mini" id="deleteSelected">删除</button></div>`;}
   wrap.innerHTML=html;document.getElementById('scaleDown')?.addEventListener('click',()=>adjustSelectedScale(-.08));document.getElementById('scaleUp')?.addEventListener('click',()=>adjustSelectedScale(.08));document.getElementById('rotateLeft')?.addEventListener('click',()=>rotateSelected(-8));document.getElementById('rotateRight')?.addEventListener('click',()=>rotateSelected(8));document.getElementById('sendBack')?.addEventListener('click',()=>layerSelected('back'));document.getElementById('bringFront')?.addEventListener('click',()=>layerSelected('front'));document.getElementById('duplicateSelected')?.addEventListener('click',duplicateSelected);document.getElementById('lockSelected')?.addEventListener('click',toggleLockSelected);document.getElementById('deleteSelected')?.addEventListener('click',removeSelected);
+  const photoTool=document.getElementById('photoTools');if(photoTool){
+    if(state.selectedPhoto.size===1){
+      const id=[...state.selectedPhoto][0],p=state.entry.photos.find(x=>x.id===id),frame=String(p?.frame||'paper'),cropMode=String(p?.cropMode||'original');
+      photoTool.innerHTML=`<div class="tool-group photo-edit-tools"><span class="tool-label">照片样式</span><button class="ghost-mini ${frame==='paper'?'active':''}" data-photo-frame="paper">纸张</button><button class="ghost-mini ${frame==='tape'?'active':''}" data-photo-frame="tape">胶带</button><button class="ghost-mini ${frame==='shadow'?'active':''}" data-photo-frame="shadow">阴影</button><button class="ghost-mini ${frame==='none'?'active':''}" data-photo-frame="none">无框</button><span class="tool-label photo-crop-label">裁切</span><button class="ghost-mini ${cropMode==='original'?'active':''}" data-photo-crop="original">原比例</button><button class="ghost-mini ${cropMode==='4:3'?'active':''}" data-photo-crop="4:3">4:3</button></div>`;
+      photoTool.querySelectorAll('[data-photo-frame]').forEach(btn=>btn.addEventListener('click',()=>{const before=clone(state.entry);p.frame=btn.dataset.photoFrame;recordChange(before);renderCanvasOnly();renderTools();}));
+      photoTool.querySelectorAll('[data-photo-crop]').forEach(btn=>btn.addEventListener('click',()=>{const before=clone(state.entry);p.cropMode=btn.dataset.photoCrop;if(p.cropMode==='4:3'){p.objectPositionX=50;p.objectPositionY=50;}recordChange(before);renderCanvasOnly();renderTools();}));
+    } else photoTool.innerHTML='';
+  }
   const text=document.getElementById('textTools');if(text){if(state.selectedText){const style=state.entry[`${state.selectedText}Style`]||{};text.innerHTML=`<div class="tool-group"><span class="tool-label">${state.selectedText==='title'?'标题':'正文'} · ${style.fontSize}px</span><button class="ghost-mini" id="textSmaller">A−</button><button class="ghost-mini" id="textLarger">A＋</button><button class="ghost-mini" id="textAlign">对齐：${style.align==='left'?'左':style.align==='center'?'中':'右'}</button></div>`;document.getElementById('textSmaller').onclick=()=>setTextSize(state.selectedText,-2);document.getElementById('textLarger').onclick=()=>setTextSize(state.selectedText,2);document.getElementById('textAlign').onclick=()=>toggleTextAlign(state.selectedText);}else text.innerHTML='<div class="tool-group"><span class="tool-muted">点击文字可编辑；拖动可调整位置</span></div>';}}
 function renderCanvasSelectionState(){
   document.querySelectorAll('.placed-sticker').forEach(el=>el.classList.toggle('selected',state.selectedCanvas.has(el.dataset.id)));
@@ -2577,13 +2679,62 @@ function openCapsule(){const e=state.entry||emptyEntry(currentDateKey()), existi
 function closeCapsule(){document.getElementById('capsuleRoot').innerHTML='';}
 function checkCapsule(){const tc=state.entry?.timeCapsule;if(tc&&tc.date<=currentDateKey()){state.pendingCapsule=tc;}else state.pendingCapsule=null;}
 
-function openReview(){const days=Object.values(state.monthEntries).filter(hasEntryContent),counts={};let moodCounts={};days.forEach(e=>(e.stickers||[]).forEach(s=>counts[s.stickerId]=(counts[s.stickerId]||0)+1));days.forEach(e=>{if(e.mood)moodCounts[e.mood]=(moodCounts[e.mood]||0)+1;});const top=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([id,n])=>{const s=STICKERS.find(x=>x.id===id);return s?`<span class="review-sticker">${svgSticker(s,32)} ${escapeHtml(s.name)} · ${n}</span>`:''}).join('');document.getElementById('reviewRoot').innerHTML=`<button class="auth-backdrop" id="reviewBackdrop"></button><section class="review-modal"><button class="close-button" id="closeReview">×</button><div class="section-kicker">MONTH REVIEW</div><h2>${state.year} · ${monthCN[state.month]}</h2><p class="review-sub">这个月，你留下了 ${days.length} 个小片刻。</p><div class="review-stat-grid"><div><strong>${days.length}</strong><span>有记录的日子</span></div><div><strong>${days.reduce((n,e)=>n+(e.stickers||[]).length,0)}</strong><span>枚贴纸</span></div><div><strong>${days.filter(e=>e.photos?.length).length}</strong><span>有照片的日子</span></div></div><div class="review-section"><h3>常出现的贴纸</h3><div class="review-stickers">${top||'<span class="tool-muted">还没有足够的数据。</span>'}</div></div><div class="review-section"><h3>这个月的心情</h3><div class="mood-summary">${MOODS.map(m=>`<span>${m.label} ${moodCounts[m.key]||0}</span>`).join('')}</div></div></section>`;document.getElementById('reviewBackdrop').addEventListener('click',()=>document.getElementById('reviewRoot').innerHTML='');document.getElementById('closeReview').addEventListener('click',()=>document.getElementById('reviewRoot').innerHTML='');}
+function moodScore(key){return ({sad:1,tired:2,anxious:2,calm:3,full:4,happy:5,excited:5,love:5,wow:5}[key]||0);}
+function buildMoodTrendSvg(){
+  const entries=[]; const total=new Date(state.year,state.month+1,0).getDate();
+  for(let d=1;d<=total;d++){const k=dateKey(state.year,state.month,d),e=state.monthEntries[k];if(e?.mood)entries.push({d,score:moodScore(e.mood),label:MOODS.find(m=>m.key===e.mood)?.label||''});}
+  if(!entries.length)return '<div class="review-empty-trend">这个月还没有足够的心情记录。</div>';
+  const W=640,H=150,pad=18,maxX=Math.max(1,entries.length-1),maxY=5;
+  const pts=entries.map((x,i)=>`${pad+i*(W-pad*2)/Math.max(1,maxX)},${H-pad-x.score*(H-pad*2)/maxY}`).join(' ');
+  const dots=entries.map((x,i)=>`<circle cx="${pad+i*(W-pad*2)/Math.max(1,maxX)}" cy="${H-pad-x.score*(H-pad*2)/maxY}" r="4" fill="#8da684"/>`).join('');
+  return `<div class="review-trend-wrap"><svg class="review-trend" viewBox="0 0 ${W} ${H}" role="img" aria-label="本月心情趋势"><line x1="${pad}" y1="${H-pad}" x2="${W-pad}" y2="${H-pad}" stroke="#e8e4da"/><line x1="${pad}" y1="${H/2}" x2="${W-pad}" y2="${H/2}" stroke="#eeeae1"/><polyline points="${pts}" fill="none" stroke="#8da684" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>${dots}</svg><div class="review-trend-meta"><span>低落</span><span>平稳</span><span>开心</span></div></div>`;
+}
+function monthlyReviewData(){
+  const days=Object.values(state.monthEntries).filter(hasEntryContent),counts={},moodCounts={};
+  days.forEach(e=>(e.stickers||[]).forEach(s=>counts[s.stickerId]=(counts[s.stickerId]||0)+1));
+  days.forEach(e=>{if(e.mood)moodCounts[e.mood]=(moodCounts[e.mood]||0)+1;});
+  const mostMood=Object.entries(moodCounts).sort((a,b)=>b[1]-a[1])[0];
+  const holidayDays=Object.keys(state.monthEntries).map(k=>({k,h:holidayCueForDate(k)})).filter(x=>x.h);
+  return {days,counts,moodCounts,mostMood,holidayDays};
+}
+function buildMonthlyReviewSvg(){
+  const {days,counts,moodCounts,mostMood,holidayDays}=monthlyReviewData();
+  const W=1400,H=1000,bg='#fbfaf6',ink='#3f403b',muted='#8f8c84';
+  let svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><rect width="100%" height="100%" fill="${bg}"/><rect x="48" y="48" width="${W-96}" height="${H-96}" rx="42" fill="#fffefb" stroke="#ded9ce"/><text x="92" y="112" font-size="18" letter-spacing="5" fill="${muted}">IN DAYS · MONTH REVIEW</text><text x="92" y="172" font-size="58" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif" fill="${ink}">${state.year} · ${escapeHtml(monthCN[state.month])}</text><text x="92" y="207" font-size="15" fill="${muted}">记录生活，收藏每一个小小的你。</text>`;
+  const stats=[['记录日',days.length],['贴纸',days.reduce((n,e)=>n+(e.stickers||[]).length,0)],['照片日',days.filter(e=>e.photos?.length).length]];
+  stats.forEach((s,i)=>{const x=92+i*250;svg+=`<rect x="${x}" y="258" width="220" height="118" rx="24" fill="#f6f4ed"/><text x="${x+24}" y="298" font-size="14" fill="${muted}">${s[0]}</text><text x="${x+24}" y="350" font-size="36" fill="${ink}">${s[1]}</text>`;});
+  svg+=`<text x="92" y="446" font-size="16" fill="${ink}">本月心情趋势</text>`;
+  const trend=buildMoodTrendSvg().match(/<svg[^>]*viewBox="0 0 ([^"]+)">([\s\S]*?)<\/svg>/); if(trend){const inner=trend[2].replace(/#8da684/g,'#8da684').replace(/#e8e4da/g,'#e8e4da').replace(/#eeeae1/g,'#eeeae1');svg+=`<g transform="translate(92 462) scale(.92)">${inner}</g>`;} else svg+=`<text x="92" y="500" font-size="13" fill="${muted}">还没有足够的心情记录。</text>`;
+  const top=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,6);svg+=`<text x="820" y="446" font-size="16" fill="${ink}">最常出现</text>`;top.forEach(([id,n],i)=>{const st=STICKERS.find(x=>x.id===id),y=486+i*60;if(!st)return;svg+=`<g transform="translate(820 ${y})">${exportSvgForSticker(st,24,12,42,1,0)}<text x="58" y="17" font-size="13" fill="${ink}">${escapeHtml(st.name)}</text><text x="260" y="17" font-size="11" fill="${muted}">${n} 次</text></g>`;});
+  const moodText=mostMood?MOODS.find(m=>m.key===mostMood[0])?.label:'还没设置心情';svg+=`<text x="92" y="820" font-size="16" fill="${ink}">这个月的你</text><text x="92" y="862" font-size="28" fill="${ink}">${escapeHtml(moodText)} · ${days.length?`留下了 ${days.length} 个小片刻`:'还在慢慢开始'}</text><text x="92" y="908" font-size="14" fill="${muted}">${holidayDays.length?`遇见了 ${holidayDays.map(x=>x.h.name).join('、')}`:'让每一个平凡的日子都有迹可循。'}</text><text x="1030" y="906" font-size="13" fill="${muted}">一隅 · IN DAYS</text></svg>`;
+  return svg;
+}
+async function exportMonthlyReviewPng(){try{await svgToPng(buildMonthlyReviewSvg(),1400,1000,`in-days-${state.year}-${String(state.month+1).padStart(2,'0')}-review.png`);toast('本月生活月报已导出。');}catch{toast('月报导出失败，请稍后重试。');}}
+function openReview(){
+  const {days,counts,moodCounts,mostMood,holidayDays}=monthlyReviewData();
+  const top=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([id,n])=>{const s=STICKERS.find(x=>x.id===id);return s?`<span class="review-sticker">${svgSticker(s,32)} ${escapeHtml(s.name)} · ${n}</span>`:''}).join('');
+  document.getElementById('reviewRoot').innerHTML=`<button class="auth-backdrop" id="reviewBackdrop"></button><section class="review-modal"><button class="close-button" id="closeReview">×</button><div class="section-kicker">MONTH REVIEW</div><div class="review-head-row"><div><h2>${state.year} · ${monthCN[state.month]}</h2><p class="review-sub">这个月，你留下了 ${days.length} 个小片刻。${mostMood?` 最常见的心情是「${escapeHtml(MOODS.find(m=>m.key===mostMood[0])?.label||'')}」。`:''}</p></div><button class="save-button mini" id="exportReviewPng">导出生活月报 PNG</button></div><div class="review-stat-grid"><div><strong>${days.length}</strong><span>有记录的日子</span></div><div><strong>${days.reduce((n,e)=>n+(e.stickers||[]).length,0)}</strong><span>枚贴纸</span></div><div><strong>${days.filter(e=>e.photos?.length).length}</strong><span>有照片的日子</span></div></div><div class="review-section"><h3>本月心情趋势</h3>${buildMoodTrendSvg()}</div><div class="review-section"><h3>常出现的贴纸</h3><div class="review-stickers">${top||'<span class="tool-muted">还没有足够的数据。</span>'}</div></div><div class="review-section"><h3>节日记录</h3><div class="mood-summary">${holidayDays.length?holidayDays.map(x=>`<span>${escapeHtml(x.k.slice(5))} · ${escapeHtml(x.h.name)}</span>`).join(''):'<span>这个月没有系统节日提示</span>'}</div></div><div class="review-section"><h3>这个月的心情</h3><div class="mood-summary">${MOODS.map(m=>`<span>${escapeHtml(m.label)} ${moodCounts[m.key]||0}</span>`).join('')}</div></div></section>`;
+  document.getElementById('reviewBackdrop').addEventListener('click',()=>document.getElementById('reviewRoot').innerHTML='');
+  document.getElementById('closeReview').addEventListener('click',()=>document.getElementById('reviewRoot').innerHTML='');
+  document.getElementById('exportReviewPng').addEventListener('click',exportMonthlyReviewPng);
+}
 
 function exportSvgForSticker(sticker,x,y,size,scale=1,rot=0){if(!sticker)return '';if(sticker.inlineSvg)return `<image href="${escapeHtml(stickerDataUri(sticker))}" x="${x-size/2}" y="${y-size/2}" width="${size*scale}" height="${size*scale}" transform="rotate(${rot} ${x} ${y})"/>`;const raw=svgSticker(sticker,size),m=raw.match(/<svg[^>]*>([\s\S]*)<\/svg>/);return m?`<g transform="translate(${x-size/2} ${y-size/2}) rotate(${rot} ${size/2} ${size/2}) scale(${scale})">${m[1]}</g>`:'';}
-function textLinesSvg(text,maxChars){const out=[];for(let i=0;i<text.length;i+=maxChars)out.push(text.slice(i,i+maxChars));return out;}
+function textLinesSvg(text,maxChars){const out=[];for(const rawLine of String(text||'').split(/\r?\n/)){const line=rawLine||' ';for(let i=0;i<line.length;i+=maxChars)out.push(line.slice(i,i+maxChars));if(rawLine==='')out.push(' ');}return out.length?out:[' '];}
 async function svgToPng(svg,w,h,filename){return await new Promise((resolve,reject)=>{const blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}),url=URL.createObjectURL(blob),img=new Image();img.onload=()=>{const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');ctx.fillStyle='#fbfaf6';ctx.fillRect(0,0,w,h);ctx.drawImage(img,0,0,w,h);URL.revokeObjectURL(url);c.toBlob(b=>{if(!b)return reject(new Error('export failed'));const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);resolve();},'image/png');};img.onerror=reject;img.src=url;});}
-function compositionSvg(e,w=1200,h=900){const sx=w/CANVAS_W,sy=h/CANVAS_H,tx=x=>x*CANVAS_W*sx,ty=y=>y*CANVAS_H*sy;let body='';if(e.title){body+=`<text x="${tx(e.titlePos.x)}" y="${ty(e.titlePos.y)}" font-size="${e.titleStyle.fontSize*sx}" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif" font-weight="${e.titleStyle.weight||500}" fill="#3f403b" text-anchor="${e.titleStyle.align==='center'?'middle':e.titleStyle.align==='right'?'end':'start'}">${escapeHtml(e.title)}</text>`;}if(e.content){const lines=textLinesSvg(e.content,Math.max(14,Math.floor(38/(e.contentStyle.fontSize/12))));lines.forEach((line,i)=>body+=`<text x="${tx(e.contentPos.x)}" y="${ty(e.contentPos.y)+i*e.contentStyle.fontSize*1.45*sy}" font-size="${e.contentStyle.fontSize*sx}" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif" fill="#66645c" text-anchor="${e.contentStyle.align==='center'?'middle':e.contentStyle.align==='right'?'end':'start'}">${escapeHtml(line)}</text>`);}if(e.mood){const mm=MOODS.find(m=>m.key===e.mood);const mc={happy:'#d8b971',calm:'#9db5a2',full:'#b6a486',tired:'#9cabb6',sad:'#95a7b3',anxious:'#c39a9d'}[e.mood]||'#b7b5ae';body+=`<circle cx="${tx(.84)}" cy="${ty(.10)}" r="${8*sx}" fill="${mc}" opacity=".85"/><text x="${tx(.84)+14*sx}" y="${ty(.10)+5*sy}" font-size="${12*sx}" fill="#8f8c84" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif">${escapeHtml(mm?.label||'')}</text>`;}
-  for(const p of e.photos||[]){body+=`<image href="${escapeHtml(p.src)}" x="${tx(p.x)-80*p.scale*sx}" y="${ty(p.y)-60*p.scale*sy}" width="${160*p.scale*sx}" height="${120*p.scale*sy}" preserveAspectRatio="xMidYMid slice" transform="rotate(${p.rotation||0} ${tx(p.x)} ${ty(p.y)})"/>`;}for(const p of e.stickers||[]){const st=STICKERS.find(x=>x.id===p.stickerId);body+=exportSvgForSticker(st,tx(p.x),ty(p.y),64*sx,p.scale||1,p.rotation||0);}return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><rect width="100%" height="100%" rx="44" fill="${e.background||'#fffdf7'}"/><rect x="24" y="24" width="${w-48}" height="${h-48}" rx="34" fill="none" stroke="#ded9ce" stroke-dasharray="5 7"/><text x="48" y="55" font-size="18" fill="#9b9991" letter-spacing="3">${e.entry_date}</text>${body}</svg>`;}
+function compositionElementsSvg(e,w,h,{includeDate=true}={}){
+  const sx=w/CANVAS_W,sy=h/CANVAS_H,tx=x=>x*CANVAS_W*sx,ty=y=>y*CANVAS_H*sy;let body='';
+  const esc=v=>escapeHtml(v);
+  if(e.title){body+=`<text x="${tx(e.titlePos.x)}" y="${ty(e.titlePos.y)}" font-size="${e.titleStyle.fontSize*sx}" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif" font-weight="${e.titleStyle.weight||500}" fill="#3f403b" text-anchor="${e.titleStyle.align==='center'?'middle':e.titleStyle.align==='right'?'end':'start'}">${esc(e.title)}</text>`;}
+  if(e.content){const lines=textLinesSvg(e.content,Math.max(14,Math.floor(38/(e.contentStyle.fontSize/12))));lines.forEach((line,i)=>body+=`<text x="${tx(e.contentPos.x)}" y="${ty(e.contentPos.y)+i*e.contentStyle.fontSize*1.45*sy}" font-size="${e.contentStyle.fontSize*sx}" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif" fill="#66645c" text-anchor="${e.contentStyle.align==='center'?'middle':e.contentStyle.align==='right'?'end':'start'}">${esc(line)}</text>`);}
+  if(e.mood){const mm=MOODS.find(m=>m.key===e.mood);const mc={happy:'#d8b971',calm:'#9db5a2',full:'#b6a486',tired:'#9cabb6',sad:'#95a7b3',anxious:'#c39a9d',excited:'#d39b77',love:'#c58d8c',wow:'#c5a269',angry:'#c88e87'}[e.mood]||'#b7b5ae';body+=`<circle cx="${tx(.84)}" cy="${ty(.10)}" r="${8*sx}" fill="${mc}" opacity=".85"/><text x="${tx(.84)+14*sx}" y="${ty(.10)+5*sy}" font-size="${12*sx}" fill="#8f8c84" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif">${esc(mm?.label||'')}</text>`;}
+  const layers=[...(e.photos||[]).map(p=>({kind:'photo',item:p,z:Number(p.z)||0})),...(e.stickers||[]).map(p=>({kind:'sticker',item:p,z:Number(p.z)||0}))].sort((a,b)=>a.z-b.z);
+  for(const layer of layers){const p=layer.item;if(layer.kind==='photo'){const rawRatio=clamp(Number(p.ratio)||4/3,.55,2.2),ratio=String(p.cropMode||'original')==='4:3'?4/3:rawRatio,pw=160*p.scale*sx,ph=pw/ratio;body+=`<rect x="${tx(p.x)-pw/2-5*sx}" y="${ty(p.y)-ph/2-5*sy}" width="${pw+10*sx}" height="${ph+10*sy}" rx="10" fill="#fffefb" opacity=".92" transform="rotate(${p.rotation||0} ${tx(p.x)} ${ty(p.y)})"/><image href="${esc(p.src)}" x="${tx(p.x)-pw/2}" y="${ty(p.y)-ph/2}" width="${pw}" height="${ph}" preserveAspectRatio="xMidYMid ${String(p.cropMode||'original')==='4:3'?'slice':'meet'}" transform="rotate(${p.rotation||0} ${tx(p.x)} ${ty(p.y)})"/>`;}else {const st=STICKERS.find(x=>x.id===p.stickerId);body+=exportSvgForSticker(st,tx(p.x),ty(p.y),64*sx,p.scale||1,p.rotation||0);}}
+  if(includeDate)body=`<text x="48" y="55" font-size="18" fill="#9b9991" letter-spacing="3">${esc(e.entry_date)}</text>`+body;
+  return body;
+}
+function compositionSvg(e,w=1200,h=900){return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><rect width="100%" height="100%" rx="44" fill="${escapeHtml(e.background||'#fffdf7')}"/><rect x="24" y="24" width="${w-48}" height="${h-48}" rx="34" fill="none" stroke="#ded9ce" stroke-dasharray="5 7"/>${compositionElementsSvg(e,w,h)}</svg>`;}
+
 async function exportDayPng(){await svgToPng(compositionSvg(state.entry,1200,900),1200,900,`in-days-${currentDateKey()}.png`);toast('这一日已导出。');}
 async function shareDay(){const fileName=`in-days-${currentDateKey()}.png`;try{const svg=compositionSvg(state.entry,1200,900),blob=new Blob([svg],{type:'image/svg+xml'}),url=URL.createObjectURL(blob),img=await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=url;});const c=document.createElement('canvas');c.width=1200;c.height=900;c.getContext('2d').drawImage(img,0,0);const png=await new Promise(r=>c.toBlob(r,'image/png'));URL.revokeObjectURL(url);const file=new File([png],fileName,{type:'image/png'});if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]})))await navigator.share({title:'一隅｜IN DAYS',files:[file]});else{const a=document.createElement('a');a.href=URL.createObjectURL(png);a.download=fileName;a.click();} }catch{toast('分享不可用，已改为导出图片。');await exportDayPng();}}
 function downloadBlob(blob,filename){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200);}
@@ -2592,19 +2743,19 @@ function exportMonthJson(){
   const payload={product:'IN DAYS',year:state.year,month:state.month+1,days};
   downloadBlob(new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'}),`in-days-${state.year}-${String(state.month+1).padStart(2,'0')}.json`);toast('本月数据已导出。');
 }
+function monthExportDimensions(onlyRecorded=false){const total=new Date(state.year,state.month+1,0).getDate(),first=(new Date(state.year,state.month,1).getDay()+6)%7;const count=onlyRecorded?Object.values(state.monthEntries).filter(hasEntryContent).length:(first+total);const rows=Math.max(1,Math.ceil(count/7));return {W:1680,H:Math.max(1320,220+rows*(157.5+24)+80)};}
 function buildMonthSvg({onlyRecorded=false}={}){
-  const W=1680,H=1320,cols=7,cardW=210,cardH=168,gapX=24,gapY=24,left=64,top=220;
-  const total=new Date(state.year,state.month+1,0).getDate(),first=(new Date(state.year,state.month,1).getDay()+6)%7,rows=Math.ceil((first+total)/7);
-  let s=[`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`,`<rect width="100%" height="100%" fill="#fbfaf6"/>`,`<text x="64" y="70" font-size="18" fill="#9b9991" letter-spacing="4">${state.year}</text>`,`<text x="64" y="148" font-size="72" fill="#3f403b" font-family="Arial, sans-serif">${escapeHtml(monthNames[state.month])}</text>`];
-  for(let d=1;d<=total;d++){
-    const key=dateKey(state.year,state.month,d),e=state.monthEntries[key],has=hasEntryContent(e);if(onlyRecorded&&!has)continue;
-    const idx=first+d-1,col=idx%7,row=Math.floor(idx/7),x=left+col*(cardW+gapX),y=top+row*(cardH+gapY),bg=e?.background||'#fffdf7';
-    s.push(`<rect x="${x}" y="${y}" width="${cardW}" height="${cardH}" rx="22" fill="${escapeHtml(bg)}" stroke="#e8e4da"/>`);
-    if(has){s.push(`<g transform="translate(${x} ${y}) scale(${cardW/CANVAS_W})">${miniObjectHtml(e,cardW/CANVAS_W)}</g>`);}else{s.push(`<text x="${x+16}" y="${y+24}" font-size="13" fill="#9b9991">${String(d).padStart(2,'0')}</text>`);}
-  }
+  const {W,H}=monthExportDimensions(onlyRecorded),cols=7,cardW=210,cardH=157.5,gapX=24,gapY=24,left=64,top=220;
+  const total=new Date(state.year,state.month+1,0).getDate(),first=(new Date(state.year,state.month,1).getDay()+6)%7;
+  let dates=[];for(let d=1;d<=total;d++){const key=dateKey(state.year,state.month,d),e=state.monthEntries[key];if(!onlyRecorded||hasEntryContent(e))dates.push(d);}
+  const outH=H;
+  let s=[`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${outH}" viewBox="0 0 ${W} ${outH}">`,`<rect width="100%" height="100%" fill="#fbfaf6"/>`,`<text x="64" y="70" font-size="18" fill="#9b9991" letter-spacing="4">${state.year}</text>`,`<text x="64" y="148" font-size="72" fill="#3f403b" font-family="Arial, sans-serif">${escapeHtml(monthNames[state.month])}</text>`];
+  if(onlyRecorded)s.push(`<text x="64" y="184" font-size="14" fill="#9b9991">仅有记录的日子</text>`);
+  dates.forEach((d,idx)=>{const key=dateKey(state.year,state.month,d),e=state.monthEntries[key],idx2=onlyRecorded?idx:first+d-1,col=idx2%7,row=Math.floor(idx2/7),x=left+col*(cardW+gapX),y=top+row*(cardH+gapY),bg=e?.background||'#fffdf7';s.push(`<rect x="${x}" y="${y}" width="${cardW}" height="${cardH}" rx="22" fill="${escapeHtml(bg)}" stroke="#e8e4da"/>`);if(e&&hasEntryContent(e)){s.push(`<g transform="translate(${x} ${y}) scale(${cardW/CANVAS_W})">${compositionElementsSvg(e,CANVAS_W,CANVAS_H,{includeDate:false})}</g>`);}s.push(`<text x="${x+16}" y="${y+25}" font-size="13" fill="#9b9991">${String(d).padStart(2,'0')}</text>`);const holiday=holidayCueForDate(key);if(holiday)s.push(`<text x="${x+cardW-16}" y="${y+25}" font-size="8" fill="#d1b46c" text-anchor="end">${escapeHtml(holiday.name.replace('节',''))}</text>`);});
   s.push('</svg>');return s.join('');
 }
-async function exportMonthPng({onlyRecorded=false}={}){const W=1680,H=1320;await svgToPng(buildMonthSvg({onlyRecorded}),W,H,`in-days-${state.year}-${String(state.month+1).padStart(2,'0')}${onlyRecorded?'-records':''}.png`);toast(onlyRecorded?'有记录的日子已导出。':'本月完整月历已导出。');}
+
+async function exportMonthPng({onlyRecorded=false}={}){const {W,H}=monthExportDimensions(onlyRecorded);await svgToPng(buildMonthSvg({onlyRecorded}),W,H,`in-days-${state.year}-${String(state.month+1).padStart(2,'0')}${onlyRecorded?'-records':''}.png`);toast(onlyRecorded?'有记录的日子已导出。':'本月完整月历已导出。');}
 function openMonthExport(){
   const root=document.getElementById('exportMonthRoot');if(!root)return;
   root.innerHTML=`<button class="export-backdrop" id="exportBackdrop"></button><section class="export-modal" role="dialog" aria-modal="true"><button class="close-button" id="closeMonthExport">×</button><div class="section-kicker">EXPORT MONTH</div><h2>导出本月</h2><p>选择一种你想留下的格式，不会一次导出全部内容。</p><div class="export-choice-list"><button class="export-choice" id="exportMonthFull"><strong>完整月历 PNG</strong><span>保留整个${monthCN[state.month]}的日期布局与已记录内容。</span></button><button class="export-choice" id="exportMonthRecords"><strong>仅有记录的日子 PNG</strong><span>只整理本月真正留下内容的日期。</span></button><button class="export-choice" id="exportMonthData"><strong>本月数据 JSON</strong><span>导出文字、贴纸位置、样式等可恢复数据。</span></button></div></section>`;
@@ -2615,10 +2766,10 @@ function openMonthExport(){
 }
 function closeMonthExport(){document.getElementById('exportMonthRoot').innerHTML='';}
 
-function injectStyle(){const link=document.createElement('link');link.rel='stylesheet';link.href='./styles.css?v=ultimate-final';document.head.appendChild(link);}
 function boot(){
   try{
-    renderShell();state.entry=emptyEntry(currentDateKey());renderCalendar();
+    if(!window.IN_DAYS_CONFIG){console.info('[IN DAYS] config.js 未提供，当前按未配置账号模式启动；不会覆盖现有 config.js。');}
+    renderShell();state.entry=emptyEntry(currentDateKey());state.drawerOpen=window.innerWidth>=1180;renderCalendar();
     Promise.resolve(initAuth()).then(async()=>{if(!supabase){await loadCurrentMonth();await loadSelectedEntry();}}).catch(async()=>{await loadCurrentMonth();await loadSelectedEntry();});
   }catch(error){console.error(error);app.innerHTML='<main class="app-shell"><section class="selected-summary"><div><p class="section-kicker">IN DAYS</p><h2>页面加载失败</h2><p>请刷新页面重试。</p></div></section></main>';}
 }
