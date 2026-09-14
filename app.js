@@ -20,8 +20,10 @@ const DRAFT_PREFIX = 'in-days:draft:';
 const CANVAS_W = 560;
 const CANVAS_H = 420;
 // 固定日期区：日期是独立板块，标题/正文/贴纸/照片都不得侵入。
-const DATE_SAFE_ZONE = {left:.035, top:.035, right:.245, bottom:.165, margin:.012};
-const CONTENT_ZONE = {left:.05, top:.21, right:.94, bottom:.92};
+const DATE_SAFE_ZONE = {left:.035, top:.035, right:.17, bottom:.135, margin:.008};
+// 日期只占左上角很小的一块；其余区域尽量留给文字、贴纸和照片。
+const CONTENT_ZONE = {left:.16, top:.15, right:.95, bottom:.93};
+const MINI_CONTENT_BOOST = 1.38;
 
 // 2026 mainland China statutory holiday / holiday-period map (official schedule).
 // The app uses these dates only for calendar cues and sticker recommendations;
@@ -2021,14 +2023,14 @@ function compositionDomHtml(e,{mode='mini'}={}){
   const title=String(e?.title||'').trim(), content=String(e?.content||'').trim();
   const titlePos=e?.titlePos||{x:.10,y:.22}, contentPos=e?.contentPos||{x:.10,y:.39};
   const titleStyle=e?.titleStyle||{fontSize:25,align:'left',weight:500}, contentStyle=e?.contentStyle||{fontSize:12,align:'left',weight:400};
-  const positionStyle=(pos,style)=>`left:${clamp(Number(pos?.x)||.1,.02,.94)*100}%;top:${clamp(Number(pos?.y)||.2,.06,.94)*100}%;font-size:${Number(style?.fontSize)||12}px;text-align:${style?.align||'left'};font-weight:${style?.weight||400};`;
+  const positionStyle=(pos,style)=>`left:${clamp(Number(pos?.x)||.1,.02,.94)*100}%;top:${clamp(Number(pos?.y)||.2,.06,.94)*100}%;font-size:${(Number(style?.fontSize)||12)*(mini?MINI_CONTENT_BOOST:1)}px;text-align:${style?.align||'left'};font-weight:${style?.weight||400};`;
   if(title||!mini)parts.push(`<div class="${mini?'mini-object mini-title':'canvas-text title-canvas'} ${!title&&!mini?'placeholder':''} ${!mini&&state.selectedText==='title'?'text-selected':''}" ${mini?'':`data-drag-kind="title"`} style="${positionStyle(titlePos,titleStyle)}">${escapeHtml(title||'双击这里写标题')}</div>`);
   if(content||!mini)parts.push(`<div class="${mini?'mini-object mini-content':'canvas-text content-canvas'} ${!content&&!mini?'placeholder':''} ${!mini&&state.selectedText==='content'?'text-selected':''}" ${mini?'':`data-drag-kind="content"`} style="${positionStyle(contentPos,contentStyle)}">${escapeHtml(content||'双击这里写下今天发生了什么…')}</div>`);
   if(e?.mood)parts.push(moodVisualMarkup(e.mood,mini));
   const layers=[...(e?.photos||[]).map(p=>({kind:'photo',item:p,z:Number(p.z)||0})),...(e?.stickers||[]).map(p=>({kind:'sticker',item:p,z:Number(p.z)||0}))].sort((a,b)=>a.z-b.z);
   for(const layer of layers){const p=layer.item;
-    if(layer.kind==='photo') {const rawRatio=clamp(Number(p.ratio)||4/3,.55,2.2),cropMode=String(p.cropMode||'original'),ratio=cropMode==='4:3'?4/3:rawRatio,cls=mini?'mini-object mini-photo':'placed-photo',frame=String(p.frame||'paper'),ox=clamp(Number(p.objectPositionX)||50,0,100),oy=clamp(Number(p.objectPositionY)||50,0,100),frameClass=frame==='paper'?' photo-frame-paper':frame==='tape'?' photo-frame-tape':frame==='shadow'?' photo-frame-shadow':'';parts.push(`<div class="${cls}-wrap${frameClass} ${!mini&&state.selectedPhoto.has(p.id)?'selected':''}" ${mini?'':`data-drag-kind="photo" data-id="${escapeHtml(p.id)}"`} style="--photo-ratio:${ratio};left:${clamp(Number(p.x)||.5,.01,.99)*100}%;top:${clamp(Number(p.y)||.5,.01,.99)*100}%;transform:translate(-50%,-50%) rotate(${Number(p.rotation)||0}deg) scale(${Number(p.scale)||1});z-index:${Number(p.z)||1}"><img class="${cls}" src="${escapeHtml(p.src||'')}" alt="照片" style="object-fit:${cropMode==='4:3'?'cover':'contain'};object-position:${ox}% ${oy}%" /></div>`);}
-    else {const st=STICKERS.find(x=>x.id===p.stickerId);if(!st)continue;parts.push(`<div class="${mini?'mini-object mini-sticker':'placed-sticker'} ${!mini&&state.selectedCanvas.has(p.id)?'selected ':''}${!mini&&p.locked?'locked':''}" ${mini?'':`data-drag-kind="sticker" data-id="${escapeHtml(p.id)}"`} style="left:${clamp(Number(p.x)||.5,.01,.99)*100}%;top:${clamp(Number(p.y)||.5,.01,.99)*100}%;transform:translate(-50%,-50%) rotate(${Number(p.rotation)||0}deg) scale(${Number(p.scale)||1});z-index:${Number(p.z)||1}">${svgSticker(st,64)}</div>`);}
+    if(layer.kind==='photo') {const rawRatio=clamp(Number(p.ratio)||4/3,.55,2.2),cropMode=String(p.cropMode||'original'),ratio=cropMode==='4:3'?4/3:rawRatio,cls=mini?'mini-object mini-photo':'placed-photo',frame=String(p.frame||'paper'),ox=clamp(Number(p.objectPositionX)||50,0,100),oy=clamp(Number(p.objectPositionY)||50,0,100),frameClass=frame==='paper'?' photo-frame-paper':frame==='tape'?' photo-frame-tape':frame==='shadow'?' photo-frame-shadow':'';parts.push(`<div class="${cls}-wrap${frameClass} ${!mini&&state.selectedPhoto.has(p.id)?'selected':''}" ${mini?'':`data-drag-kind="photo" data-id="${escapeHtml(p.id)}"`} style="--photo-ratio:${ratio};left:${clamp(Number(p.x)||.5,.01,.99)*100}%;top:${clamp(Number(p.y)||.5,.01,.99)*100}%;transform:translate(-50%,-50%) rotate(${Number(p.rotation)||0}deg) scale(${(Number(p.scale)||1)*(mini?1.28:1)});z-index:${Number(p.z)||1}"><img class="${cls}" src="${escapeHtml(p.src||'')}" alt="照片" style="object-fit:${cropMode==='4:3'?'cover':'contain'};object-position:${ox}% ${oy}%" /></div>`);}
+    else {const st=STICKERS.find(x=>x.id===p.stickerId);if(!st)continue;parts.push(`<div class="${mini?'mini-object mini-sticker':'placed-sticker'} ${!mini&&state.selectedCanvas.has(p.id)?'selected ':''}${!mini&&p.locked?'locked':''}" ${mini?'':`data-drag-kind="sticker" data-id="${escapeHtml(p.id)}"`} style="left:${clamp(Number(p.x)||.5,.01,.99)*100}%;top:${clamp(Number(p.y)||.5,.01,.99)*100}%;transform:translate(-50%,-50%) rotate(${Number(p.rotation)||0}deg) scale(${Number(p.scale)||1});z-index:${Number(p.z)||1}">${svgSticker(st,mini?88:64)}</div>`);}
   }
   return parts.join('');
 }
