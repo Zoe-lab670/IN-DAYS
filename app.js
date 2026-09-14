@@ -23,9 +23,6 @@ const CANVAS_H = 420;
 const DATE_SAFE_ZONE = {left:.035, top:.035, right:.145, bottom:.115, margin:.006};
 // 日期只占左上角很小的一块；其余区域尽量留给文字、贴纸和照片。
 const CONTENT_ZONE = {left:.08, top:.12, right:.95, bottom:.94};
-const MINI_CONTENT_BOOST = 1.72;
-const MINI_STICKER_BOOST = 1.28;
-const MINI_PHOTO_BOOST = 1.12;
 
 // 2026 mainland China statutory holiday / holiday-period map (official schedule).
 // The app uses these dates only for calendar cues and sticker recommendations;
@@ -2018,67 +2015,55 @@ function miniScale(){
   return clamp(cardW/CANVAS_W,.08,.8);
 }
 function miniPresentation(e){
-  // Final mini-calendar rule: fit the actual composition into the card, not the
-  // full 560×420 canvas. The relative arrangement is preserved, but the content
-  // is allowed to occupy the card so it remains visually legible.
-  const points=[];
-  const add=(x,y)=>{
-    const nx=clamp(Number(x)||0.5,.02,.98),ny=clamp(Number(y)||0.5,.02,.98);
-    points.push({x:nx,y:ny});
-  };
-  if(String(e?.title||'').trim()) add(e?.titlePos?.x,e?.titlePos?.y);
-  if(String(e?.content||'').trim()) add(e?.contentPos?.x,e?.contentPos?.y);
-  (e?.photos||[]).forEach(p=>add(p?.x,p?.y));
-  (e?.stickers||[]).forEach(p=>add(p?.x,p?.y));
-  if(!points.length){
-    return {minX:.16,maxX:.84,minY:.22,maxY:.82,safeLeft:.08,safeRight:.92,safeTop:.18,safeBottom:.90};
-  }
-  const xs=points.map(p=>p.x), ys=points.map(p=>p.y);
-  let minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
-  // Keep a small amount of breathing room around the content anchor range.
-  const padX=Math.min(.06,Math.max(.02,(maxX-minX)*.18));
-  const padY=Math.min(.06,Math.max(.02,(maxY-minY)*.18));
-  minX=clamp(minX-padX,.02,.92); maxX=clamp(maxX+padX,.08,.98);
-  minY=clamp(minY-padY,.04,.94); maxY=clamp(maxY+padY,.08,.98);
-  if(maxX-minX<.06){ const c=(minX+maxX)/2; minX=clamp(c-.03,.08,.92); maxX=clamp(c+.03,.14,.98); }
-  if(maxY-minY<.06){ const c=(minY+maxY)/2; minY=clamp(c-.03,.12,.92); maxY=clamp(c+.03,.18,.98); }
-  return {minX,maxX,minY,maxY,safeLeft:.08,safeRight:.92,safeTop:.18,safeBottom:.90};
+  // Month thumbnails are strict proportional miniatures of the 560×420 canvas.
+  // No content reflow, re-centering, or independent font scaling is allowed.
+  const grid=document.getElementById('calendarGrid');
+  const columns=state.viewMode==='mosaic'?4:7;
+  const gap=parseFloat(getComputedStyle(grid||document.body).columnGap)||10;
+  const gridW=grid?.clientWidth||0;
+  const cardW=gridW>0?(gridW-gap*(columns-1))/columns:160;
+  return {scale:cardW/CANVAS_W};
 }
 function miniPoint(x,y,p){
-  const nx=clamp(Number(x)||0.5,.02,.98),ny=clamp(Number(y)||0.5,.02,.98);
-  const dx=Math.max(.06,p.maxX-p.minX),dy=Math.max(.06,p.maxY-p.minY);
-  const tx=clamp((nx-p.minX)/dx,0,1),ty=clamp((ny-p.minY)/dy,0,1);
-  return {
-    x:clamp(p.safeLeft+tx*(p.safeRight-p.safeLeft),.06,.94),
-    y:clamp(p.safeTop+ty*(p.safeBottom-p.safeTop),.18,.94)
-  };
+  // Preserve the exact normalized canvas coordinates.
+  return {x:clamp(Number(x)||.5,.02,.98),y:clamp(Number(y)||.5,.02,.98)};
 }
-
 function moodVisualMarkup(mood,mini=false){
-  if(!mood)return '';const item=MOODS.find(m=>m.key===mood);if(!item)return '';const color={happy:'#d8b971',calm:'#9db5a2',full:'#b6a486',tired:'#9cabb6',sad:'#95a7b3',anxious:'#c39a9d'}[mood]||'#b7b5ae';return mini?`<div class="mini-object mini-mood" style="left:84%;top:10%;--mood-color:${color}"><i></i><span>${escapeHtml(item.label)}</span></div>`:`<div class="canvas-mood" style="left:84%;top:10%;--mood-color:${color}"><i></i><span>${escapeHtml(item.label)}</span></div>`;
+  if(!mood)return '';const item=MOODS.find(m=>m.key===mood);if(!item)return '';const color={happy:'#d8b971',calm:'#9db5a2',full:'#b6a486',tired:'#9cabb6',sad:'#95a7b3',anxious:'#c39a9d'}[mood]||'#b7b5ae';
+  return mini?`<div class="mini-object mini-mood" style="left:84%;top:10%;--mood-color:${color};font-size:${(9/CANVAS_W)*100}cqw;padding:${(4/CANVAS_W)*100}cqw ${(7/CANVAS_W)*100}cqw;gap:${(5/CANVAS_W)*100}cqw"><i style="width:${(7/CANVAS_W)*100}cqw;height:${(7/CANVAS_W)*100}cqw"></i><span>${escapeHtml(item.label)}</span></div>`:
+  `<div class="canvas-mood" style="left:84%;top:10%;--mood-color:${color}"><i></i><span>${escapeHtml(item.label)}</span></div>`;
 }
-function compositionDomHtml(e,{mode='mini'}={}){
-  const mini=mode==='mini',parts=[];
+function compositionDomHtml(e,{mode='canvas'}={}){
+  const parts=[];
   const title=String(e?.title||'').trim(), content=String(e?.content||'').trim();
   const titlePos=e?.titlePos||{x:.10,y:.22}, contentPos=e?.contentPos||{x:.10,y:.39};
   const titleStyle=e?.titleStyle||{fontSize:25,align:'left',weight:500}, contentStyle=e?.contentStyle||{fontSize:12,align:'left',weight:400};
-  const miniFit=mini?miniPresentation(e):{scale:1,offsetX:0,offsetY:0};
-  const pointStyle=(pos,style,kind)=>{const q=mini?miniPoint(pos?.x,pos?.y,miniFit):{x:clamp(Number(pos?.x)||.1,.02,.94),y:clamp(Number(pos?.y)||.2,.06,.94)};if(!mini)return `left:${q.x*100}%;top:${q.y*100}%;font-size:${Number(style?.fontSize)||12}px;text-align:${style?.align||'left'};font-weight:${style?.weight||400};`;const base=Number(style?.fontSize)||12;const cqw=kind==='title'?clamp(base*0.50,8.6,12):clamp(base*0.58,6.2,8.8);return `left:${q.x*100}%;top:${q.y*100}%;font-size:clamp(8px,${cqw}cqw,20px);text-align:${style?.align||'left'};font-weight:${style?.weight||400};`;};
-  if(title||!mini)parts.push(`<div class="${mini?'mini-object mini-title':'canvas-text title-canvas'} ${!title&&!mini?'placeholder':''} ${!mini&&state.selectedText==='title'?'text-selected':''}" ${mini?'':`data-drag-kind="title"`} style="${pointStyle(titlePos,titleStyle,'title')}">${escapeHtml(title||'双击这里写标题')}</div>`);
-  if(content||!mini)parts.push(`<div class="${mini?'mini-object mini-content':'canvas-text content-canvas'} ${!content&&!mini?'placeholder':''} ${!mini&&state.selectedText==='content'?'text-selected':''}" ${mini?'':`data-drag-kind="content"`} style="${pointStyle(contentPos,contentStyle,'content')}">${escapeHtml(content||'双击这里写下今天发生了什么…')}</div>`);
-  if(e?.mood)parts.push(moodVisualMarkup(e.mood,mini));
+  const pointStyle=(pos,style)=>{const q={x:clamp(Number(pos?.x)||.1,.02,.94),y:clamp(Number(pos?.y)||.2,.06,.94)};return `left:${q.x*100}%;top:${q.y*100}%;font-size:${Number(style?.fontSize)||12}px;text-align:${style?.align||'left'};font-weight:${style?.weight||400};`;};
+  const selectedText=(kind)=>state.selectedText===kind?'text-selected':'';
+  if(title||mode==='canvas')parts.push(`<div class="canvas-text title-canvas ${!title?'placeholder':''} ${selectedText('title')}" data-drag-kind="title" style="${pointStyle(titlePos,titleStyle)}">${escapeHtml(title||'双击这里写标题')}</div>`);
+  if(content||mode==='canvas')parts.push(`<div class="canvas-text content-canvas ${!content?'placeholder':''} ${selectedText('content')}" data-drag-kind="content" style="${pointStyle(contentPos,contentStyle)}">${escapeHtml(content||'双击这里写下今天发生了什么…')}</div>`);
+  if(e?.mood)parts.push(moodVisualMarkup(e.mood,false));
   const layers=[...(e?.photos||[]).map(p=>({kind:'photo',item:p,z:Number(p.z)||0})),...(e?.stickers||[]).map(p=>({kind:'sticker',item:p,z:Number(p.z)||0}))].sort((a,b)=>a.z-b.z);
   for(const layer of layers){const p=layer.item;
-    if(layer.kind==='photo') {const rawRatio=clamp(Number(p.ratio)||4/3,.55,2.2),cropMode=String(p.cropMode||'original'),ratio=cropMode==='4:3'?4/3:rawRatio,cls=mini?'mini-object mini-photo':'placed-photo',frame=String(p.frame||'paper'),ox=clamp(Number(p.objectPositionX)||50,0,100),oy=clamp(Number(p.objectPositionY)||50,0,100),frameClass=frame==='paper'?' photo-frame-paper':frame==='tape'?' photo-frame-tape':frame==='shadow'?' photo-frame-shadow':'';parts.push(`<div class="${cls}-wrap${frameClass} ${!mini&&state.selectedPhoto.has(p.id)?'selected':''}" ${mini?'':`data-drag-kind="photo" data-id="${escapeHtml(p.id)}"`} style="--photo-ratio:${ratio};left:${(mini?miniPoint(p.x,p.y,miniFit).x:clamp(Number(p.x)||.5,.01,.99))*100}%;top:${(mini?miniPoint(p.x,p.y,miniFit).y:clamp(Number(p.y)||.5,.01,.99))*100}%;${mini?`width:${clamp(34*Math.max(Number(p.scale)||1,.55),20,52)}cqw;`:''}transform:translate(-50%,-50%) rotate(${Number(p.rotation)||0}deg)${mini?'':' scale('+(Number(p.scale)||1)+')'};z-index:${Number(p.z)||1}"><img class="${cls}" src="${escapeHtml(p.src||'')}" alt="照片" style="object-fit:${cropMode==='4:3'?'cover':'contain'};object-position:${ox}% ${oy}%" /></div>`);}
-    else {const st=STICKERS.find(x=>x.id===p.stickerId);if(!st)continue;parts.push(`<div class="${mini?'mini-object mini-sticker':'placed-sticker'} ${!mini&&state.selectedCanvas.has(p.id)?'selected ':''}${!mini&&p.locked?'locked':''}" ${mini?'':`data-drag-kind="sticker" data-id="${escapeHtml(p.id)}"`} style="left:${(mini?miniPoint(p.x,p.y,miniFit).x:clamp(Number(p.x)||.5,.01,.99))*100}%;top:${(mini?miniPoint(p.x,p.y,miniFit).y:clamp(Number(p.y)||.5,.01,.99))*100}%;${mini?`width:${clamp(24*Math.max(Number(p.scale)||1,.55),16,44)}cqw;height:${clamp(24*Math.max(Number(p.scale)||1,.55),16,44)}cqw;`:''}transform:translate(-50%,-50%) rotate(${Number(p.rotation)||0}deg)${mini?'':' scale('+(Number(p.scale)||1)+')'};z-index:${Number(p.z)||1}">${svgSticker(st,mini?88:64)}</div>`);}
+    if(layer.kind==='photo'){
+      const rawRatio=clamp(Number(p.ratio)||4/3,.55,2.2),cropMode=String(p.cropMode||'original'),ratio=cropMode==='4:3'?4/3:rawRatio,ox=clamp(Number(p.objectPositionX)||50,0,100),oy=clamp(Number(p.objectPositionY)||50,0,100);
+      parts.push(`<div class="placed-photo-wrap ${state.selectedPhoto.has(p.id)?'selected':''}" data-drag-kind="photo" data-id="${escapeHtml(p.id)}" style="--photo-ratio:${ratio};left:${clamp(Number(p.x)||.5,.01,.99)*100}%;top:${clamp(Number(p.y)||.5,.01,.99)*100}%;transform:translate(-50%,-50%) rotate(${Number(p.rotation)||0}deg) scale(${Number(p.scale)||1});z-index:${Number(p.z)||1}"><img class="placed-photo" src="${escapeHtml(p.src||'')}" alt="照片" style="object-fit:${cropMode==='4:3'?'cover':'contain'};object-position:${ox}% ${oy}%" /></div>`);
+    }else{
+      const st=STICKERS.find(x=>x.id===p.stickerId);if(!st)continue;
+      parts.push(`<div class="placed-sticker ${state.selectedCanvas.has(p.id)?'selected ':''}${p.locked?'locked':''}" data-drag-kind="sticker" data-id="${escapeHtml(p.id)}" style="left:${clamp(Number(p.x)||.5,.01,.99)*100}%;top:${clamp(Number(p.y)||.5,.01,.99)*100}%;transform:translate(-50%,-50%) rotate(${Number(p.rotation)||0}deg) scale(${Number(p.scale)||1});z-index:${Number(p.z)||1}">${svgSticker(st,64)}</div>`);
+    }
   }
   return parts.join('');
 }
-function miniObjectHtml(e,scale){return compositionDomHtml(e,{mode:'mini'});}
+function miniObjectHtml(e){
+  // Strict 1:1 miniature: the same 560×420 composition is rendered once inside an SVG viewBox.
+  // The whole artwork is then scaled by the browser as a single unit.
+  return `<svg class="mini-svg" viewBox="0 0 ${CANVAS_W} ${CANVAS_H}" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="0" y="0" width="${CANVAS_W}" height="${CANVAS_H}" fill="transparent"/>${compositionElementsSvg(e,CANVAS_W,CANVAS_H,{includeDate:false})}</svg>`;
+}
 function calendarDayHtml(entry,key,day,active,today){
-  const e=entry||emptyEntry(key),has=hasEntryContent(entry),scale=miniScale(),holiday=holidayCueForDate(key);
+  const e=entry||emptyEntry(key),has=hasEntryContent(entry),holiday=holidayCueForDate(key);
   return `<button class="day-card ${active?'active':''} ${today?'today':''} ${has?'has-entry':''} ${holiday?'holiday-day':''}" data-day="${day}" aria-label="${state.year}年${state.month+1}月${day}日${holiday?`，${holiday.name}`:''}" title="${holiday?escapeHtml(holiday.name):''}" style="--day-bg:${escapeHtml(e.background||'#fffdf7')}">
-    <div class="day-thumbnail">${has?`<div class="mini-canvas" style="background:${escapeHtml(e.background||'#fffdf7')};--mini-scale:${scale}">${miniObjectHtml(e,scale)}</div>`:''}</div>
+    <div class="day-thumbnail">${has?`<div class="mini-canvas" style="background:${escapeHtml(e.background||'#fffdf7')}">${miniObjectHtml(e)}</div>`:''}</div>
     <span class="day-number" aria-hidden="true"><b>${String(day).padStart(2,'0')}</b></span>
     ${holiday?`<span class="holiday-mark">${escapeHtml(holiday.name.replace('节',''))}</span>`:''}
     ${today?'<span class="today-mark">TODAY</span>':''}
@@ -2106,7 +2091,7 @@ function renderCalendar(){
   document.querySelectorAll('.view-mode-btn').forEach(b=>b.classList.toggle('selected',b.dataset.view===state.viewMode));
   document.getElementById('prevMonth').disabled=state.year*12+state.month<=MIN_MONTH_INDEX;
 }
-function timelineDayHtml(e,key,day,active,today){const scale=.24;return `<button class="timeline-card ${active?'active':''}" data-day="${day}"><div class="timeline-date"><b>${String(day).padStart(2,'0')}</b><span>${today?'TODAY':''}</span></div><div class="timeline-thumb" style="--day-bg:${e.background||'#fffdf7'}"><div class="mini-canvas" style="background:${e.background||'#fffdf7'};--mini-scale:${scale}">${miniObjectHtml(e,scale)}</div></div><div class="timeline-text"><strong>${escapeHtml(e.title||'这一天')}</strong><p>${escapeHtml(e.content||'')}</p></div></button>`;}
+function timelineDayHtml(e,key,day,active,today){return `<button class="timeline-card ${active?'active':''}" data-day="${day}"><div class="timeline-date"><b>${String(day).padStart(2,'0')}</b><span>${today?'TODAY':''}</span></div><div class="timeline-thumb" style="--day-bg:${e.background||'#fffdf7'}"><div class="mini-canvas" style="background:${e.background||'#fffdf7'}">${miniObjectHtml(e)}</div></div><div class="timeline-text"><strong>${escapeHtml(e.title||'这一天')}</strong><p>${escapeHtml(e.content||'')}</p></div></button>`;}
 function commitBeforeNavigation(){if(state.textEdit)finishInlineTextEdit();if(state.drawerOpen&&state.entry)saveDraft(state.entry);}
 function moveMonth(delta){commitBeforeNavigation();const current=state.year*12+state.month,next=current+delta;if(next<MIN_MONTH_INDEX)return;state.year=Math.floor(next/12);state.month=next%12;state.selectedDay=1;renderCalendar();loadCurrentMonth();loadSelectedEntry();}
 function goToday(){commitBeforeNavigation();state.year=currentYear;state.month=currentMonth;state.selectedDay=currentDay;state.viewMode='month';localStorage.setItem('in-days:view','month');state.drawerOpen=false;closeDrawer();renderCalendar();loadCurrentMonth();loadSelectedEntry();}
