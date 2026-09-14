@@ -23,6 +23,9 @@ const CANVAS_H = 420;
 const DATE_SAFE_ZONE = {left:.035, top:.035, right:.145, bottom:.115, margin:.006};
 // 日期只占左上角很小的一块；其余区域尽量留给文字、贴纸和照片。
 const CONTENT_ZONE = {left:.08, top:.12, right:.95, bottom:.94};
+// 标题默认样式：新的一天第一次输入标题时自动采用，不需要手动调字号/位置。
+const DEFAULT_TITLE_POS = {x:.10, y:.22};
+const DEFAULT_TITLE_STYLE = {fontSize:25, align:'left', weight:500};
 
 // 2026 mainland China statutory holiday / holiday-period map (official schedule).
 // The app uses these dates only for calendar cues and sticker recommendations;
@@ -1797,8 +1800,8 @@ function isTodayKey(key){ const d=parseKey(key); return d.y===now.getFullYear() 
 function hasEntryContent(e){ return !!(e && (String(e.title||'').trim() || String(e.content||'').trim() || (e.stickers||[]).length || (e.photos||[]).length || e.mood || e.timeCapsule)); }
 function emptyEntry(date){
   return {entry_date:date,title:'',content:'',background:'#fffdf7',stickers:[],photos:[],mood:null,
-    timeCapsule:null,titlePos:{x:.10,y:.22},contentPos:{x:.10,y:.39},
-    titleStyle:{fontSize:25,align:'left',weight:500},contentStyle:{fontSize:12,align:'left',weight:400}};
+    timeCapsule:null,titlePos:{...DEFAULT_TITLE_POS},contentPos:{x:.10,y:.39},
+    titleStyle:{...DEFAULT_TITLE_STYLE},contentStyle:{fontSize:12,align:'left',weight:400}};
 }
 function normalizePos(pos,fallback){
   if(!pos || typeof pos!=='object')return {...fallback};
@@ -1879,6 +1882,11 @@ function normalizeStickerItems(items){
   normalized.sort((a,b)=>(Number(a.z)||0)-(Number(b.z)||0));
   normalized.forEach((it,idx)=>it.z=idx+1);
   return normalized;
+}
+function applyDefaultTitleLayout(entry){
+  if(!entry)return;
+  entry.titlePos={...DEFAULT_TITLE_POS};
+  entry.titleStyle={...DEFAULT_TITLE_STYLE};
 }
 function normalizeDesign(raw,date){
   const base=emptyEntry(date);
@@ -2430,7 +2438,12 @@ function updateDrawerFooter(){const s=document.getElementById('saveStatus');if(s
 function bindDrawerEvents(){
   document.getElementById('drawerBackdrop').addEventListener('click',closeDrawer);document.getElementById('closeDrawer').addEventListener('click',closeDrawer);document.getElementById('mobileBackMonth')?.addEventListener('click',()=>{commitBeforeNavigation();closeDrawer();renderCalendar();});document.getElementById('saveEntry').addEventListener('click',()=>saveEntry());document.getElementById('deleteEntry').addEventListener('click',deleteEntry);document.getElementById('loginFromEditor')?.addEventListener('click',openAuth);
   const t=document.getElementById('entryTitle'),c=document.getElementById('entryContent');
-  const onInput=(kind,el)=>{state.entry[kind]=el.value;queueDraftSaveAndRecommend();renderCanvasOnly();};
+  const onInput=(kind,el)=>{
+    const wasEmpty=kind==='title' && !String(state.entry.title||'').trim();
+    state.entry[kind]=el.value;
+    if(kind==='title' && wasEmpty && String(el.value||'').trim()) applyDefaultTitleLayout(state.entry);
+    queueDraftSaveAndRecommend();renderCanvasOnly();
+  };
   const queueDraftSaveAndRecommend=()=>{saveDraft(state.entry);state.autosaveStatus='正在保存草稿…';clearTimeout(state.recoTimer);state.recoTimer=setTimeout(()=>{updateStickerPanelResults();},120);scheduleCloudSave();updateDrawerFooter();};
   t.addEventListener('compositionstart',()=>state.inputComposing=true);c.addEventListener('compositionstart',()=>state.inputComposing=true);t.addEventListener('compositionend',()=>state.inputComposing=false);c.addEventListener('compositionend',()=>state.inputComposing=false);
   t.addEventListener('input',()=>onInput('title',t));c.addEventListener('input',()=>onInput('content',c));
@@ -2664,6 +2677,7 @@ function startInlineTextEdit(kind){
   const el=document.querySelector(`.canvas-text[data-drag-kind="${kind}"]`);
   if(!el)return;
   state.textEdit={kind,beforeText:state.entry[kind]||'',beforeEntry:clone(state.entry)};
+  if(kind==='title' && !String(state.entry.title||'').trim()) applyDefaultTitleLayout(state.entry);
   state.selectedText=kind;
   state.selectedCanvas.clear();
   state.selectedPhoto.clear();
@@ -2681,8 +2695,10 @@ function startInlineTextEdit(kind){
   updateSidebarInput(kind);
   el.oninput=()=>{
     if(!state.textEdit||state.textEdit.kind!==kind)return;
+    const wasEmpty=kind==='title' && !String(state.entry.title||'').trim();
     const value=el.innerText.replace(/\u00a0/g,' ').replace(/\r/g,'');
     state.entry[kind]=value;
+    if(kind==='title' && wasEmpty && value.trim()) applyDefaultTitleLayout(state.entry);
     const side=document.getElementById(kind==='title'?'entryTitle':'entryContent');
     if(side && side.value!==value)side.value=value;
     queueDraftSaveAndCloud();
