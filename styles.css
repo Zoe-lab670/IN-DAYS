@@ -262,7 +262,6 @@ footer{margin-top:40px;color:#b0aca3}
 
 /* V22: editorial month wall + monthly report */
 .day-card.has-entry .day-thumbnail{background:linear-gradient(145deg,rgba(255,254,249,.86),rgba(250,247,238,.72));box-shadow:0 10px 26px rgba(58,54,46,.028);}
-.day-card.has-entry .day-thumbnail:before{content:"";position:absolute;inset:10px;border:1px solid rgba(224,219,207,.36);border-radius:14px;pointer-events:none;z-index:1;}
 .day-card.has-entry .mini-canvas{filter:saturate(.96);}
 .day-card.has-entry .day-number{font-size:9px;letter-spacing:.08em;color:#8f8a80;}
 .day-card.has-entry:hover .day-thumbnail{transform:translateY(-1px);box-shadow:0 12px 28px rgba(58,54,46,.045);}
@@ -310,5 +309,8 @@ footer{margin-top:40px;color:#b0aca3}
   .report-heading h3{font-size:19px;}
   .report-stats{grid-template-columns:1fr 1fr;}
   .report-featured{grid-column:1/-1;}
-  .day-card.has-entry .day-thumbnail:before{inset:7px;border-radius:11px;}
 }
+
+/* V23: only the day-card itself has a border; composition has no inner frame. */
+.day-card.has-entry .day-thumbnail:before{content:none !important;display:none !important;}
+.day-number{pointer-events:none;z-index:20;}
