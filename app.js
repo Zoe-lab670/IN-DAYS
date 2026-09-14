@@ -2018,32 +2018,42 @@ function miniScale(){
   return clamp(cardW/CANVAS_W,.08,.8);
 }
 function miniPresentation(e){
-  const items=[];
-  const push=(x,y,w,h)=>{if([x,y,w,h].every(v=>Number.isFinite(v))){items.push({x,y,w,h});}};
-  if(e?.title){
-    const fs=Number(e?.titleStyle?.fontSize)||25, text=String(e.title), lines=Math.max(1,text.split(/\n/).length), chars=Math.max(2,Math.min(32,Math.max(...text.split(/\n/).map(v=>v.length)||[2])));
-    const w=Math.min(.72,Math.max(.14,(chars*fs*.56)/CANVAS_W)), h=Math.min(.24,Math.max(.05,(lines*fs*1.4)/CANVAS_H));
-    push(Number(e.titlePos?.x)||.18,Number(e.titlePos?.y)||.24,w,h);
+  // Final mini-calendar rule: fit the actual composition into the card, not the
+  // full 560×420 canvas. The relative arrangement is preserved, but the content
+  // is allowed to occupy the card so it remains visually legible.
+  const points=[];
+  const add=(x,y)=>{
+    const nx=clamp(Number(x)||0.5,.02,.98),ny=clamp(Number(y)||0.5,.02,.98);
+    points.push({x:nx,y:ny});
+  };
+  if(String(e?.title||'').trim()) add(e?.titlePos?.x,e?.titlePos?.y);
+  if(String(e?.content||'').trim()) add(e?.contentPos?.x,e?.contentPos?.y);
+  (e?.photos||[]).forEach(p=>add(p?.x,p?.y));
+  (e?.stickers||[]).forEach(p=>add(p?.x,p?.y));
+  if(!points.length){
+    return {minX:.16,maxX:.84,minY:.22,maxY:.82,safeLeft:.08,safeRight:.92,safeTop:.18,safeBottom:.90};
   }
-  if(e?.content){
-    const fs=Number(e?.contentStyle?.fontSize)||12, text=String(e.content), lines=text.split(/\n/), chars=Math.max(5,Math.min(44,Math.max(...lines.map(v=>v.length||1))||5));
-    const w=Math.min(.74,Math.max(.16,(chars*fs*.52)/CANVAS_W)), h=Math.min(.36,Math.max(.08,(lines.length*fs*1.55)/CANVAS_H));
-    push(Number(e.contentPos?.x)||.18,Number(e.contentPos?.y)||.40,w,h);
-  }
-  for(const p of (e?.stickers||[])){ const size=86*(Number(p.scale)||1)/CANVAS_W; push(Number(p.x)||.5,Number(p.y)||.5,size,size); }
-  for(const p of (e?.photos||[])){ const ratio=clamp(Number(p.ratio)||4/3,.55,2.2),w=160*(Number(p.scale)||1)/CANVAS_W,h=(w*CANVAS_W/ratio)/CANVAS_H; push(Number(p.x)||.5,Number(p.y)||.5,w,h); }
-  if(e?.mood)push(.84,.10,.12,.04);
-  if(!items.length)return {scale:1,offsetX:0,offsetY:0};
-  let minX=1,minY=1,maxX=0,maxY=0;
-  items.forEach(it=>{minX=Math.min(minX,it.x-it.w/2);maxX=Math.max(maxX,it.x+it.w/2);minY=Math.min(minY,it.y-it.h/2);maxY=Math.max(maxY,it.y+it.h/2);});
-  minX=clamp(minX,0,.96);maxX=clamp(maxX,.04,1);minY=clamp(minY,0,.94);maxY=clamp(maxY,.06,1);
-  const target={left:.10,top:.16,right:.94,bottom:.91};
-  const bw=Math.max(.16,maxX-minX),bh=Math.max(.12,maxY-minY);
-  const scale=Math.min((target.right-target.left)/bw,(target.bottom-target.top)/bh,1.55);
-  const cx=(minX+maxX)/2,cy=(minY+maxY)/2,tcx=(target.left+target.right)/2,tcy=(target.top+target.bottom)/2;
-  return {scale,offsetX:tcx-cx*scale,offsetY:tcy-cy*scale};
+  const xs=points.map(p=>p.x), ys=points.map(p=>p.y);
+  let minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
+  // Keep a small amount of breathing room around the content anchor range.
+  const padX=Math.min(.06,Math.max(.02,(maxX-minX)*.18));
+  const padY=Math.min(.06,Math.max(.02,(maxY-minY)*.18));
+  minX=clamp(minX-padX,.02,.92); maxX=clamp(maxX+padX,.08,.98);
+  minY=clamp(minY-padY,.04,.94); maxY=clamp(maxY+padY,.08,.98);
+  if(maxX-minX<.06){ const c=(minX+maxX)/2; minX=clamp(c-.03,.08,.92); maxX=clamp(c+.03,.14,.98); }
+  if(maxY-minY<.06){ const c=(minY+maxY)/2; minY=clamp(c-.03,.12,.92); maxY=clamp(c+.03,.18,.98); }
+  return {minX,maxX,minY,maxY,safeLeft:.08,safeRight:.92,safeTop:.18,safeBottom:.90};
 }
-function miniPoint(x,y,p){ return {x:clamp((Number(x)||0)*p.scale+p.offsetX,.04,.96), y:clamp((Number(y)||0)*p.scale+p.offsetY,.08,.94)}; }
+function miniPoint(x,y,p){
+  const nx=clamp(Number(x)||0.5,.02,.98),ny=clamp(Number(y)||0.5,.02,.98);
+  const dx=Math.max(.06,p.maxX-p.minX),dy=Math.max(.06,p.maxY-p.minY);
+  const tx=clamp((nx-p.minX)/dx,0,1),ty=clamp((ny-p.minY)/dy,0,1);
+  return {
+    x:clamp(p.safeLeft+tx*(p.safeRight-p.safeLeft),.06,.94),
+    y:clamp(p.safeTop+ty*(p.safeBottom-p.safeTop),.18,.94)
+  };
+}
+
 function moodVisualMarkup(mood,mini=false){
   if(!mood)return '';const item=MOODS.find(m=>m.key===mood);if(!item)return '';const color={happy:'#d8b971',calm:'#9db5a2',full:'#b6a486',tired:'#9cabb6',sad:'#95a7b3',anxious:'#c39a9d'}[mood]||'#b7b5ae';return mini?`<div class="mini-object mini-mood" style="left:84%;top:10%;--mood-color:${color}"><i></i><span>${escapeHtml(item.label)}</span></div>`:`<div class="canvas-mood" style="left:84%;top:10%;--mood-color:${color}"><i></i><span>${escapeHtml(item.label)}</span></div>`;
 }
@@ -2053,14 +2063,14 @@ function compositionDomHtml(e,{mode='mini'}={}){
   const titlePos=e?.titlePos||{x:.10,y:.22}, contentPos=e?.contentPos||{x:.10,y:.39};
   const titleStyle=e?.titleStyle||{fontSize:25,align:'left',weight:500}, contentStyle=e?.contentStyle||{fontSize:12,align:'left',weight:400};
   const miniFit=mini?miniPresentation(e):{scale:1,offsetX:0,offsetY:0};
-  const pointStyle=(pos,style)=>{const q=mini?miniPoint(pos?.x,pos?.y,miniFit):{x:clamp(Number(pos?.x)||.1,.02,.94),y:clamp(Number(pos?.y)||.2,.06,.94)};const size=(Number(style?.fontSize)||12)*(mini?MINI_CONTENT_BOOST*miniFit.scale:1);return `left:${q.x*100}%;top:${q.y*100}%;font-size:${size}px;text-align:${style?.align||'left'};font-weight:${style?.weight||400};`;};
-  if(title||!mini)parts.push(`<div class="${mini?'mini-object mini-title':'canvas-text title-canvas'} ${!title&&!mini?'placeholder':''} ${!mini&&state.selectedText==='title'?'text-selected':''}" ${mini?'':`data-drag-kind="title"`} style="${pointStyle(titlePos,titleStyle)}">${escapeHtml(title||'双击这里写标题')}</div>`);
-  if(content||!mini)parts.push(`<div class="${mini?'mini-object mini-content':'canvas-text content-canvas'} ${!content&&!mini?'placeholder':''} ${!mini&&state.selectedText==='content'?'text-selected':''}" ${mini?'':`data-drag-kind="content"`} style="${pointStyle(contentPos,contentStyle)}">${escapeHtml(content||'双击这里写下今天发生了什么…')}</div>`);
+  const pointStyle=(pos,style,kind)=>{const q=mini?miniPoint(pos?.x,pos?.y,miniFit):{x:clamp(Number(pos?.x)||.1,.02,.94),y:clamp(Number(pos?.y)||.2,.06,.94)};if(!mini)return `left:${q.x*100}%;top:${q.y*100}%;font-size:${Number(style?.fontSize)||12}px;text-align:${style?.align||'left'};font-weight:${style?.weight||400};`;const base=Number(style?.fontSize)||12;const cqw=kind==='title'?clamp(base*0.50,8.6,12):clamp(base*0.58,6.2,8.8);return `left:${q.x*100}%;top:${q.y*100}%;font-size:clamp(8px,${cqw}cqw,20px);text-align:${style?.align||'left'};font-weight:${style?.weight||400};`;};
+  if(title||!mini)parts.push(`<div class="${mini?'mini-object mini-title':'canvas-text title-canvas'} ${!title&&!mini?'placeholder':''} ${!mini&&state.selectedText==='title'?'text-selected':''}" ${mini?'':`data-drag-kind="title"`} style="${pointStyle(titlePos,titleStyle,'title')}">${escapeHtml(title||'双击这里写标题')}</div>`);
+  if(content||!mini)parts.push(`<div class="${mini?'mini-object mini-content':'canvas-text content-canvas'} ${!content&&!mini?'placeholder':''} ${!mini&&state.selectedText==='content'?'text-selected':''}" ${mini?'':`data-drag-kind="content"`} style="${pointStyle(contentPos,contentStyle,'content')}">${escapeHtml(content||'双击这里写下今天发生了什么…')}</div>`);
   if(e?.mood)parts.push(moodVisualMarkup(e.mood,mini));
   const layers=[...(e?.photos||[]).map(p=>({kind:'photo',item:p,z:Number(p.z)||0})),...(e?.stickers||[]).map(p=>({kind:'sticker',item:p,z:Number(p.z)||0}))].sort((a,b)=>a.z-b.z);
   for(const layer of layers){const p=layer.item;
-    if(layer.kind==='photo') {const rawRatio=clamp(Number(p.ratio)||4/3,.55,2.2),cropMode=String(p.cropMode||'original'),ratio=cropMode==='4:3'?4/3:rawRatio,cls=mini?'mini-object mini-photo':'placed-photo',frame=String(p.frame||'paper'),ox=clamp(Number(p.objectPositionX)||50,0,100),oy=clamp(Number(p.objectPositionY)||50,0,100),frameClass=frame==='paper'?' photo-frame-paper':frame==='tape'?' photo-frame-tape':frame==='shadow'?' photo-frame-shadow':'';parts.push(`<div class="${cls}-wrap${frameClass} ${!mini&&state.selectedPhoto.has(p.id)?'selected':''}" ${mini?'':`data-drag-kind="photo" data-id="${escapeHtml(p.id)}"`} style="--photo-ratio:${ratio};left:${(mini?miniPoint(p.x,p.y,miniFit).x:clamp(Number(p.x)||.5,.01,.99))*100}%;top:${(mini?miniPoint(p.x,p.y,miniFit).y:clamp(Number(p.y)||.5,.01,.99))*100}%;transform:translate(-50%,-50%) rotate(${Number(p.rotation)||0}deg) scale(${(Number(p.scale)||1)*(mini?MINI_PHOTO_BOOST*miniFit.scale:1)});z-index:${Number(p.z)||1}"><img class="${cls}" src="${escapeHtml(p.src||'')}" alt="照片" style="object-fit:${cropMode==='4:3'?'cover':'contain'};object-position:${ox}% ${oy}%" /></div>`);}
-    else {const st=STICKERS.find(x=>x.id===p.stickerId);if(!st)continue;parts.push(`<div class="${mini?'mini-object mini-sticker':'placed-sticker'} ${!mini&&state.selectedCanvas.has(p.id)?'selected ':''}${!mini&&p.locked?'locked':''}" ${mini?'':`data-drag-kind="sticker" data-id="${escapeHtml(p.id)}"`} style="left:${(mini?miniPoint(p.x,p.y,miniFit).x:clamp(Number(p.x)||.5,.01,.99))*100}%;top:${(mini?miniPoint(p.x,p.y,miniFit).y:clamp(Number(p.y)||.5,.01,.99))*100}%;transform:translate(-50%,-50%) rotate(${Number(p.rotation)||0}deg) scale(${(Number(p.scale)||1)*(mini?MINI_STICKER_BOOST*miniFit.scale:1)});z-index:${Number(p.z)||1}">${svgSticker(st,mini?88:64)}</div>`);}
+    if(layer.kind==='photo') {const rawRatio=clamp(Number(p.ratio)||4/3,.55,2.2),cropMode=String(p.cropMode||'original'),ratio=cropMode==='4:3'?4/3:rawRatio,cls=mini?'mini-object mini-photo':'placed-photo',frame=String(p.frame||'paper'),ox=clamp(Number(p.objectPositionX)||50,0,100),oy=clamp(Number(p.objectPositionY)||50,0,100),frameClass=frame==='paper'?' photo-frame-paper':frame==='tape'?' photo-frame-tape':frame==='shadow'?' photo-frame-shadow':'';parts.push(`<div class="${cls}-wrap${frameClass} ${!mini&&state.selectedPhoto.has(p.id)?'selected':''}" ${mini?'':`data-drag-kind="photo" data-id="${escapeHtml(p.id)}"`} style="--photo-ratio:${ratio};left:${(mini?miniPoint(p.x,p.y,miniFit).x:clamp(Number(p.x)||.5,.01,.99))*100}%;top:${(mini?miniPoint(p.x,p.y,miniFit).y:clamp(Number(p.y)||.5,.01,.99))*100}%;${mini?`width:${clamp(34*Math.max(Number(p.scale)||1,.55),20,52)}cqw;`:''}transform:translate(-50%,-50%) rotate(${Number(p.rotation)||0}deg)${mini?'':' scale('+(Number(p.scale)||1)+')'};z-index:${Number(p.z)||1}"><img class="${cls}" src="${escapeHtml(p.src||'')}" alt="照片" style="object-fit:${cropMode==='4:3'?'cover':'contain'};object-position:${ox}% ${oy}%" /></div>`);}
+    else {const st=STICKERS.find(x=>x.id===p.stickerId);if(!st)continue;parts.push(`<div class="${mini?'mini-object mini-sticker':'placed-sticker'} ${!mini&&state.selectedCanvas.has(p.id)?'selected ':''}${!mini&&p.locked?'locked':''}" ${mini?'':`data-drag-kind="sticker" data-id="${escapeHtml(p.id)}"`} style="left:${(mini?miniPoint(p.x,p.y,miniFit).x:clamp(Number(p.x)||.5,.01,.99))*100}%;top:${(mini?miniPoint(p.x,p.y,miniFit).y:clamp(Number(p.y)||.5,.01,.99))*100}%;${mini?`width:${clamp(24*Math.max(Number(p.scale)||1,.55),16,44)}cqw;height:${clamp(24*Math.max(Number(p.scale)||1,.55),16,44)}cqw;`:''}transform:translate(-50%,-50%) rotate(${Number(p.rotation)||0}deg)${mini?'':' scale('+(Number(p.scale)||1)+')'};z-index:${Number(p.z)||1}">${svgSticker(st,mini?88:64)}</div>`);}
   }
   return parts.join('');
 }
