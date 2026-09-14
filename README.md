@@ -1,26 +1,22 @@
-# 一隅｜IN DAYS — Day Composition V9-acceptance
+# IN DAYS · Day Composition V10
 
-基于 V8 继续优化。本轮以“最终验收前稳定性”为重点，不改变 Supabase 表结构，也不覆盖现有 config.js。
+基于 V9 验收基线继续优化。本轮针对“日期与编辑内容重叠”的问题做结构性修复。
 
-## V9-acceptance 本轮完成
-- 修复本地模式按月读取记录时的时区偏移问题：不再使用 `toISOString().slice(0,10)` 推导本地日期，避免日本/东亚时区在月初出现少一天或前一天记录的问题。
-- 加强历史数据兼容：当 `stickers` JSON 是新版对象但 title/content/background 仍保存在表字段时，读取会优先保留已有表字段，避免旧数据字段被空对象覆盖。
-- 调整 Supabase `onAuthStateChange`：事件回调不直接等待数据刷新，改为异步调度，降低认证事件与 Supabase 内部锁/事件链互相等待的风险。
-- 继续保留 V8 的照片裁切、纸张/胶带/阴影、移动端单日创作、快捷键、时间胶囊、月度回顾与导出能力。
+## V10 本轮内容
+- 日期独立为固定的“日期板块”，画布中不可选中、不可拖动。
+- 标题、正文、贴纸、照片全部受“内容安全区”约束，不允许进入日期保护区。
+- 拖动、方向键微调、缩放、旋转、复制、自动排版都会重新计算安全位置。
+- 旧记录加载时会自动把旧位置规范化到内容安全区，保留标题、正文、贴纸、照片等数据。
+- 月历日期数字升级为独立的小日期块；月历缩略图继续使用同一份 Composition 数据。
+- 保留 233 枚贴纸（107 原始 + 126 补充），仍全部在 app.js。
+- 不包含 config.js，替换时保留你现有的 config.js / Supabase 配置。
 
-## 本轮检查
-- `node --check app.js`：通过。
-- 贴纸数量与唯一性：重新检查。
-- 关键函数重复定义：重新检查。
-- index.html 的 V8 资源引用：保持一致，V9-acceptance 不改变缓存语义。
-- ZIP 完整性：重新检查。
-- `config.js` 不打包、不覆盖。
+## 检查
+- app.js Node syntax check：通过
+- 233 stickers / unique IDs：通过
+- 关键函数单次定义：通过
+- index.html 资源版本：V10
+- ZIP 完整性：通过
+- 浏览器完整 E2E：当前容器 Chromium 环境仍无法稳定启动，因此不宣称已通过。
 
-## 未完成自动验证
-当前容器 Chromium headless 仍不稳定，因此 Supabase Magic Link、中文 IME、真实触控拖拽/缩放/旋转仍需 GitHub Pages 实机验证。
-
-## 升级规则
-V9-acceptance 只替换 `index.html`、`styles.css`、`app.js`、`README.md`；保留正式站现有 `config.js`。
-
-
-验收说明：已通过静态/语法/资源/贴纸库检查。当前容器的 Chromium 被环境策略阻止启动本地页面，因此未将浏览器 E2E 标记为通过。建议上线前以真实 GitHub Pages 环境做一次链路验证。
+建议把 V10 作为新的开发基线，正式站先不替换，直到下一次整体验收完成。

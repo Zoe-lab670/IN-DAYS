@@ -19,6 +19,9 @@ const LOCAL_PREFIX = 'in-days:entry:';
 const DRAFT_PREFIX = 'in-days:draft:';
 const CANVAS_W = 560;
 const CANVAS_H = 420;
+// 固定日期区：日期是独立板块，标题/正文/贴纸/照片都不得侵入。
+const DATE_SAFE_ZONE = {left:.035, top:.035, right:.245, bottom:.165, margin:.012};
+const CONTENT_ZONE = {left:.05, top:.21, right:.94, bottom:.92};
 
 // 2026 mainland China statutory holiday / holiday-period map (official schedule).
 // The app uses these dates only for calendar cues and sticker recommendations;
@@ -1793,7 +1796,7 @@ function isTodayKey(key){ const d=parseKey(key); return d.y===now.getFullYear() 
 function hasEntryContent(e){ return !!(e && (String(e.title||'').trim() || String(e.content||'').trim() || (e.stickers||[]).length || (e.photos||[]).length || e.mood || e.timeCapsule)); }
 function emptyEntry(date){
   return {entry_date:date,title:'',content:'',background:'#fffdf7',stickers:[],photos:[],mood:null,
-    timeCapsule:null,titlePos:{x:.10,y:.18},contentPos:{x:.10,y:.36},
+    timeCapsule:null,titlePos:{x:.10,y:.22},contentPos:{x:.10,y:.39},
     titleStyle:{fontSize:25,align:'left',weight:500},contentStyle:{fontSize:12,align:'left',weight:400}};
 }
 function normalizePos(pos,fallback){
@@ -1801,6 +1804,43 @@ function normalizePos(pos,fallback){
   const x=Number(pos.x),y=Number(pos.y);
   if(!Number.isFinite(x)||!Number.isFinite(y))return {...fallback};
   return {x:x>1?clamp(x/CANVAS_W,.02,.94):clamp(x,.02,.94),y:y>1?clamp(y/CANVAS_H,.06,.94):clamp(y,.06,.94)};
+}
+
+function normalizeTextPos(pos,fallback){
+  if(!pos || typeof pos!=='object')return {...fallback};
+  const x=Number(pos.x),y=Number(pos.y);
+  if(!Number.isFinite(x)||!Number.isFinite(y))return {...fallback};
+  const nx=x>1?x/CANVAS_W:x, ny=y>1?y/CANVAS_H:y;
+  return {x:clamp(nx,CONTENT_ZONE.left,CONTENT_ZONE.right),y:clamp(ny,CONTENT_ZONE.top,CONTENT_ZONE.bottom)};
+}
+function rotatedHalfExtents(widthPx,heightPx,rotationDeg){
+  const rad=Math.abs(Number(rotationDeg)||0)*Math.PI/180, c=Math.abs(Math.cos(rad)), s=Math.abs(Math.sin(rad));
+  return {w:(widthPx*c+heightPx*s)/CANVAS_W/2,h:(widthPx*s+heightPx*c)/CANVAS_H/2};
+}
+function constrainCanvasElementPosition(kind,item,x,y){
+  let nx=Number.isFinite(Number(x))?Number(x):.5;
+  let ny=Number.isFinite(Number(y))?Number(y):.5;
+  if(kind==='text') return {x:clamp(nx,CONTENT_ZONE.left,CONTENT_ZONE.right),y:clamp(ny,CONTENT_ZONE.top,CONTENT_ZONE.bottom)};
+  let halfW,halfH;
+  if(kind==='photo'){
+    const ratio=clamp(Number(item?.ratio)||4/3,.55,2.2);
+    const cropMode=String(item?.cropMode||'original');
+    const effectiveRatio=cropMode==='4:3'?4/3:ratio;
+    const baseW=160*(Number(item?.scale)||1), baseH=baseW/effectiveRatio;
+    const ext=rotatedHalfExtents(baseW,baseH,item?.rotation||0); halfW=ext.w; halfH=ext.h;
+  }else{
+    const base=86*(Number(item?.scale)||1); const ext=rotatedHalfExtents(base,base,item?.rotation||0); halfW=ext.w; halfH=ext.h;
+  }
+  const margin=.012;
+  nx=clamp(nx,halfW+margin,1-halfW-margin); ny=clamp(ny,halfH+margin,1-halfH-margin);
+  const overlapsDate=nx-halfW < DATE_SAFE_ZONE.right && nx+halfW > DATE_SAFE_ZONE.left && ny-halfH < DATE_SAFE_ZONE.bottom && ny+halfH > DATE_SAFE_ZONE.top;
+  if(overlapsDate){
+    const pushRight=DATE_SAFE_ZONE.right+halfW+DATE_SAFE_ZONE.margin;
+    const pushDown=DATE_SAFE_ZONE.bottom+halfH+DATE_SAFE_ZONE.margin;
+    if(pushRight+halfW <= 1-margin) nx=pushRight; else ny=pushDown;
+    nx=clamp(nx,halfW+margin,1-halfW-margin); ny=clamp(ny,halfH+margin,1-halfH-margin);
+  }
+  return {x:nx,y:ny};
 }
 function normalizeTextStyle(style,fallback){
   if(!style||typeof style!=='object')return {...fallback};
@@ -1821,6 +1861,7 @@ function normalizePhotoItems(items){
     cropMode:['original','4:3'].includes(p?.cropMode)?p.cropMode:'original',
     frame:['paper','tape','none','shadow'].includes(p?.frame)?p.frame:'paper'
   })).filter(p=>p.src);
+  normalized.forEach(p=>{const q=constrainCanvasElementPosition('photo',p,p.x,p.y);p.x=q.x;p.y=q.y;});
   normalized.sort((a,b)=>(Number(a.z)||0)-(Number(b.z)||0)); normalized.forEach((it,idx)=>it.z=idx+1); return normalized;
 }
 function normalizeStickerItems(items){
@@ -1833,6 +1874,7 @@ function normalizeStickerItems(items){
     scale:clamp(Number(item?.scale)||1,.35,2.15),rotation:clamp(Number(item?.rotation)||0,-180,180),
     z:Number.isFinite(Number(item?.z))?Number(item.z):idx+1,locked:!!item?.locked
   })).filter(x=>STICKERS.some(s=>s.id===x.stickerId));
+  normalized.forEach(p=>{const q=constrainCanvasElementPosition('sticker',p,p.x,p.y);p.x=q.x;p.y=q.y;});
   normalized.sort((a,b)=>(Number(a.z)||0)-(Number(b.z)||0));
   normalized.forEach((it,idx)=>it.z=idx+1);
   return normalized;
@@ -1847,7 +1889,7 @@ function normalizeDesign(raw,date){
     background:String(raw.background||base.background),
     stickers:normalizeStickerItems(raw.stickers||[]),photos:normalizePhotoItems(raw.photos||[]),mood:MOODS.some(m=>m.key===raw.mood)?raw.mood:null,
     timeCapsule:raw.timeCapsule&&raw.timeCapsule.date&&raw.timeCapsule.note?{date:String(raw.timeCapsule.date),note:String(raw.timeCapsule.note)}:null,
-    titlePos:normalizePos(raw.titlePos||raw.title_position,base.titlePos),contentPos:normalizePos(raw.contentPos||raw.content_position,base.contentPos),
+    titlePos:normalizeTextPos(raw.titlePos||raw.title_position,base.titlePos),contentPos:normalizeTextPos(raw.contentPos||raw.content_position,base.contentPos),
     titleStyle:normalizeTextStyle(raw.titleStyle||raw.title_style,base.titleStyle),contentStyle:normalizeTextStyle(raw.contentStyle||raw.content_style,base.contentStyle)
   };
   normalizeLayerOrder(result.stickers,result.photos);
@@ -1977,7 +2019,7 @@ function moodVisualMarkup(mood,mini=false){
 function compositionDomHtml(e,{mode='mini'}={}){
   const mini=mode==='mini',parts=[];
   const title=String(e?.title||'').trim(), content=String(e?.content||'').trim();
-  const titlePos=e?.titlePos||{x:.10,y:.18}, contentPos=e?.contentPos||{x:.10,y:.36};
+  const titlePos=e?.titlePos||{x:.10,y:.22}, contentPos=e?.contentPos||{x:.10,y:.39};
   const titleStyle=e?.titleStyle||{fontSize:25,align:'left',weight:500}, contentStyle=e?.contentStyle||{fontSize:12,align:'left',weight:400};
   const positionStyle=(pos,style)=>`left:${clamp(Number(pos?.x)||.1,.02,.94)*100}%;top:${clamp(Number(pos?.y)||.2,.06,.94)*100}%;font-size:${Number(style?.fontSize)||12}px;text-align:${style?.align||'left'};font-weight:${style?.weight||400};`;
   if(title||!mini)parts.push(`<div class="${mini?'mini-object mini-title':'canvas-text title-canvas'} ${!title&&!mini?'placeholder':''} ${!mini&&state.selectedText==='title'?'text-selected':''}" ${mini?'':`data-drag-kind="title"`} style="${positionStyle(titlePos,titleStyle)}">${escapeHtml(title||'双击这里写标题')}</div>`);
@@ -1995,7 +2037,7 @@ function calendarDayHtml(entry,key,day,active,today){
   const e=entry||emptyEntry(key),has=hasEntryContent(entry),scale=miniScale(),holiday=holidayCueForDate(key);
   return `<button class="day-card ${active?'active':''} ${today?'today':''} ${has?'has-entry':''} ${holiday?'holiday-day':''}" data-day="${day}" aria-label="${state.year}年${state.month+1}月${day}日${holiday?`，${holiday.name}`:''}" title="${holiday?escapeHtml(holiday.name):''}" style="--day-bg:${escapeHtml(e.background||'#fffdf7')}">
     <div class="day-thumbnail">${has?`<div class="mini-canvas" style="background:${escapeHtml(e.background||'#fffdf7')};--mini-scale:${scale}">${miniObjectHtml(e,scale)}</div>`:''}</div>
-    <span class="day-number">${String(day).padStart(2,'0')}</span>
+    <span class="day-number" aria-hidden="true"><b>${String(day).padStart(2,'0')}</b></span>
     ${holiday?`<span class="holiday-mark">${escapeHtml(holiday.name.replace('节',''))}</span>`:''}
     ${today?'<span class="today-mark">TODAY</span>':''}
   </button>`;
@@ -2281,7 +2323,7 @@ function toggleFavorite(id){if(state.favorites.has(id))state.favorites.delete(id
 function toggleLibrarySticker(id){if(state.selectedLibrary.has(id))state.selectedLibrary.delete(id);else state.selectedLibrary.add(id);updateStickerPanelResults();}
 
 function findOpenPosition(offset=0){
-  const existing=[...(state.entry.stickers||[]),(state.entry.photos||[])];const candidates=[];for(let r=0;r<5;r++)for(let c=0;c<7;c++)candidates.push({x:.14+c*.12,y:.32+r*.12});const rotated=[...candidates.slice(offset),...candidates.slice(0,offset)];for(const p of rotated){if(!existing.some(o=>Math.hypot((o.x-p.x)*CANVAS_W,(o.y-p.y)*CANVAS_H)<70))return p;}return {x:.5,y:.52};
+  const existing=[...(state.entry.stickers||[]),(state.entry.photos||[])];const candidates=[];for(let r=0;r<5;r++)for(let c=0;c<7;c++)candidates.push({x:.34+c*.10,y:.31+r*.12});const rotated=[...candidates.slice(offset),...candidates.slice(0,offset)];for(const p of rotated){if(!existing.some(o=>Math.hypot((o.x-p.x)*CANVAS_W,(o.y-p.y)*CANVAS_H)<70))return p;}return {x:.52,y:.52};
 }
 function addSticker(sticker){
   const before=clone(state.entry),p=findOpenPosition((state.entry.stickers||[]).length);
@@ -2308,17 +2350,17 @@ function duplicateSelected(){
   const ids=[...state.selectedCanvas],photos=[...state.selectedPhoto];
   if(!ids.length&&!photos.length)return;
   const before=clone(state.entry),newIds=[];
-  ids.forEach(id=>{const src=state.entry.stickers.find(x=>x.id===id);if(src){const maxZ=Math.max(0,...(state.entry.stickers||[]).map(x=>Number(x.z)||0));const n={...src,id:uid(src.stickerId),x:clamp(src.x+.06,.06,.94),y:clamp(src.y+.06,.18,.92),z:maxZ+1};state.entry.stickers.push(n);newIds.push(n.id);}});
-  photos.forEach(id=>{const src=state.entry.photos.find(x=>x.id===id);if(src){const maxZ=Math.max(0,...(state.entry.stickers||[]).map(x=>Number(x.z)||0),...(state.entry.photos||[]).map(x=>Number(x.z)||0));const n={...src,id:uid('photo'),x:clamp(src.x+.06,.06,.94),y:clamp(src.y+.06,.18,.92),z:maxZ+1};state.entry.photos.push(n);newIds.push(n.id);}});
+  ids.forEach(id=>{const src=state.entry.stickers.find(x=>x.id===id);if(src){const maxZ=Math.max(0,...(state.entry.stickers||[]).map(x=>Number(x.z)||0));const n={...src,id:uid(src.stickerId),x:clamp(src.x+.06,CONTENT_ZONE.left,.94),y:clamp(src.y+.06,CONTENT_ZONE.top,.92),z:maxZ+1};state.entry.stickers.push(n);newIds.push(n.id);}});
+  photos.forEach(id=>{const src=state.entry.photos.find(x=>x.id===id);if(src){const maxZ=Math.max(0,...(state.entry.stickers||[]).map(x=>Number(x.z)||0),...(state.entry.photos||[]).map(x=>Number(x.z)||0));const n={...src,id:uid('photo'),x:clamp(src.x+.06,CONTENT_ZONE.left,.94),y:clamp(src.y+.06,CONTENT_ZONE.top,.92),z:maxZ+1};state.entry.photos.push(n);newIds.push(n.id);}});
   state.selectedCanvas=new Set(newIds);state.selectedPhoto=new Set();state.selectedText=null;
   recordChange(before,'已复制');
   renderDrawer();
 }
-function adjustSelectedScale(delta){const before=clone(state.entry);if(state.selectedText){const key=state.selectedText+'Style',style=state.entry[key]||{};style.fontSize=clamp((style.fontSize|| (state.selectedText==='title'?25:12))+(delta*28),state.selectedText==='title'?16:9,state.selectedText==='title'?54:28);state.entry[key]=style;}state.entry.stickers.forEach(x=>{if(state.selectedCanvas.has(x.id)&&!x.locked)x.scale=clamp((x.scale||1)+delta,.35,2.15);});state.entry.photos.forEach(x=>{if(state.selectedPhoto.has(x.id)&&!x.locked)x.scale=clamp((x.scale||1)+delta,.35,1.8);});recordChange(before);renderCanvasOnly();}
-function rotateSelected(delta){const before=clone(state.entry);state.entry.stickers.forEach(x=>{if(state.selectedCanvas.has(x.id)&&!x.locked)x.rotation=clamp((x.rotation||0)+delta,-180,180);});state.entry.photos.forEach(x=>{if(state.selectedPhoto.has(x.id)&&!x.locked)x.rotation=clamp((x.rotation||0)+delta,-180,180);});recordChange(before);renderCanvasOnly();}
+function adjustSelectedScale(delta){const before=clone(state.entry);if(state.selectedText){const key=state.selectedText+'Style',style=state.entry[key]||{};style.fontSize=clamp((style.fontSize|| (state.selectedText==='title'?25:12))+(delta*28),state.selectedText==='title'?16:9,state.selectedText==='title'?54:28);state.entry[key]=style;}state.entry.stickers.forEach(x=>{if(state.selectedCanvas.has(x.id)&&!x.locked){x.scale=clamp((x.scale||1)+delta,.35,2.15);const q=constrainCanvasElementPosition('sticker',x,x.x,x.y);x.x=q.x;x.y=q.y;}});state.entry.photos.forEach(x=>{if(state.selectedPhoto.has(x.id)&&!x.locked){x.scale=clamp((x.scale||1)+delta,.35,1.8);const q=constrainCanvasElementPosition('photo',x,x.x,x.y);x.x=q.x;x.y=q.y;}});recordChange(before);renderCanvasOnly();}
+function rotateSelected(delta){const before=clone(state.entry);state.entry.stickers.forEach(x=>{if(state.selectedCanvas.has(x.id)&&!x.locked){x.rotation=clamp((x.rotation||0)+delta,-180,180);const q=constrainCanvasElementPosition('sticker',x,x.x,x.y);x.x=q.x;x.y=q.y;}});state.entry.photos.forEach(x=>{if(state.selectedPhoto.has(x.id)&&!x.locked){x.rotation=clamp((x.rotation||0)+delta,-180,180);const q=constrainCanvasElementPosition('photo',x,x.x,x.y);x.x=q.x;x.y=q.y;}});recordChange(before);renderCanvasOnly();}
 function layerSelected(dir){const ids=new Set([...state.selectedCanvas,...state.selectedPhoto]);if(!ids.size)return;const before=clone(state.entry);const list=[...(state.entry.stickers||[]),...(state.entry.photos||[])];if(dir==='front'){let max=Math.max(0,...list.map(x=>Number(x.z)||0));for(const it of list){if(ids.has(it.id))it.z=++max;}}else{let min=Math.min(0,...list.map(x=>Number(x.z)||0));for(const it of list){if(ids.has(it.id))it.z=--min;}}normalizeLayerOrder(state.entry.stickers,state.entry.photos);recordChange(before);renderCanvasOnly();renderTools();}
 function toggleLockSelected(){const ids=new Set([...state.selectedCanvas,...state.selectedPhoto]),before=clone(state.entry);state.entry.stickers.forEach(x=>{if(ids.has(x.id))x.locked=!x.locked;});state.entry.photos.forEach(x=>{if(ids.has(x.id))x.locked=!x.locked;});recordChange(before);renderCanvasOnly();renderTools();}
-function autoArrangeStickers(){const list=state.entry.stickers||[];if(!list.length)return;const before=clone(state.entry),anchors=[];for(let r=0;r<4;r++)for(let c=0;c<6;c++)anchors.push({x:.16+c*.14,y:.44+r*.11});list.forEach((it,i)=>{if(it.locked)return;const a=anchors[i%anchors.length];it.x=a.x;it.y=a.y;it.rotation=(i%5-2)*3;it.z=i+1;});recordChange(before,'已自动排版');renderCanvasOnly();}
+function autoArrangeStickers(){const list=state.entry.stickers||[];if(!list.length)return;const before=clone(state.entry),anchors=[];for(let r=0;r<4;r++)for(let c=0;c<6;c++)anchors.push({x:.32+c*.12,y:.39+r*.11});list.forEach((it,i)=>{if(it.locked)return;const a=anchors[i%anchors.length];it.x=a.x;it.y=a.y;it.rotation=(i%5-2)*3;it.z=i+1;});recordChange(before,'已自动排版');renderCanvasOnly();}
 function toggleCanvasSelection(id){if(state.canvasMultiSelect){if(state.selectedCanvas.has(id))state.selectedCanvas.delete(id);else state.selectedCanvas.add(id);}else{state.selectedCanvas=new Set([id]);state.selectedPhoto.clear();}state.selectedText=null;renderTools();renderCanvasSelectionState();}
 function clearSelection(){state.selectedCanvas.clear();state.selectedPhoto.clear();state.selectedText=null;renderCanvasSelectionState();renderTools();}
 
@@ -2342,7 +2384,7 @@ function renderDrawer(){
     ${supabase&&!state.user?'<div class="login-hint"><strong>云端记录</strong><span>当前输入会自动保留在本机，登录后再保存到云端。</span><button id="loginFromEditor">登录</button></div>':''}
     <div class="canvas-toolbar"><div><strong>一日画布</strong><span id="canvasSelectionInfo"></span></div><div class="canvas-actions"><button class="ghost-mini" id="undoBtn" ${state.historyPast.length?'':'disabled'}>撤销</button><button class="ghost-mini" id="redoBtn" ${state.historyFuture.length?'':'disabled'}>恢复</button><button class="ghost-mini ${state.canvasMultiSelect?'active':''}" id="toggleCanvasMulti">${state.canvasMultiSelect?'结束多选':'多选移动'}</button><button class="ghost-mini" id="autoArrange">自动排版</button></div></div>
     ${state.pendingCapsule?`<div class="capsule-alert"><strong>时间胶囊</strong><span>${escapeHtml(state.pendingCapsule.note)}</span></div>`:''}
-    <div class="journal-canvas" id="journalCanvas" style="background:${escapeHtml(e.background)}"><div class="canvas-date">${currentDateKey()}</div>${canvasObjects}<div id="canvasFloatingTools" class="canvas-floating-tools" aria-hidden="true"></div></div>
+    <div class="journal-canvas" id="journalCanvas" style="background:${escapeHtml(e.background)}"><div class="canvas-date-block" aria-hidden="true"><span class="canvas-date">${currentDateKey()}</span><i></i></div>${canvasObjects}<div id="canvasFloatingTools" class="canvas-floating-tools" aria-hidden="true"></div></div>
     <div class="canvas-hint">点击文字后可直接编辑；拖动元素调整位置。拖动控制点可缩放/旋转；方向键微调位置，Shift + 方向键快速移动。</div>
     <div class="selection-tools" id="selectionTools"><div id="objectTools"></div><div id="photoTools"></div><div id="textTools"></div></div>
     <div class="field-block"><label class="field-label">标题<input id="entryTitle" maxlength="80" value="${escapeHtml(title)}" placeholder="给这一天一个名字" /></label><label class="field-label">今天发生了什么？<textarea id="entryContent" rows="4" placeholder="写下一点点就好。">${escapeHtml(content)}</textarea></label><div class="autosave-note" id="autosaveNote">${escapeHtml(state.autosaveStatus||'输入会自动保留；登录后会自动同步到云端。')}</div></div>
@@ -2500,11 +2542,11 @@ function renderCanvasSelectionState(){
       const move=(me)=>{
         if(type==='scale'){
           const ratio=Math.max(.25,Math.min(3,Math.hypot(me.clientX-center.x,me.clientY-center.y)/startDistance));
-          if(item)item.scale=clamp(startScale*ratio,.35,kind==='photo'?1.8:2.15);
+          if(item){item.scale=clamp(startScale*ratio,.35,kind==='photo'?1.8:2.15);const q=constrainCanvasElementPosition(kind,item,item.x,item.y);item.x=q.x;item.y=q.y;}
           else if(textKey)state.entry[textKey].fontSize=clamp(startFont*ratio,state.selectedText==='title'?16:9,state.selectedText==='title'?54:28);
         }else{
           const ang=Math.atan2(me.clientY-center.y,me.clientX-center.x)*180/Math.PI;
-          if(item)item.rotation=clamp((item.rotation||0)+(ang-startAngle),-180,180);
+          if(item){item.rotation=clamp((item.rotation||0)+(ang-startAngle),-180,180);const q=constrainCanvasElementPosition(kind,item,item.x,item.y);item.x=q.x;item.y=q.y;}
         }
         renderCanvasOnly();
         renderCanvasSelectionState();
@@ -2567,11 +2609,11 @@ function bindCanvasInteractions(canvas){
     const rect=canvas.getBoundingClientRect(),nx=(e.clientX-rect.left)/rect.width,ny=(e.clientY-rect.top)/rect.height,dx=nx-candidate.startX,dy=ny-candidate.startY;
     if(Math.hypot(dx,dy)>.008)candidate.moved=true;
     if(candidate.kind==='sticker'){
-      for(const id of state.selectedCanvas){const it=state.entry.stickers.find(x=>x.id===id),st=candidate.starts[id];if(!it||it.locked||!st)continue;it.x=clamp(st.x+dx,.04,.96);it.y=clamp(st.y+dy,.14,.94);const el=canvas.querySelector(`[data-id="${CSS.escape(id)}"]`);if(el){el.style.left=`${it.x*100}%`;el.style.top=`${it.y*100}%`;}}
+      for(const id of state.selectedCanvas){const it=state.entry.stickers.find(x=>x.id===id),st=candidate.starts[id];if(!it||it.locked||!st)continue;const q=constrainCanvasElementPosition('sticker',it,st.x+dx,st.y+dy);it.x=q.x;it.y=q.y;const el=canvas.querySelector(`[data-id="${CSS.escape(id)}"]`);if(el){el.style.left=`${it.x*100}%`;el.style.top=`${it.y*100}%`;}}
     }else if(candidate.kind==='photo'){
-      for(const id of state.selectedPhoto){const it=state.entry.photos.find(x=>x.id===id),st=candidate.starts[id];if(!it||it.locked||!st)continue;it.x=clamp(st.x+dx,.04,.96);it.y=clamp(st.y+dy,.18,.94);const el=canvas.querySelector(`[data-id="${CSS.escape(id)}"]`);if(el){el.style.left=`${it.x*100}%`;el.style.top=`${it.y*100}%`;}}
+      for(const id of state.selectedPhoto){const it=state.entry.photos.find(x=>x.id===id),st=candidate.starts[id];if(!it||it.locked||!st)continue;const q=constrainCanvasElementPosition('photo',it,st.x+dx,st.y+dy);it.x=q.x;it.y=q.y;const el=canvas.querySelector(`[data-id="${CSS.escape(id)}"]`);if(el){el.style.left=`${it.x*100}%`;el.style.top=`${it.y*100}%`;}}
     }else{
-      const posKey=candidate.kind==='title'?'titlePos':'contentPos',base=candidate.before[posKey]||state.entry[posKey];state.entry[posKey]={x:clamp(base.x+dx,.04,.86),y:clamp(base.y+dy,.10,.90)};const el=canvas.querySelector(`[data-drag-kind="${candidate.kind}"]`);if(el){el.style.left=`${state.entry[posKey].x*100}%`;el.style.top=`${state.entry[posKey].y*100}%`;}
+      const posKey=candidate.kind==='title'?'titlePos':'contentPos',base=candidate.before[posKey]||state.entry[posKey],q=constrainCanvasElementPosition('text',null,base.x+dx,base.y+dy);state.entry[posKey]={x:q.x,y:q.y};const el=canvas.querySelector(`[data-drag-kind="${candidate.kind}"]`);if(el){el.style.left=`${state.entry[posKey].x*100}%`;el.style.top=`${state.entry[posKey].y*100}%`;}
     }
     state.autosaveStatus='正在保存草稿…';updateDrawerFooter();
   };
@@ -2658,7 +2700,7 @@ function finishInlineTextEdit(cancel=false){
 }
 function setTextSize(kind,delta){const before=clone(state.entry),style=state.entry[`${kind}Style`]||{};style.fontSize=clamp((style.fontSize|| (kind==='title'?25:12))+delta,kind==='title'?16:9,kind==='title'?46:22);state.entry[`${kind}Style`]=style;recordChange(before);renderCanvasOnly();renderTools();}
 function toggleTextAlign(kind){const before=clone(state.entry),style=state.entry[`${kind}Style`]||{};style.align=style.align==='left'?'center':style.align==='center'?'right':'left';state.entry[`${kind}Style`]=style;recordChange(before);renderCanvasOnly();renderTools();}
-function moveSelectionByKeyboard(dx,dy){const before=clone(state.entry);if(state.selectedText){const k=state.selectedText+'Pos',p=state.entry[k];state.entry[k]={x:clamp(p.x+dx,.04,.86),y:clamp(p.y+dy,.10,.90)};}else{state.entry.stickers.forEach(it=>{if(state.selectedCanvas.has(it.id)&&!it.locked){it.x=clamp(it.x+dx,.04,.96);it.y=clamp(it.y+dy,.14,.94);}});state.entry.photos.forEach(it=>{if(state.selectedPhoto.has(it.id)&&!it.locked){it.x=clamp(it.x+dx,.04,.96);it.y=clamp(it.y+dy,.18,.94);}});}recordChange(before);renderCanvasOnly();}
+function moveSelectionByKeyboard(dx,dy){const before=clone(state.entry);if(state.selectedText){const k=state.selectedText+'Pos',p=state.entry[k],q=constrainCanvasElementPosition('text',null,p.x+dx,p.y+dy);state.entry[k]={x:q.x,y:q.y};}else{state.entry.stickers.forEach(it=>{if(state.selectedCanvas.has(it.id)&&!it.locked){const q=constrainCanvasElementPosition('sticker',it,it.x+dx,it.y+dy);it.x=q.x;it.y=q.y;}});state.entry.photos.forEach(it=>{if(state.selectedPhoto.has(it.id)&&!it.locked){const q=constrainCanvasElementPosition('photo',it,it.x+dx,it.y+dy);it.x=q.x;it.y=q.y;}});}recordChange(before);renderCanvasOnly();}
 function undo(){if(!state.historyPast.length)return;const current=clone(state.entry);state.historyFuture.push(current);state.entry=state.historyPast.pop();saveDraft(state.entry);renderDrawer();toast('已撤销');}
 function redo(){if(!state.historyFuture.length)return;const current=clone(state.entry);state.historyPast.push(current);state.entry=state.historyFuture.pop();saveDraft(state.entry);renderDrawer();toast('已恢复');}
 
