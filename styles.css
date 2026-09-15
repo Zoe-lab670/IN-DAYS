@@ -449,3 +449,17 @@ footer{margin-top:40px;color:#b0aca3}
 .timeline-text{min-width:0;padding:2px 5px 2px 0}.timeline-meta{display:flex;gap:6px;align-items:center;min-height:15px;color:var(--muted);font-size:7px}.timeline-mood{padding:3px 6px;border-radius:999px;background:#efeee7;color:var(--ink)}.timeline-text strong{display:block;font-size:14px;font-weight:500;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.timeline-text p{margin:7px 0 0;color:var(--muted);font-size:9px;line-height:1.65;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
 @media(max-width:900px){.timeline-grid:before{left:61px}.timeline-card{grid-template-columns:44px 12px 180px minmax(0,1fr)}}
 @media(max-width:760px){.p1-choice-row{grid-template-columns:1fr 1fr}.timeline-card{grid-template-columns:40px 10px 124px minmax(0,1fr);gap:6px;padding:8px;min-height:102px}.timeline-grid:before{left:50px}.timeline-thumb{width:124px;height:86px}.timeline-date b{font-size:17px}.timeline-text strong{font-size:11px}.timeline-text p{font-size:8px;-webkit-line-clamp:3}.timeline-dot{width:7px;height:7px}.timeline-meta{font-size:6.5px}}
+
+
+/* P1返工：心情安全带 + 常驻文字样式面板 + 小场景整组操作 + 月历可读性 */
+.canvas-mood{left:84% !important;top:10% !important;z-index:18 !important;}
+.text-style-panel{margin:10px 0 2px;padding:12px 13px;border:1px solid var(--line);border-radius:16px;background:rgba(255,254,251,.84)}
+.text-style-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:9px}
+.text-style-head>div:first-child{display:flex;flex-direction:column;gap:3px;min-width:0}.text-style-head b{font-size:11px;font-weight:500}.text-style-head span{font-size:8px;color:var(--muted);line-height:1.5}
+.text-style-targets{display:flex;gap:5px;flex:0 0 auto}.text-style-target{border:1px solid var(--line);background:#fffefb;border-radius:999px;padding:6px 9px;font-size:9px;cursor:pointer}.text-style-target.selected{background:#eef0e9;border-color:#bfcab8}
+.text-style-controls{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.text-style-controls .font-choice{min-width:54px}
+.scene-active{box-shadow:inset 0 0 0 1px rgba(141,166,132,.16)}
+/* 月历中标题/正文刻意提高可读性，仍保留原位置与整体构图。 */
+.month-grid .mini-svg text{paint-order:stroke;stroke:transparent;stroke-width:0}
+.month-grid .day-thumbnail{overflow:hidden}
+@media(max-width:760px){.text-style-head{align-items:flex-start;flex-direction:column}.text-style-targets{width:100%}.text-style-target{flex:1}.text-style-controls{gap:5px}.text-style-controls .font-choice{flex:1}}

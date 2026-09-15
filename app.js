@@ -24,7 +24,7 @@ const DATE_SAFE_ZONE = {left:.035, top:.035, right:.145, bottom:.115, margin:.00
 // 日期只占左上角很小的一块；其余区域尽量留给文字、贴纸和照片。
 const CONTENT_ZONE = {left:.08, top:.12, right:.95, bottom:.94};
 // 右上角心情标记安全区：贴纸 / 照片 / 文字都不得压到日期与心情。
-const MOOD_SAFE_ZONE = {left:.76, top:.035, right:.975, bottom:.16, margin:.008};
+const MOOD_SAFE_ZONE = {left:.70, top:.035, right:.985, bottom:.185, margin:.012};
 // 标题默认样式：新的一天第一次输入标题时自动采用，不需要手动调字号/位置。
 const DEFAULT_TITLE_POS = {x:.10, y:.22};
 const FONT_OPTIONS = {
@@ -1762,16 +1762,28 @@ function applyCanvasTemplate(key){
   }
   normalizeLayerOrder(e.stickers,e.photos);recordChange(before,'已应用版式');saveDraft(e);scheduleCloudSave();renderDrawer();toast(`已应用「${CANVAS_TEMPLATES[key].label}」`);
 }
+function sceneGroupForEntry(key){
+  return [...(state.entry?.stickers||[])].filter(x=>x.sceneKey===key).map(x=>x.sceneGroup).filter(Boolean).sort().pop()||null;
+}
+function removeStickerScene(key){
+  const group=sceneGroupForEntry(key);
+  if(!group){toast('这个小场景目前没有加入画布。');return;}
+  const before=clone(state.entry);
+  state.entry.stickers=(state.entry.stickers||[]).filter(x=>x.sceneGroup!==group);
+  state.selectedCanvas=new Set([...state.selectedCanvas].filter(id=>state.entry.stickers.some(x=>x.id===id)));
+  recordChange(before,'已移除小场景');saveDraft(state.entry);scheduleCloudSave();renderDrawer();toast(`已移除「${STICKER_SCENES[key]?.label||'小场景'}」`);
+}
 function addStickerScene(key){
   const scene=STICKER_SCENES[key];if(!scene)return;
+  if(sceneGroupForEntry(key)){removeStickerScene(key);return;}
   const resolved=scene.ids.map(id=>STICKERS.find(s=>s.id===id)).filter(Boolean);if(!resolved.length){toast('这个小场景暂时没有可用贴纸。');return;}
-  const before=clone(state.entry),baseZ=Math.max(0,...(state.entry.stickers||[]).map(x=>Number(x.z)||0));
-  resolved.forEach((st,i)=>{const pos=scene.positions[i]||[.68,.56,1,0];const p=constrainCanvasElementPosition('sticker',{scale:pos[2],rotation:pos[3]},pos[0],pos[1]);state.entry.stickers.push({id:uid(st.id),stickerId:st.id,x:p.x,y:p.y,scale:pos[2],rotation:pos[3],z:baseZ+i+1,locked:false});markRecent(st.id);});
-  recordChange(before,`已加入「${scene.label}」`);saveDraft(state.entry);scheduleCloudSave();renderDrawer();toast(`已加入「${scene.label}」`);
+  const before=clone(state.entry),baseZ=Math.max(0,...(state.entry.stickers||[]).map(x=>Number(x.z)||0)),group=uid('scene');
+  resolved.forEach((st,i)=>{const pos=scene.positions[i]||[.68,.56,1,0];const p=constrainCanvasElementPosition('sticker',{scale:pos[2],rotation:pos[3]},pos[0],pos[1]);state.entry.stickers.push({id:uid(st.id),stickerId:st.id,x:p.x,y:p.y,scale:pos[2],rotation:pos[3],z:baseZ+i+1,locked:false,sceneKey:key,sceneGroup:group});markRecent(st.id);});
+  recordChange(before,`已加入「${scene.label}」`);saveDraft(state.entry);scheduleCloudSave();renderDrawer();toast(`已加入「${scene.label}」 · 再点一次可整组移除`);
 }
 function p1PanelHtml(){
   const e=state.entry||emptyEntry(currentDateKey());
-  return `<div class="p1-tools-grid"><div class="p1-tool-card"><div class="p1-tool-head"><span>模板版式</span><small>一键整理当前这一隅，不会删除内容</small></div><div class="p1-choice-row">${Object.entries(CANVAS_TEMPLATES).map(([k,v])=>`<button class="p1-choice ${e.layoutTemplate===k?'selected':''}" data-template="${k}"><b>${v.label}</b><span>${v.desc}</span></button>`).join('')}</div></div><div class="p1-tool-card"><div class="p1-tool-head"><span>贴纸小场景</span><small>把几枚贴纸组成一个轻量生活片刻</small></div><div class="p1-choice-row">${Object.entries(STICKER_SCENES).map(([k,v])=>`<button class="p1-choice scene-choice" data-scene="${k}"><b>${v.label}</b><span>${v.desc}</span></button>`).join('')}</div></div></div>`;
+  return `<div class="p1-tools-grid"><div class="p1-tool-card"><div class="p1-tool-head"><span>模板版式</span><small>一键整理当前这一隅，不会删除内容</small></div><div class="p1-choice-row">${Object.entries(CANVAS_TEMPLATES).map(([k,v])=>`<button class="p1-choice ${e.layoutTemplate===k?'selected':''}" data-template="${k}"><b>${v.label}</b><span>${v.desc}</span></button>`).join('')}</div></div><div class="p1-tool-card"><div class="p1-tool-head"><span>贴纸小场景</span><small>再次点击同一场景即可整组移除，方便先预览再决定。</small></div><div class="p1-choice-row">${Object.entries(STICKER_SCENES).map(([k,v])=>{const active=!!sceneGroupForEntry(k);return `<button class="p1-choice scene-choice ${active?'selected scene-active':''}" data-scene="${k}"><b>${active?'已加入 · ':''}${v.label}</b><span>${active?'再点一次整组移除':v.desc}</span></button>`;}).join('')}</div></div></div>`;
 }
 
 const app = document.getElementById('app');
@@ -1876,10 +1888,9 @@ function constrainCanvasElementPosition(kind,item,x,y){
   let nx=Number.isFinite(Number(x))?Number(x):.5;
   let ny=Number.isFinite(Number(y))?Number(y):.5;
   if(kind==='text'){
-    nx=clamp(nx,CONTENT_ZONE.left,CONTENT_ZONE.right); ny=clamp(ny,CONTENT_ZONE.top,CONTENT_ZONE.bottom);
-    if(nx>=MOOD_SAFE_ZONE.left && ny>=MOOD_SAFE_ZONE.top && ny<=MOOD_SAFE_ZONE.bottom){
-      nx=clamp(MOOD_SAFE_ZONE.left-MOOD_SAFE_ZONE.margin,CONTENT_ZONE.left,CONTENT_ZONE.right);
-    }
+    nx=clamp(nx,CONTENT_ZONE.left,.90); ny=clamp(ny,.16,CONTENT_ZONE.bottom);
+    // 顶部整条区域留给日期/心情：文字不能进入右上角安全区，也不能贴住日期带。
+    if(ny < .215 && nx > .66) nx=.60;
     return {x:nx,y:ny};
   }
   let halfW,halfH;
@@ -1940,7 +1951,8 @@ function normalizeStickerItems(items){
     x:Number.isFinite(Number(item?.x))?(Number(item.x)>1?clamp(Number(item.x)/CANVAS_W,.04,.96):clamp(Number(item.x),.04,.96)):.5,
     y:Number.isFinite(Number(item?.y))?(Number(item.y)>1?clamp(Number(item.y)/CANVAS_H,.12,.94):clamp(Number(item.y),.12,.94)):.5,
     scale:clamp(Number(item?.scale)||1,.35,2.15),rotation:clamp(Number(item?.rotation)||0,-180,180),
-    z:Number.isFinite(Number(item?.z))?Number(item.z):idx+1,locked:!!item?.locked
+    z:Number.isFinite(Number(item?.z))?Number(item.z):idx+1,locked:!!item?.locked,
+    sceneKey:item?.sceneKey?String(item.sceneKey):null,sceneGroup:item?.sceneGroup?String(item.sceneGroup):null
   })).filter(x=>STICKERS.some(s=>s.id===x.stickerId));
   normalized.forEach(p=>{const q=constrainCanvasElementPosition('sticker',p,p.x,p.y);p.x=q.x;p.y=q.y;});
   normalized.sort((a,b)=>(Number(a.z)||0)-(Number(b.z)||0));
@@ -2007,7 +2019,7 @@ const state={
   year:currentYear,month:currentMonth,selectedDay:currentDay,selectedKey:null,drawerOpen:false,
   viewMode:localStorage.getItem('in-days:view')||'month',
   stickerCategory:'all',stickerSearch:'',recommendedIds:[],multiSelectMode:false,selectedLibrary:new Set(),
-  canvasMultiSelect:false,selectedCanvas:new Set(),selectedPhoto:new Set(),selectedText:null,monthEntries:{},entry:null,
+  canvasMultiSelect:false,selectedCanvas:new Set(),selectedPhoto:new Set(),selectedText:null,styleTarget:'title',monthEntries:{},entry:null,
   user:null,authOpen:false,profileOpen:false,email:'',authStatus:'',status:'',autosaveStatus:'',drag:null,
   historyPast:[],historyFuture:[],historyBusy:false,textEdit:null,draftTimer:null,recoTimer:null,cloudTimer:null,
   inputComposing:false,stickerSearchComposing:false,favorites:new Set(),recent:[],pendingCapsule:null
@@ -2103,8 +2115,8 @@ function miniPoint(x,y,p){
 }
 function moodVisualMarkup(mood,mini=false){
   if(!mood)return '';const item=MOODS.find(m=>m.key===mood);if(!item)return '';const color={happy:'#d8b971',calm:'#9db5a2',full:'#b6a486',tired:'#9cabb6',sad:'#95a7b3',anxious:'#c39a9d'}[mood]||'#b7b5ae';
-  return mini?`<div class="mini-object mini-mood" style="left:88%;top:10%;--mood-color:${color};font-size:${(9/CANVAS_W)*100}cqw;padding:${(4/CANVAS_W)*100}cqw ${(7/CANVAS_W)*100}cqw;gap:${(5/CANVAS_W)*100}cqw"><i style="width:${(7/CANVAS_W)*100}cqw;height:${(7/CANVAS_W)*100}cqw"></i><span>${escapeHtml(item.label)}</span></div>`:
-  `<div class="canvas-mood" style="left:88%;top:10%;--mood-color:${color}"><i></i><span>${escapeHtml(item.label)}</span></div>`;
+  return mini?`<div class="mini-object mini-mood" style="left:84%;top:10%;--mood-color:${color};font-size:${(9/CANVAS_W)*100}cqw;padding:${(4/CANVAS_W)*100}cqw ${(7/CANVAS_W)*100}cqw;gap:${(5/CANVAS_W)*100}cqw"><i style="width:${(7/CANVAS_W)*100}cqw;height:${(7/CANVAS_W)*100}cqw"></i><span>${escapeHtml(item.label)}</span></div>`:
+  `<div class="canvas-mood" style="left:84%;top:10%;--mood-color:${color}"><i></i><span>${escapeHtml(item.label)}</span></div>`;
 }
 function compositionDomHtml(e,{mode='canvas'}={}){
   const parts=[];
@@ -2131,7 +2143,7 @@ function compositionDomHtml(e,{mode='canvas'}={}){
 function miniObjectHtml(e){
   // Strict 1:1 miniature: the same 560×420 composition is rendered once inside an SVG viewBox.
   // The whole artwork is then scaled by the browser as a single unit.
-  return `<svg class="mini-svg" viewBox="0 0 ${CANVAS_W} ${CANVAS_H}" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="0" y="0" width="${CANVAS_W}" height="${CANVAS_H}" fill="transparent"/>${compositionElementsSvg(e,CANVAS_W,CANVAS_H,{includeDate:false})}</svg>`;
+  return `<svg class="mini-svg" viewBox="0 0 ${CANVAS_W} ${CANVAS_H}" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="0" y="0" width="${CANVAS_W}" height="${CANVAS_H}" fill="transparent"/>${compositionElementsSvg(e,CANVAS_W,CANVAS_H,{includeDate:false,mini:true})}</svg>`;
 }
 function visualDensityClass(entry){
   const e=entry||{};
@@ -2598,7 +2610,7 @@ function renderDrawer(){
     <div class="journal-canvas" id="journalCanvas" style="background:${escapeHtml(e.background)}"><div class="canvas-date-block" aria-hidden="true"><span class="canvas-date">${currentDateKey()}</span><i></i></div>${canvasObjects}<div id="canvasFloatingTools" class="canvas-floating-tools" aria-hidden="true"></div></div>
     <div class="canvas-hint">点击文字后可直接编辑；拖动元素调整位置。拖动控制点可缩放/旋转；方向键微调位置，Shift + 方向键快速移动。</div>
     <div class="p1-editor-section" id="p1EditorTools">${p1PanelHtml()}</div>
-    <div class="selection-tools" id="selectionTools"><div id="objectTools"></div><div id="photoTools"></div><div id="textTools"></div></div>
+    <div class="selection-tools" id="selectionTools"><div id="objectTools"></div><div id="photoTools"></div><div id="textTools"></div></div><div class="text-style-panel" id="textStylePanel"></div>
     <div class="field-block"><label class="field-label">标题<input id="entryTitle" maxlength="80" value="${escapeHtml(title)}" placeholder="给这一天一个名字" /></label><label class="field-label">今天发生了什么？<textarea id="entryContent" rows="4" placeholder="写下一点点就好。">${escapeHtml(content)}</textarea></label><div class="autosave-note" id="autosaveNote">${escapeHtml(state.autosaveStatus||'输入会自动保留；登录后会自动同步到云端。')}</div></div>
     <div class="editor-section"><div class="section-title-row"><div><span>贴纸库</span><small>搜索 / 推荐 / 收藏 / 最近使用；支持多选加入。</small></div><span>${(e.stickers||[]).length} 枚已在画布</span></div><div id="stickerPanel"></div></div>
     <div class="editor-section"><div class="section-title-row"><div><span>心情</span><small>给这一天一个轻轻的标记。</small></div></div><div class="mood-row">${MOODS.map(m=>`<button class="mood-choice ${e.mood===m.key?'selected':''}" data-mood="${m.key}">${m.label}</button>`).join('')}</div></div>
@@ -2670,8 +2682,27 @@ function applySelectedTextStyleToCanvas(){
   el.style.setProperty('font-variant-ligatures','none');
 }
 
+function selectTextForStyle(kind){
+  state.styleTarget=kind;state.selectedText=kind;state.selectedCanvas.clear();state.selectedPhoto.clear();renderCanvasSelectionState();renderTools();
+}
+function applyFontChoice(kind,fontKey){
+  const key=`${kind}Style`,before=clone(state.entry),fallback=kind==='title'?DEFAULT_TITLE_STYLE:DEFAULT_CONTENT_STYLE;
+  state.entry[key]={...fallback,...(state.entry[key]||{}),fontFamily:fontKey};
+  recordChange(before,`已设置${kind==='title'?'标题':'正文'}字体`);saveDraft(state.entry);scheduleCloudSave();renderCanvasOnly();toast(`已切换为「${FONT_OPTIONS[fontKey]?.label||'简约'}」`);
+}
+function renderTextStylePanel(){
+  const panel=document.getElementById('textStylePanel');if(!panel)return;
+  const target=state.styleTarget||state.selectedText||'title',style=state.entry?.[`${target}Style`]|| (target==='title'?DEFAULT_TITLE_STYLE:DEFAULT_CONTENT_STYLE),activeFont=style.fontFamily||'system';
+  panel.innerHTML=`<div class="text-style-head"><div><b>文字样式</b><span>先选择标题或正文，再直接点击样式；会立即显示在画布上。</span></div><div class="text-style-targets"><button class="text-style-target ${target==='title'?'selected':''}" data-style-target="title">标题</button><button class="text-style-target ${target==='content'?'selected':''}" data-style-target="content">正文</button></div></div><div class="text-style-controls"><button class="ghost-mini" id="styleSmaller">A−</button><button class="ghost-mini" id="styleLarger">A＋</button><button class="ghost-mini" id="styleAlign">对齐：${style.align==='left'?'左':style.align==='center'?'中':'右'}</button>${Object.entries(FONT_OPTIONS).map(([key,opt])=>`<button type="button" class="font-choice ${activeFont===key?'selected':''}" data-style-font="${key}" style="font-family:${opt.family}">${opt.label}</button>`).join('')}</div>`;
+  panel.querySelectorAll('[data-style-target]').forEach(btn=>btn.addEventListener('click',()=>selectTextForStyle(btn.dataset.styleTarget)));
+  panel.querySelectorAll('[data-style-font]').forEach(btn=>btn.addEventListener('click',()=>applyFontChoice(target,btn.dataset.styleFont)));
+  panel.querySelector('#styleSmaller')?.addEventListener('click',()=>{state.styleTarget=target;setTextSize(target,-2)});
+  panel.querySelector('#styleLarger')?.addEventListener('click',()=>{state.styleTarget=target;setTextSize(target,2)});
+  panel.querySelector('#styleAlign')?.addEventListener('click',()=>{state.styleTarget=target;toggleTextAlign(target)});
+}
+
 function renderTools(){const wrap=document.getElementById('objectTools');if(!wrap)return;let html='';const n=state.selectedCanvas.size+state.selectedPhoto.size;if(n){const locked=[...state.selectedCanvas].some(id=>state.entry.stickers.find(x=>x.id===id)?.locked)||[...state.selectedPhoto].some(id=>state.entry.photos.find(x=>x.id===id)?.locked);html+=`<div class="tool-group"><span class="tool-label">选中 ${n} 个</span><button class="ghost-mini" id="scaleDown">缩小</button><button class="ghost-mini" id="scaleUp">放大</button><button class="ghost-mini" id="rotateLeft">↺</button><button class="ghost-mini" id="rotateRight">↻</button><button class="ghost-mini" id="sendBack">后置</button><button class="ghost-mini" id="bringFront">前置</button><button class="ghost-mini" id="duplicateSelected">复制</button><button class="ghost-mini" id="lockSelected">${locked?'解锁':'锁定'}</button><button class="ghost-mini danger-mini" id="deleteSelected">删除</button></div>`;}
-  wrap.innerHTML=html;document.getElementById('scaleDown')?.addEventListener('click',()=>adjustSelectedScale(-.08));document.getElementById('scaleUp')?.addEventListener('click',()=>adjustSelectedScale(.08));document.getElementById('rotateLeft')?.addEventListener('click',()=>rotateSelected(-8));document.getElementById('rotateRight')?.addEventListener('click',()=>rotateSelected(8));document.getElementById('sendBack')?.addEventListener('click',()=>layerSelected('back'));document.getElementById('bringFront')?.addEventListener('click',()=>layerSelected('front'));document.getElementById('duplicateSelected')?.addEventListener('click',duplicateSelected);document.getElementById('lockSelected')?.addEventListener('click',toggleLockSelected);document.getElementById('deleteSelected')?.addEventListener('click',removeSelected);
+  wrap.innerHTML=html;renderTextStylePanel();document.getElementById('scaleDown')?.addEventListener('click',()=>adjustSelectedScale(-.08));document.getElementById('scaleUp')?.addEventListener('click',()=>adjustSelectedScale(.08));document.getElementById('rotateLeft')?.addEventListener('click',()=>rotateSelected(-8));document.getElementById('rotateRight')?.addEventListener('click',()=>rotateSelected(8));document.getElementById('sendBack')?.addEventListener('click',()=>layerSelected('back'));document.getElementById('bringFront')?.addEventListener('click',()=>layerSelected('front'));document.getElementById('duplicateSelected')?.addEventListener('click',duplicateSelected);document.getElementById('lockSelected')?.addEventListener('click',toggleLockSelected);document.getElementById('deleteSelected')?.addEventListener('click',removeSelected);
   const photoTool=document.getElementById('photoTools');if(photoTool){
     if(state.selectedPhoto.size===1){
       const id=[...state.selectedPhoto][0],p=state.entry.photos.find(x=>x.id===id),frame=String(p?.frame||'paper'),cropMode=String(p?.cropMode||'original');
@@ -2680,7 +2711,7 @@ function renderTools(){const wrap=document.getElementById('objectTools');if(!wra
       photoTool.querySelectorAll('[data-photo-crop]').forEach(btn=>btn.addEventListener('click',()=>{const before=clone(state.entry);p.cropMode=btn.dataset.photoCrop;if(p.cropMode==='4:3'){p.objectPositionX=50;p.objectPositionY=50;}recordChange(before);renderCanvasOnly();renderTools();}));
     } else photoTool.innerHTML='';
   }
-  const text=document.getElementById('textTools');if(text){if(state.selectedText){const style=state.entry[`${state.selectedText}Style`]||{};const activeFont=style.fontFamily||'system';text.innerHTML=`<div class="tool-group font-toolbar"><span class="tool-label">${state.selectedText==='title'?'标题':'正文'} · ${style.fontSize}px</span><button class="ghost-mini" id="textSmaller">A−</button><button class="ghost-mini" id="textLarger">A＋</button><button class="ghost-mini" id="textAlign">对齐：${style.align==='left'?'左':style.align==='center'?'中':'右'}</button></div><div class="font-choice-row">${Object.entries(FONT_OPTIONS).map(([key,opt])=>`<button type="button" class="font-choice ${activeFont===key?'selected':''}" data-font-choice="${key}" style="font-family:${opt.family}" title="${opt.label}">${opt.label}</button>`).join('')}</div>`;document.getElementById('textSmaller').onclick=()=>setTextSize(state.selectedText,-2);document.getElementById('textLarger').onclick=()=>setTextSize(state.selectedText,2);document.getElementById('textAlign').onclick=()=>toggleTextAlign(state.selectedText);text.querySelectorAll('[data-font-choice]').forEach(btn=>btn.addEventListener('click',()=>{const before=clone(state.entry);const key=`${state.selectedText}Style`;const fallback=state.selectedText==='title'?DEFAULT_TITLE_STYLE:DEFAULT_CONTENT_STYLE;state.entry[key]={...fallback,...(state.entry[key]||{}),fontFamily:btn.dataset.fontChoice};recordChange(before);saveDraft(state.entry);scheduleCloudSave();renderCanvasOnly();applySelectedTextStyleToCanvas();renderTools();toast(`已切换为「${FONT_OPTIONS[btn.dataset.fontChoice]?.label||'简约'}」`);}));}else text.innerHTML='<div class="tool-group"><span class="tool-muted">点击文字可编辑；拖动可调整位置。选中文字后可选择趣味字体。</span></div>';}}
+  const text=document.getElementById('textTools');if(text){if(state.selectedText){const style=state.entry[`${state.selectedText}Style`]||{};const activeFont=style.fontFamily||'system';text.innerHTML=`<div class="tool-group font-toolbar"><span class="tool-label">${state.selectedText==='title'?'标题':'正文'} · ${style.fontSize}px</span><button class="ghost-mini" id="textSmaller">A−</button><button class="ghost-mini" id="textLarger">A＋</button><button class="ghost-mini" id="textAlign">对齐：${style.align==='left'?'左':style.align==='center'?'中':'右'}</button></div><div class="font-choice-row">${Object.entries(FONT_OPTIONS).map(([key,opt])=>`<button type="button" class="font-choice ${activeFont===key?'selected':''}" data-font-choice="${key}" style="font-family:${opt.family}" title="${opt.label}">${opt.label}</button>`).join('')}</div>`;document.getElementById('textSmaller').onclick=()=>setTextSize(state.selectedText,-2);document.getElementById('textLarger').onclick=()=>setTextSize(state.selectedText,2);document.getElementById('textAlign').onclick=()=>toggleTextAlign(state.selectedText);text.querySelectorAll('[data-font-choice]').forEach(btn=>btn.addEventListener('click',()=>{const before=clone(state.entry);const key=`${state.selectedText}Style`;const fallback=state.selectedText==='title'?DEFAULT_TITLE_STYLE:DEFAULT_CONTENT_STYLE;state.entry[key]={...fallback,...(state.entry[key]||{}),fontFamily:btn.dataset.fontChoice};state.styleTarget=state.selectedText;recordChange(before);saveDraft(state.entry);scheduleCloudSave();renderCanvasOnly();applySelectedTextStyleToCanvas();renderTools();toast(`已切换为「${FONT_OPTIONS[btn.dataset.fontChoice]?.label||'简约'}」`);}));}else text.innerHTML='<div class="tool-group"><span class="tool-muted">点击文字可编辑；拖动可调整位置。选中文字后可选择趣味字体。</span></div>';}}
 function renderCanvasSelectionState(){
   document.querySelectorAll('.placed-sticker').forEach(el=>el.classList.toggle('selected',state.selectedCanvas.has(el.dataset.id)));
   document.querySelectorAll('.placed-photo').forEach(el=>el.classList.toggle('selected',state.selectedPhoto.has(el.dataset.id)));
@@ -3000,11 +3031,11 @@ function openReview(){
 function exportSvgForSticker(sticker,x,y,size,scale=1,rot=0){if(!sticker)return '';if(sticker.inlineSvg)return `<image href="${escapeHtml(stickerDataUri(sticker))}" x="${x-size/2}" y="${y-size/2}" width="${size*scale}" height="${size*scale}" transform="rotate(${rot} ${x} ${y})"/>`;const raw=svgSticker(sticker,size),m=raw.match(/<svg[^>]*>([\s\S]*)<\/svg>/);return m?`<g transform="translate(${x-size/2} ${y-size/2}) rotate(${rot} ${size/2} ${size/2}) scale(${scale})">${m[1]}</g>`:'';}
 function textLinesSvg(text,maxChars){const out=[];for(const rawLine of String(text||'').split(/\r?\n/)){const line=rawLine||' ';for(let i=0;i<line.length;i+=maxChars)out.push(line.slice(i,i+maxChars));if(rawLine==='')out.push(' ');}return out.length?out:[' '];}
 async function svgToPng(svg,w,h,filename){return await new Promise((resolve,reject)=>{const blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}),url=URL.createObjectURL(blob),img=new Image();img.onload=()=>{const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');ctx.fillStyle='#fbfaf6';ctx.fillRect(0,0,w,h);ctx.drawImage(img,0,0,w,h);URL.revokeObjectURL(url);c.toBlob(b=>{if(!b)return reject(new Error('export failed'));const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);resolve();},'image/png');};img.onerror=reject;img.src=url;});}
-function compositionElementsSvg(e,w,h,{includeDate=true}={}){
+function compositionElementsSvg(e,w,h,{includeDate=true,mini=false}={}){
   const sx=w/CANVAS_W,sy=h/CANVAS_H,tx=x=>x*CANVAS_W*sx,ty=y=>y*CANVAS_H*sy;let body='';
   const esc=v=>escapeHtml(v);
-  if(e.title){const tf=FONT_OPTIONS[e.titleStyle?.fontFamily||'system']?.family||FONT_OPTIONS.system.family;body+=`<text x="${tx(e.titlePos.x)}" y="${ty(e.titlePos.y)}" font-size="${e.titleStyle.fontSize*sx}" font-family="${escapeHtml(tf)}" font-weight="${e.titleStyle.weight||500}" fill="#3f403b" text-anchor="${e.titleStyle.align==='center'?'middle':e.titleStyle.align==='right'?'end':'start'}">${esc(e.title)}</text>`;}
-  if(e.content){const cf=FONT_OPTIONS[e.contentStyle?.fontFamily||'system']?.family||FONT_OPTIONS.system.family;const lines=textLinesSvg(e.content,Math.max(14,Math.floor(38/(e.contentStyle.fontSize/12))));lines.forEach((line,i)=>body+=`<text x="${tx(e.contentPos.x)}" y="${ty(e.contentPos.y)+i*e.contentStyle.fontSize*1.45*sy}" font-size="${e.contentStyle.fontSize*sx}" font-family="${escapeHtml(cf)}" fill="#66645c" text-anchor="${e.contentStyle.align==='center'?'middle':e.contentStyle.align==='right'?'end':'start'}">${esc(line)}</text>`);}
+  if(e.title){const tf=FONT_OPTIONS[e.titleStyle?.fontFamily||'system']?.family||FONT_OPTIONS.system.family;const titleSize=(mini?Math.max(Number(e.titleStyle?.fontSize)||25,44):Number(e.titleStyle?.fontSize)||25);body+=`<text x="${tx(e.titlePos.x)}" y="${ty(e.titlePos.y)}" font-size="${titleSize*sx}" font-family="${escapeHtml(tf)}" font-weight="${e.titleStyle.weight||500}" fill="#3f403b" text-anchor="${e.titleStyle.align==='center'?'middle':e.titleStyle.align==='right'?'end':'start'}">${esc(e.title)}</text>`;}
+  if(e.content){const cf=FONT_OPTIONS[e.contentStyle?.fontFamily||'system']?.family||FONT_OPTIONS.system.family;const contentSize=(mini?Math.max(Number(e.contentStyle?.fontSize)||12,24):Number(e.contentStyle?.fontSize)||12);const lines=textLinesSvg(e.content,Math.max(9,Math.floor((mini?24:38)/(contentSize/12))));lines.slice(0,mini?4:99).forEach((line,i)=>body+=`<text x="${tx(e.contentPos.x)}" y="${ty(e.contentPos.y)+i*contentSize*1.45*sy}" font-size="${contentSize*sx}" font-family="${escapeHtml(cf)}" fill="#66645c" text-anchor="${e.contentStyle.align==='center'?'middle':e.contentStyle.align==='right'?'end':'start'}">${esc(line)}</text>`);}
   if(e.mood){const mm=MOODS.find(m=>m.key===e.mood);const mc={happy:'#d8b971',calm:'#9db5a2',full:'#b6a486',tired:'#9cabb6',sad:'#95a7b3',anxious:'#c39a9d',excited:'#d39b77',love:'#c58d8c',wow:'#c5a269',angry:'#c88e87'}[e.mood]||'#b7b5ae';body+=`<circle cx="${tx(.84)}" cy="${ty(.10)}" r="${8*sx}" fill="${mc}" opacity=".85"/><text x="${tx(.84)+14*sx}" y="${ty(.10)+5*sy}" font-size="${12*sx}" fill="#8f8c84" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif">${esc(mm?.label||'')}</text>`;}
   const layers=[...(e.photos||[]).map(p=>({kind:'photo',item:p,z:Number(p.z)||0})),...(e.stickers||[]).map(p=>({kind:'sticker',item:p,z:Number(p.z)||0}))].sort((a,b)=>a.z-b.z);
   for(const layer of layers){const p=layer.item;if(layer.kind==='photo'){const rawRatio=clamp(Number(p.ratio)||4/3,.55,2.2),ratio=String(p.cropMode||'original')==='4:3'?4/3:rawRatio,pw=160*p.scale*sx,ph=pw/ratio;body+=`<rect x="${tx(p.x)-pw/2-5*sx}" y="${ty(p.y)-ph/2-5*sy}" width="${pw+10*sx}" height="${ph+10*sy}" rx="10" fill="#fffefb" opacity=".92" transform="rotate(${p.rotation||0} ${tx(p.x)} ${ty(p.y)})"/><image href="${esc(p.src)}" x="${tx(p.x)-pw/2}" y="${ty(p.y)-ph/2}" width="${pw}" height="${ph}" preserveAspectRatio="xMidYMid ${String(p.cropMode||'original')==='4:3'?'slice':'meet'}" transform="rotate(${p.rotation||0} ${tx(p.x)} ${ty(p.y)})"/>`;}else {const st=STICKERS.find(x=>x.id===p.stickerId);if(!st)continue;const tier=st.category==='mood'||st.category==='nature'?'accent':st.category==='festival'||st.category==='travel'?'story':'object';body+=`<g class="composition-sticker tier-${tier}">${exportSvgForSticker(st,tx(p.x),ty(p.y),64*sx,p.scale||1,p.rotation||0)}</g>`;}}
