@@ -3097,7 +3097,7 @@ function closeMonthExport(){document.getElementById('exportMonthRoot').innerHTML
 function boot(){
   try{
     if(!window.IN_DAYS_CONFIG){console.info('[IN DAYS] config.js 未提供，当前按未配置账号模式启动；不会覆盖现有 config.js。');}
-    renderShell();state.entry=emptyEntry(currentDateKey());state.drawerOpen=window.innerWidth>=1180;renderCalendar();
+    renderShell();state.entry=emptyEntry(currentDateKey());state.drawerOpen=false;renderCalendar();
     Promise.resolve(initAuth()).then(async()=>{if(!supabase){await loadCurrentMonth();await loadSelectedEntry();}}).catch(async()=>{await loadCurrentMonth();await loadSelectedEntry();});
   }catch(error){console.error(error);app.innerHTML='<main class="app-shell"><section class="selected-summary"><div><p class="section-kicker">IN DAYS</p><h2>页面加载失败</h2><p>请刷新页面重试。</p></div></section></main>';}
 }

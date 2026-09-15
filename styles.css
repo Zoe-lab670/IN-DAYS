@@ -575,3 +575,8 @@ footer{opacity:.82}
   .journal-canvas:before{inset:9px}
   .canvas-date-block{padding:3px 6px}
 }
+
+/* FIX: drawer must remain a viewport-level side panel and never enter normal document flow. */
+.editor-drawer{position:fixed !important;top:0 !important;right:0 !important;bottom:0 !important;left:auto !important;transform:none !important;z-index:21 !important;display:flex !important;flex-direction:column !important;overflow:hidden;}
+.drawer-backdrop{position:fixed !important;inset:0 !important;z-index:20 !important;}
+#drawerRoot:empty{display:none;}
