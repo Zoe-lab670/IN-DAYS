@@ -272,7 +272,7 @@ footer{margin-top:40px;color:#b0aca3}
   .insight-mood{grid-column:1/-1}
 }
 
-/* V30: compact, reference-like monthly report. Keep the hierarchy light and avoid oversized cards. */
+/* V31: compact monthly report. Keep all five user-facing modules small and balanced. */
 .monthly-report{margin-top:18px;border-top:1px solid #ebe6dc;padding-top:14px;}
 .report-kicker{display:flex;justify-content:space-between;align-items:center;gap:16px;color:#aaa59b;font-size:8px;letter-spacing:.2em;}
 .report-kicker .section-kicker{margin:0;}
@@ -280,52 +280,42 @@ footer{margin-top:40px;color:#b0aca3}
 .report-heading h3{margin:0;font-size:18px;font-weight:500;letter-spacing:-.02em;color:var(--ink);}
 .report-heading p{margin:6px 0 0;max-width:680px;font-size:10px;line-height:1.7;color:#8e8a81;}
 .report-link{border:0;background:transparent;color:#7d8177;font-size:9px;cursor:pointer;padding:3px 0;white-space:nowrap;}
-.report-body{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(260px,.82fr);gap:9px;align-items:stretch;}
-.report-story,.report-stat,.report-featured{border:1px solid #e8e3d8;background:rgba(255,254,250,.56);border-radius:16px;box-shadow:none;text-align:left;cursor:pointer;color:inherit;}
-.report-story{padding:14px 16px;min-height:156px;}
+.report-body{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(260px,.82fr);gap:9px;align-items:start;}
+.report-story,.report-stat,.report-featured{box-sizing:border-box;border:1px solid #e8e3d8;background:rgba(255,254,250,.56);border-radius:16px;box-shadow:none;text-align:left;cursor:pointer;color:inherit;}
+.report-story{padding:14px 16px;min-height:156px;height:156px;overflow:hidden;}
 .report-story-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;}
 .report-story-head span,.report-stat span,.report-featured>span{font-size:9px;color:#6f6b63;}
 .report-story-head small{font-size:7.5px;color:#9f9a90;}
 .report-trend{margin-top:11px;}
-.report-trend .insight-trend{height:72px;}
+.report-trend .insight-trend{height:64px;}
 .report-trend-note{display:flex;justify-content:space-between;color:#aaa59b;font-size:7.5px;padding:3px 3px 0;}
-.report-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}
-.report-stat{padding:12px;min-height:82px;}
-.report-stat strong{display:block;margin-top:7px;font-size:24px;font-weight:500;letter-spacing:-.035em;}
+.report-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;align-content:start;}
+.report-stat{padding:11px 12px;min-height:76px;height:76px;overflow:hidden;}
+.report-stat strong{display:block;margin-top:6px;font-size:22px;font-weight:500;letter-spacing:-.035em;}
 .report-stat strong em{font-style:normal;color:#aaa59b;font-size:9px;margin-left:3px;}
-.report-stat small{display:block;margin-top:4px;color:#969189;font-size:7.5px;line-height:1.5;}
-.report-featured{grid-column:1/-1;padding:11px 12px;min-height:72px;}
-.featured-inner{display:flex;align-items:center;gap:9px;margin-top:5px;}
-.featured-inner > svg,.featured-inner > span{width:34px!important;height:34px!important;flex:0 0 34px;}
-.featured-inner b{display:block;font-size:11px;font-weight:500;color:var(--ink);}
-.featured-inner small{display:block;margin-top:3px;font-size:7.5px;color:#969189;}
+.report-stat small{display:block;margin-top:3px;color:#969189;font-size:7.5px;line-height:1.4;}
+.report-featured{grid-column:1/-1;padding:10px 12px;height:68px;min-height:68px;overflow:hidden;}
+.featured-inner{display:flex;align-items:center;gap:8px;margin-top:4px;min-height:32px;}
+.featured-inner > svg,.featured-inner > span{width:30px!important;height:30px!important;flex:0 0 30px;}
+.featured-inner b{display:block;font-size:10.5px;font-weight:500;color:var(--ink);}
+.featured-inner small{display:block;margin-top:2px;font-size:7.5px;color:#969189;}
 .report-divider{height:1px;background:#eee9df;margin:13px 2px 0;}
 .monthly-report .hot-stickers-row{margin-top:11px;padding:0 2px 1px;}
 .monthly-report .hot-stickers-head{padding-top:0;align-items:flex-end;}
 .monthly-report .hot-stickers-head h4{font-size:12px;margin-top:4px;}
-.monthly-report .hot-sticker{flex-basis:72px;border-radius:13px;background:rgba(255,254,250,.72);padding:8px 7px;}
+.monthly-report .hot-sticker{flex-basis:72px;border-radius:13px;background:rgba(255,254,250,.72);padding:7px 6px;}
+.monthly-report .hot-sticker .sticker-art{width:34px!important;height:34px!important;}
 .monthly-report .hot-sticker.featured-hot{background:#f3f0e7;border-color:#ddd7ca;}
 .monthly-report .hot-sticker.featured-hot b{font-size:8px;}
-
-/* Today's Corner is the closing module from the reference, kept visually quiet. */
-.selected-summary{padding:30px 7px 0;margin-top:20px;border-top:1px solid #e8e3d9;display:flex;justify-content:space-between;gap:24px;align-items:flex-end;}
-.selected-summary h2{font-size:28px;letter-spacing:-.03em;font-weight:500;margin:7px 0 0;}
-.selected-summary p:last-child{font-size:12px;line-height:1.9;color:#97938a;margin-top:7px;}
-.selected-summary .summary-actions{gap:8px;}
-.open-editor{font-size:10px;padding:11px 15px;background:#fffefa;}
-.open-editor.light{background:transparent;}
-
 @media(max-width:900px){
   .report-body{grid-template-columns:1fr;}
-  .report-stats{grid-template-columns:repeat(3,minmax(0,1fr));}
-  .report-featured{grid-column:auto;}
-  .selected-summary{align-items:flex-start;flex-direction:column;}
+  .report-stats{grid-template-columns:repeat(2,minmax(0,1fr));}
 }
 @media(max-width:760px){
   .report-heading{align-items:flex-start;flex-direction:column;gap:7px;}
   .report-heading h3{font-size:19px;}
+  .report-story{height:150px;min-height:150px;}
   .report-stats{grid-template-columns:1fr 1fr;}
-  .report-featured{grid-column:1/-1;}
 }
 
 /* V23: only the day-card itself has a border; composition has no inner frame. */
@@ -404,10 +394,3 @@ footer{margin-top:40px;color:#b0aca3}
 .sticker-art.sticker-hero{filter:url(#stickerRough) saturate(.98) contrast(.99) drop-shadow(.55px .4px 0 rgba(63,64,59,.09));}
 .sticker-art.sticker-story{filter:url(#stickerRough) saturate(.97) contrast(.99) drop-shadow(.5px .35px 0 rgba(63,64,59,.08));}
 
-/* V30 final compact monthly report overrides */
-.report-body{align-items:start;}
-.report-story{min-height:168px;height:auto;}
-.report-stats{align-content:start;align-items:start;grid-auto-rows:min-content;}
-.report-featured{height:72px;min-height:72px;}
-.featured-inner .sticker-art{display:block;flex:0 0 40px;width:40px!important;height:40px!important;overflow:hidden;}
-.featured-inner .sticker-art .sticker-image{display:block;width:40px!important;height:40px!important;object-fit:contain;}
