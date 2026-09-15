@@ -272,45 +272,40 @@ footer{margin-top:40px;color:#b0aca3}
   .insight-mood{grid-column:1/-1}
 }
 
-/* V24: reference-faithful monthly report / little things / today corner */
-.day-card.has-entry .day-thumbnail{background:linear-gradient(145deg,rgba(255,254,249,.86),rgba(250,247,238,.72));box-shadow:0 10px 26px rgba(58,54,46,.028);}
-.day-card.has-entry .mini-canvas{filter:saturate(.96);}
-.day-card.has-entry .day-number{font-size:9px;letter-spacing:.08em;color:#8f8a80;}
-.day-card.has-entry:hover .day-thumbnail{transform:translateY(-1px);box-shadow:0 12px 28px rgba(58,54,46,.045);}
-.day-card.has-entry.active .day-thumbnail{box-shadow:0 0 0 1px rgba(141,166,132,.24),0 10px 28px rgba(58,54,46,.045);}
-
-.monthly-report{margin-top:22px;border-top:1px solid #ebe6dc;padding-top:18px;}
-.report-kicker{display:flex;justify-content:space-between;align-items:center;gap:16px;color:#aaa59b;font-size:9px;letter-spacing:.22em;}
+/* V30: compact, reference-like monthly report. Keep the hierarchy light and avoid oversized cards. */
+.monthly-report{margin-top:18px;border-top:1px solid #ebe6dc;padding-top:14px;}
+.report-kicker{display:flex;justify-content:space-between;align-items:center;gap:16px;color:#aaa59b;font-size:8px;letter-spacing:.2em;}
 .report-kicker .section-kicker{margin:0;}
-.report-heading{display:flex;justify-content:space-between;gap:24px;align-items:flex-end;padding:8px 2px 16px;}
-.report-heading h3{margin:0;font-size:22px;font-weight:500;letter-spacing:-.025em;color:var(--ink);}
-.report-heading p{margin:7px 0 0;max-width:760px;font-size:11px;line-height:1.9;color:#8e8a81;}
-.report-link{border:0;background:transparent;color:#7d8177;font-size:10px;cursor:pointer;padding:4px 0;white-space:nowrap;}
-.report-body{display:grid;grid-template-columns:minmax(0,1.38fr) minmax(300px,.72fr);gap:10px;align-items:stretch;}
-.report-story,.report-stat,.report-featured{border:1px solid #e8e3d8;background:rgba(255,254,250,.66);border-radius:18px;box-shadow:none;text-align:left;cursor:pointer;color:inherit;}
-.report-story{padding:17px 18px;min-height:202px;}
+.report-heading{display:flex;justify-content:space-between;gap:20px;align-items:flex-end;padding:7px 2px 12px;}
+.report-heading h3{margin:0;font-size:18px;font-weight:500;letter-spacing:-.02em;color:var(--ink);}
+.report-heading p{margin:6px 0 0;max-width:680px;font-size:10px;line-height:1.7;color:#8e8a81;}
+.report-link{border:0;background:transparent;color:#7d8177;font-size:9px;cursor:pointer;padding:3px 0;white-space:nowrap;}
+.report-body{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(260px,.82fr);gap:9px;align-items:stretch;}
+.report-story,.report-stat,.report-featured{border:1px solid #e8e3d8;background:rgba(255,254,250,.56);border-radius:16px;box-shadow:none;text-align:left;cursor:pointer;color:inherit;}
+.report-story{padding:14px 16px;min-height:156px;}
 .report-story-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;}
-.report-story-head span,.report-stat span,.report-featured>span{font-size:10px;color:#6f6b63;}
-.report-story-head small{font-size:8px;color:#9f9a90;}
-.report-trend{margin-top:17px;}
-.report-trend .insight-trend{height:94px;}
-.report-trend-note{display:flex;justify-content:space-between;color:#aaa59b;font-size:8px;padding:4px 3px 0;}
-.report-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
-.report-stat{padding:15px;min-height:96px;}
-.report-stat strong{display:block;margin-top:10px;font-size:28px;font-weight:500;letter-spacing:-.035em;}
-.report-stat strong em{font-style:normal;color:#aaa59b;font-size:11px;margin-left:3px;}
-.report-stat small{display:block;margin-top:5px;color:#969189;font-size:8px;line-height:1.6;}
-.report-featured{grid-column:1/-1;padding:14px 15px;min-height:88px;}
-.featured-inner{display:flex;align-items:center;gap:11px;margin-top:7px;}
-.featured-inner b{display:block;font-size:13px;font-weight:500;color:var(--ink);}
-.featured-inner small{display:block;margin-top:4px;font-size:8px;color:#969189;}
-.report-divider{height:1px;background:#eee9df;margin:17px 2px 0;}
-.monthly-report .hot-stickers-row{margin-top:14px;padding:0 2px 1px;}
+.report-story-head span,.report-stat span,.report-featured>span{font-size:9px;color:#6f6b63;}
+.report-story-head small{font-size:7.5px;color:#9f9a90;}
+.report-trend{margin-top:11px;}
+.report-trend .insight-trend{height:72px;}
+.report-trend-note{display:flex;justify-content:space-between;color:#aaa59b;font-size:7.5px;padding:3px 3px 0;}
+.report-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}
+.report-stat{padding:12px;min-height:82px;}
+.report-stat strong{display:block;margin-top:7px;font-size:24px;font-weight:500;letter-spacing:-.035em;}
+.report-stat strong em{font-style:normal;color:#aaa59b;font-size:9px;margin-left:3px;}
+.report-stat small{display:block;margin-top:4px;color:#969189;font-size:7.5px;line-height:1.5;}
+.report-featured{grid-column:1/-1;padding:11px 12px;min-height:72px;}
+.featured-inner{display:flex;align-items:center;gap:9px;margin-top:5px;}
+.featured-inner > svg,.featured-inner > span{width:34px!important;height:34px!important;flex:0 0 34px;}
+.featured-inner b{display:block;font-size:11px;font-weight:500;color:var(--ink);}
+.featured-inner small{display:block;margin-top:3px;font-size:7.5px;color:#969189;}
+.report-divider{height:1px;background:#eee9df;margin:13px 2px 0;}
+.monthly-report .hot-stickers-row{margin-top:11px;padding:0 2px 1px;}
 .monthly-report .hot-stickers-head{padding-top:0;align-items:flex-end;}
-.monthly-report .hot-stickers-head h4{font-size:13px;margin-top:5px;}
-.monthly-report .hot-sticker{flex-basis:82px;border-radius:15px;background:rgba(255,254,250,.78);}
+.monthly-report .hot-stickers-head h4{font-size:12px;margin-top:4px;}
+.monthly-report .hot-sticker{flex-basis:72px;border-radius:13px;background:rgba(255,254,250,.72);padding:8px 7px;}
 .monthly-report .hot-sticker.featured-hot{background:#f3f0e7;border-color:#ddd7ca;}
-.monthly-report .hot-sticker.featured-hot b{font-size:8.5px;}
+.monthly-report .hot-sticker.featured-hot b{font-size:8px;}
 
 /* Today's Corner is the closing module from the reference, kept visually quiet. */
 .selected-summary{padding:30px 7px 0;margin-top:20px;border-top:1px solid #e8e3d9;display:flex;justify-content:space-between;gap:24px;align-items:flex-end;}
@@ -408,3 +403,11 @@ footer{margin-top:40px;color:#b0aca3}
 .sticker-art.hand-drawn{position:relative;isolation:isolate;filter:url(#stickerRough) saturate(.94) contrast(.985) drop-shadow(.45px .35px 0 rgba(63,64,59,.08));}
 .sticker-art.sticker-hero{filter:url(#stickerRough) saturate(.98) contrast(.99) drop-shadow(.55px .4px 0 rgba(63,64,59,.09));}
 .sticker-art.sticker-story{filter:url(#stickerRough) saturate(.97) contrast(.99) drop-shadow(.5px .35px 0 rgba(63,64,59,.08));}
+
+/* V30 final compact monthly report overrides */
+.report-body{align-items:start;}
+.report-story{min-height:168px;height:auto;}
+.report-stats{align-content:start;align-items:start;grid-auto-rows:min-content;}
+.report-featured{height:72px;min-height:72px;}
+.featured-inner .sticker-art{display:block;flex:0 0 40px;width:40px!important;height:40px!important;overflow:hidden;}
+.featured-inner .sticker-art .sticker-image{display:block;width:40px!important;height:40px!important;object-fit:contain;}

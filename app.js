@@ -2177,7 +2177,7 @@ function renderMonthInsights(){
       <div class="report-stats">
         <button class="report-stat" id="insightDays"><span>记录天数</span><strong>${d.entries.length}<em>/ ${d.totalDays}</em></strong><small>${d.entries.length?`这个月有 ${d.entries.length} 天认真记录`:'从今天开始记录'}</small></button>
         <button class="report-stat" id="insightStickers"><span>贴纸使用</span><strong>${d.stickerTotal}</strong><small>${d.topStickers.length?`最常用的是「${escapeHtml(d.topStickers[0].st.name)}」`:'还没有贴纸记录'}</small></button>
-        <button class="report-featured" id="insightTopSticker"><span>常用贴纸</span><div class="featured-inner">${top?svgSticker(top.st,54):'<span class="insight-placeholder">♡</span>'}<div><b>${top?escapeHtml(top.st.name):'还没有'}</b><small>${top?`${top.count} 次出现`:'之后再慢慢填满它'}</small></div></div></button>
+        <button class="report-featured" id="insightTopSticker"><span>常用贴纸</span><div class="featured-inner">${top?svgSticker(top.st,40):'<span class="insight-placeholder">♡</span>'}<div><b>${top?escapeHtml(top.st.name):'还没有'}</b><small>${top?`${top.count} 次出现`:'之后再慢慢填满它'}</small></div></div></button>
       </div>
     </div>
     <div class="report-divider"></div>
