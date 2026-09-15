@@ -260,7 +260,7 @@ footer{margin-top:40px;color:#b0aca3}
   .insight-mood{grid-column:1/-1}
 }
 
-/* V22: editorial month wall + monthly report */
+/* V24: reference-faithful monthly report / little things / today corner */
 .day-card.has-entry .day-thumbnail{background:linear-gradient(145deg,rgba(255,254,249,.86),rgba(250,247,238,.72));box-shadow:0 10px 26px rgba(58,54,46,.028);}
 .day-card.has-entry .mini-canvas{filter:saturate(.96);}
 .day-card.has-entry .day-number{font-size:9px;letter-spacing:.08em;color:#8f8a80;}
@@ -268,41 +268,51 @@ footer{margin-top:40px;color:#b0aca3}
 .day-card.has-entry.active .day-thumbnail{box-shadow:0 0 0 1px rgba(141,166,132,.24),0 10px 28px rgba(58,54,46,.045);}
 
 .monthly-report{margin-top:22px;border-top:1px solid #ebe6dc;padding-top:18px;}
-.report-kicker{display:flex;justify-content:space-between;align-items:center;gap:16px;color:#aaa59b;font-size:9px;letter-spacing:.14em;}
-.report-heading{display:flex;justify-content:space-between;gap:24px;align-items:flex-end;padding:8px 2px 15px;}
-.report-heading h3{margin:0;font-size:21px;font-weight:500;letter-spacing:-.025em;color:var(--ink);}
-.report-heading p{margin:7px 0 0;max-width:700px;font-size:11px;line-height:1.8;color:#8e8a81;}
+.report-kicker{display:flex;justify-content:space-between;align-items:center;gap:16px;color:#aaa59b;font-size:9px;letter-spacing:.22em;}
+.report-kicker .section-kicker{margin:0;}
+.report-heading{display:flex;justify-content:space-between;gap:24px;align-items:flex-end;padding:8px 2px 16px;}
+.report-heading h3{margin:0;font-size:22px;font-weight:500;letter-spacing:-.025em;color:var(--ink);}
+.report-heading p{margin:7px 0 0;max-width:760px;font-size:11px;line-height:1.9;color:#8e8a81;}
 .report-link{border:0;background:transparent;color:#7d8177;font-size:10px;cursor:pointer;padding:4px 0;white-space:nowrap;}
-.report-body{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.9fr);gap:10px;align-items:stretch;}
+.report-body{display:grid;grid-template-columns:minmax(0,1.38fr) minmax(300px,.72fr);gap:10px;align-items:stretch;}
 .report-story,.report-stat,.report-featured{border:1px solid #e8e3d8;background:rgba(255,254,250,.66);border-radius:18px;box-shadow:none;text-align:left;cursor:pointer;color:inherit;}
-.report-story{padding:15px 16px;min-height:184px;}
+.report-story{padding:17px 18px;min-height:202px;}
 .report-story-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;}
 .report-story-head span,.report-stat span,.report-featured>span{font-size:10px;color:#6f6b63;}
 .report-story-head small{font-size:8px;color:#9f9a90;}
-.report-trend{margin-top:12px;}
-.report-trend .insight-trend{height:82px;}
-.report-trend-note{display:flex;justify-content:space-between;color:#aaa59b;font-size:8px;padding:2px 3px 0;}
+.report-trend{margin-top:17px;}
+.report-trend .insight-trend{height:94px;}
+.report-trend-note{display:flex;justify-content:space-between;color:#aaa59b;font-size:8px;padding:4px 3px 0;}
 .report-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
-.report-stat{padding:15px;min-height:88px;}
-.report-stat strong{display:block;margin-top:10px;font-size:27px;font-weight:500;letter-spacing:-.035em;}
+.report-stat{padding:15px;min-height:96px;}
+.report-stat strong{display:block;margin-top:10px;font-size:28px;font-weight:500;letter-spacing:-.035em;}
 .report-stat strong em{font-style:normal;color:#aaa59b;font-size:11px;margin-left:3px;}
 .report-stat small{display:block;margin-top:5px;color:#969189;font-size:8px;line-height:1.6;}
 .report-featured{grid-column:1/-1;padding:14px 15px;min-height:88px;}
 .featured-inner{display:flex;align-items:center;gap:11px;margin-top:7px;}
 .featured-inner b{display:block;font-size:13px;font-weight:500;color:var(--ink);}
 .featured-inner small{display:block;margin-top:4px;font-size:8px;color:#969189;}
-.report-divider{height:1px;background:#eee9df;margin:16px 2px 0;}
-.monthly-report .hot-stickers-row{margin-top:12px;padding:0 2px 1px;}
-.monthly-report .hot-stickers-head{padding-top:0;}
-.monthly-report .hot-stickers-head h4{font-size:13px;}
+.report-divider{height:1px;background:#eee9df;margin:17px 2px 0;}
+.monthly-report .hot-stickers-row{margin-top:14px;padding:0 2px 1px;}
+.monthly-report .hot-stickers-head{padding-top:0;align-items:flex-end;}
+.monthly-report .hot-stickers-head h4{font-size:13px;margin-top:5px;}
 .monthly-report .hot-sticker{flex-basis:82px;border-radius:15px;background:rgba(255,254,250,.78);}
 .monthly-report .hot-sticker.featured-hot{background:#f3f0e7;border-color:#ddd7ca;}
 .monthly-report .hot-sticker.featured-hot b{font-size:8.5px;}
+
+/* Today's Corner is the closing module from the reference, kept visually quiet. */
+.selected-summary{padding:30px 7px 0;margin-top:20px;border-top:1px solid #e8e3d9;display:flex;justify-content:space-between;gap:24px;align-items:flex-end;}
+.selected-summary h2{font-size:28px;letter-spacing:-.03em;font-weight:500;margin:7px 0 0;}
+.selected-summary p:last-child{font-size:12px;line-height:1.9;color:#97938a;margin-top:7px;}
+.selected-summary .summary-actions{gap:8px;}
+.open-editor{font-size:10px;padding:11px 15px;background:#fffefa;}
+.open-editor.light{background:transparent;}
 
 @media(max-width:900px){
   .report-body{grid-template-columns:1fr;}
   .report-stats{grid-template-columns:repeat(3,minmax(0,1fr));}
   .report-featured{grid-column:auto;}
+  .selected-summary{align-items:flex-start;flex-direction:column;}
 }
 @media(max-width:760px){
   .report-heading{align-items:flex-start;flex-direction:column;gap:7px;}

@@ -2123,11 +2123,8 @@ function insightTrendSvg(scored){
   return `<svg class="insight-trend" viewBox="0 0 ${W} ${H}" aria-hidden="true"><line x1="${pad}" y1="${H-pad}" x2="${W-pad}" y2="${H-pad}"/><polyline points="${pts}" fill="none"/><g>${dots}</g></svg>`;
 }
 function monthReportSentence(d,moodLabel){
-  if(!d.entries.length)return '还没有留下太多痕迹，但一个空白的月，也可以从今天开始。';
-  const parts=[];
-  if(d.entries.length>=20)parts.push('这个月的你，认真地留下了很多日子');
-  else if(d.entries.length>=10)parts.push('这个月的你，慢慢留下了一些日常');
-  else parts.push('这个月的你，偶尔停下来记录生活');
+  if(!d.entries.length)return '这个月的你，偶尔停下来记录生活。';
+  const parts=['这个月的你，偶尔停下来记录生活'];
   if(moodLabel)parts.push(`最常见的心情是「${moodLabel}」`);
   if(d.topSticker?.st?.name)parts.push(`也常常用「${d.topSticker.st.name}」给日子留个小记号`);
   return parts.join('，')+'。';
@@ -2141,8 +2138,7 @@ function renderMonthInsights(){
   const top=d.topSticker;
   const reportSentence=monthReportSentence(d,moodLabel);
   const monthTitle=`${monthNames[state.month]} ${state.year}`;
-  const hotTotal=d.topStickers.reduce((n,x)=>n+x.count,0);
-  root.innerHTML=`<section class="monthly-report" aria-label="本月生活月报">
+  root.innerHTML=`<section class="monthly-report" aria-label="MONTHLY REPORT">
     <div class="report-kicker"><span class="section-kicker">MONTHLY REPORT</span><span>${escapeHtml(monthTitle)}</span></div>
     <div class="report-heading"><div><h3>这个月，也好好生活了一次</h3><p>${escapeHtml(reportSentence)}</p></div><button class="report-link" id="openInsightsReview">查看完整月报 ↗</button></div>
     <div class="report-body">
@@ -2152,13 +2148,13 @@ function renderMonthInsights(){
         <div class="report-trend-note"><span>低落</span><span>平稳</span><span>开心</span></div>
       </button>
       <div class="report-stats">
-        <button class="report-stat" id="insightDays"><span>记录了多少天</span><strong>${d.entries.length}<em>/ ${d.totalDays}</em></strong><small>${d.entries.length?`这个月有 ${d.entries.length} 天被认真记下`:'从今天开始记录'}</small></button>
-        <button class="report-stat" id="insightStickers"><span>留下的小记号</span><strong>${d.stickerTotal}</strong><small>${d.topStickers.length?`最常用的是「${escapeHtml(d.topStickers[0].st.name)}」`:'还没有贴纸记录'}</small></button>
-        <button class="report-featured" id="insightTopSticker"><span>本月最常出现</span><div class="featured-inner">${top?svgSticker(top.st,54):'<span class="insight-placeholder">♡</span>'}<div><b>${top?escapeHtml(top.st.name):'还没有'}</b><small>${top?`${top.count} 次出现`:'之后再慢慢填满它'}</small></div></div></button>
+        <button class="report-stat" id="insightDays"><span>记录天数</span><strong>${d.entries.length}<em>/ ${d.totalDays}</em></strong><small>${d.entries.length?`这个月有 ${d.entries.length} 天认真记录`:'从今天开始记录'}</small></button>
+        <button class="report-stat" id="insightStickers"><span>贴纸使用</span><strong>${d.stickerTotal}</strong><small>${d.topStickers.length?`最常用的是「${escapeHtml(d.topStickers[0].st.name)}」`:'还没有贴纸记录'}</small></button>
+        <button class="report-featured" id="insightTopSticker"><span>常用贴纸</span><div class="featured-inner">${top?svgSticker(top.st,54):'<span class="insight-placeholder">♡</span>'}<div><b>${top?escapeHtml(top.st.name):'还没有'}</b><small>${top?`${top.count} 次出现`:'之后再慢慢填满它'}</small></div></div></button>
       </div>
     </div>
     <div class="report-divider"></div>
-    <div class="hot-stickers-row"><div class="hot-stickers-head"><div><span class="section-kicker">LITTLE THINGS</span><h4>本月的小确幸</h4></div><span>${d.topStickers.length?`${hotTotal} 次贴纸记录`:'还没有使用记录'}</span></div><div class="hot-stickers-list">${d.topStickers.length?d.topStickers.slice(0,8).map((x,i)=>`<button class="hot-sticker ${i===0?'featured-hot':''}" data-hot-sticker="${escapeHtml(x.st.id)}" title="加入今天这一隅"><span>${svgSticker(x.st,i===0?40:34)}</span><b>${escapeHtml(x.st.name)}</b><i>${x.count} 次</i></button>`).join(''):'<span class="insight-empty inline">写下第一天后，这里会慢慢长出属于你的常用贴纸。</span>'}</div></div>
+    <div class="hot-stickers-row"><div class="hot-stickers-head"><div><span class="section-kicker">LITTLE THINGS</span><h4>本月热门贴纸</h4></div><span>${d.stickerTotal?`${d.stickerTotal} 次贴纸记录`:'还没有使用记录'}</span></div><div class="hot-stickers-list">${d.topStickers.length?d.topStickers.slice(0,8).map((x,i)=>`<button class="hot-sticker ${i===0?'featured-hot':''}" data-hot-sticker="${escapeHtml(x.st.id)}" title="加入今天这一隅"><span>${svgSticker(x.st,i===0?40:34)}</span><b>${escapeHtml(x.st.name)}</b><i>${x.count} 次</i></button>`).join(''):'<span class="insight-empty inline">写下第一天后，这里会慢慢长出属于你的常用贴纸。</span>'}</div></div>
   </section>`;
   document.getElementById('openInsightsReview')?.addEventListener('click',openReview);
   document.getElementById('insightMood')?.addEventListener('click',openReview);
@@ -2340,7 +2336,7 @@ function renderShell(){
       <header class="topbar"><div class="topbar-month-caption"><span class="eyebrow">A LITTLE CORNER, EVERY DAY</span></div><div class="top-actions"><button class="today-button" id="todayBtn">今天</button><span id="accountArea"></span></div></header>
       <section class="hero"><div class="month-nav"><button class="nav-button" id="prevMonth" aria-label="上个月">←</button><div class="month-heading"><p class="eyebrow" id="yearLabel"></p><h1 id="monthLabel"></h1></div><button class="nav-button" id="nextMonth" aria-label="下个月">→</button></div><p class="subtitle">把平凡的日子，过成喜欢的样子。</p><div class="hero-tools"><div class="view-switcher">${VIEW_MODES.map(v=>`<button class="view-mode-btn ${state.viewMode===v.key?'selected':''}" data-view="${v.key}">${v.label}</button>`).join('')}</div><button class="subtle-action" id="reviewBtn">本月回顾</button><button class="subtle-action" id="exportMonthBtn">导出本月</button></div></section>
       <section class="calendar-card"><div class="weekday-row" id="weekdayRow">${weekdayLabels.map(label=>`<div>${label}</div>`).join('')}</div><div class="calendar-grid" id="calendarGrid"></div></section>
-      <section class="month-insights" id="monthInsights" aria-label="本月生活摘要"></section>
+      <section class="month-insights" id="monthInsights" aria-label="MONTHLY REPORT"></section>
       <section class="selected-summary"><div><p class="section-kicker">TODAY'S CORNER</p><h2 id="selectedDate"></h2><p id="selectedPreview"></p></div><div class="summary-actions"><button class="open-editor" id="openEditor">进入这一隅 <span>↗</span></button><button class="open-editor light" id="capsuleBtn">写给未来</button></div></section><footer>一隅 · IN DAYS</footer>
     </section>
   </main><div id="drawerRoot"></div><div id="authRoot"></div><div id="profileRoot"></div><div id="reviewRoot"></div><div id="capsuleRoot"></div><div id="exportMonthRoot"></div><div class="toast" id="toast"></div>`;

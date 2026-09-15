@@ -1,6 +1,6 @@
-# IN DAYS — Day Composition V23
+# IN DAYS — Day Composition V24
 
-V23 is based on V21 and focuses on the editorial “life magazine / scrapbook” feel of the month wall and the monthly report.
+V24 is based on V21 and focuses on the editorial “life magazine / scrapbook” feel of the month wall and the monthly report.
 
 ## This round
 - Keeps the V16+ strict 1:1 day-canvas-to-month-thumbnail rendering rule unchanged.
