@@ -45,6 +45,18 @@
 .review-head-row{display:flex;justify-content:space-between;gap:18px;align-items:flex-start}.review-head-row>div{min-width:0}.review-head-row .save-button{white-space:nowrap}.mini-photo-wrap{display:block;overflow:hidden;border-radius:10px;padding:2px;background:#fffefb}.mini-photo{display:block;width:100%;height:auto;aspect-ratio:var(--photo-ratio,4/3);object-fit:cover;border-radius:8px}.review-modal{max-height:min(86vh,820px);overflow:auto}@media(max-width:760px){.review-head-row{flex-direction:column}.review-head-row .save-button{width:100%}.placed-photo{width:132px}}
 
 
+
+/* V28: hand-drawn sticker character — gentle irregularity without changing sticker data */
+.sticker-art{display:grid;place-items:center;width:100%;height:100%;transform:rotate(var(--sticker-tilt,0deg)) scale(var(--sticker-jitter,1));transform-origin:center;filter:saturate(.92) contrast(.97);will-change:transform;}
+.sticker-art svg,.sticker-art .sticker-image{display:block;max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain;}
+.sticker-art svg{overflow:visible;}
+.sticker-art.hero{transform:rotate(var(--sticker-tilt,0deg)) scale(calc(var(--sticker-jitter,1) * 1.04));}
+.mini-sticker .sticker-art{width:100%;height:100%;}
+.placed-sticker .sticker-art{width:100%;height:100%;}
+.sticker-tile .sticker-art{width:48px;height:48px;margin:auto;}
+.hot-sticker .sticker-art{width:44px;height:44px;margin:auto;}
+.report-sticker .sticker-art{width:36px;height:36px;}
+
 /* V7: photo presentation + mobile single-day editing */
 .photo-frame-paper{padding:5px;background:#fffefb;border:1px solid rgba(63,64,59,.08);box-shadow:0 10px 24px rgba(42,42,36,.08);border-radius:10px}
 .photo-frame-tape{padding:7px 5px 5px;background:#fffefb;border:1px solid rgba(63,64,59,.08);box-shadow:0 10px 24px rgba(42,42,36,.08);border-radius:8px}
@@ -324,3 +336,75 @@ footer{margin-top:40px;color:#b0aca3}
 /* V23: only the day-card itself has a border; composition has no inner frame. */
 .day-card.has-entry .day-thumbnail:before{content:none !important;display:none !important;}
 .day-number{pointer-events:none;z-index:20;}
+
+/* V26 趣味字体选择 */
+.font-toolbar{margin-bottom:7px}
+.font-choice-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.font-choice{border:1px solid var(--line);background:#fffefb;color:var(--ink);padding:6px 10px;border-radius:999px;font-size:11px;cursor:pointer;transition:.15s ease;border-style:solid}
+.font-choice:hover{border-color:var(--line-2);transform:translateY(-1px)}
+.font-choice.selected{background:#efeee7;border-color:#c7c2b7;box-shadow:0 1px 0 rgba(63,64,60,.04)}
+
+/* V27 — 一隅品牌视觉系统：极简、可识别、克制，不复刻任何现成品牌图形 */
+:root{
+  --brand-ink:#3f403b;
+  --brand-sage:#8da684;
+  --brand-gold:#d7b86e;
+  --brand-paper:#fbfaf6;
+  --brand-soft:#eef1ea;
+  --brand-line:#e8e4da;
+}
+
+/* Brand mark: open-corner tile + leaf stroke + warm dot */
+.brand-lockup{gap:11px}
+.brand-mark{width:38px;height:38px}
+.brand-mark:before{left:4px;top:5px;width:25px;height:25px;border:1.8px solid var(--brand-ink);border-radius:9px 11px 11px 2px;transform:rotate(-1deg)}
+.brand-mark span{right:1px;top:8px;width:7px;height:7px;background:var(--brand-gold);box-shadow:0 0 0 2px rgba(215,184,110,.08)}
+.brand-mark i{left:7px;bottom:5px;width:18px;height:8px;border-top:1.8px solid var(--brand-sage);border-radius:50%;transform:rotate(-10deg)}
+.brand-mark b{position:absolute;left:13px;bottom:7px;width:5px;height:5px;border-radius:50%;background:var(--brand-sage);opacity:.9}
+.brand-cn{font-size:15px;letter-spacing:.15em;font-weight:500;color:var(--brand-ink)}
+.brand-en{font-size:7px;letter-spacing:.3em;color:#a4a197;margin-top:4px}
+.brand-signature{margin-left:auto;margin-right:4px;color:var(--brand-sage);font-size:18px;line-height:1;opacity:.82}
+
+/* Month title: a small brand glyph gives the heading a signature without becoming an illustration. */
+.month-title-lockup{display:flex;align-items:center;justify-content:center;gap:13px}
+.month-brand-mark{position:relative;display:inline-block;width:18px;height:18px;flex:0 0 auto}
+.month-brand-mark:before{content:"";position:absolute;left:2px;top:4px;width:11px;height:9px;border:1.5px solid var(--brand-ink);border-radius:4px 5px 5px 1px;transform:rotate(-8deg)}
+.month-brand-mark:after{content:"";position:absolute;right:0;top:1px;width:4px;height:4px;border-radius:50%;background:var(--brand-gold)}
+.month-brand-mark{filter:drop-shadow(0 2px 0 rgba(141,166,132,.08))}
+.workspace-main .hero h1{font-weight:550;letter-spacing:-.06em}
+
+/* Editorial rhythm on day cards: style only the surface, never alter mini geometry. */
+.day-card.has-entry .day-thumbnail{background:rgba(255,254,250,.86)}
+.day-card.has-entry.entry-light .day-thumbnail{background:rgba(255,254,250,.72)}
+.day-card.has-entry.entry-medium .day-thumbnail{background:rgba(250,248,241,.78)}
+.day-card.has-entry.entry-rich .day-thumbnail{background:rgba(248,247,239,.82)}
+.day-card.has-entry.brand-accent-soft .day-thumbnail:after,
+.day-card.has-entry.brand-accent-strong .day-thumbnail:after{content:"";position:absolute;right:11px;bottom:10px;width:5px;height:5px;border-radius:50%;background:var(--brand-sage);opacity:.28;z-index:1;pointer-events:none}
+.day-card.has-entry.brand-accent-strong .day-thumbnail:after{width:6px;height:6px;opacity:.4;background:var(--brand-gold)}
+.day-card.has-entry .day-number{color:#8d8a81}
+.day-card.has-entry.active .day-thumbnail{box-shadow:0 0 0 1px rgba(141,166,132,.3),0 12px 28px rgba(58,54,46,.045)}
+
+/* Sticker tiers: visual rhythm without changing stored scale or 1:1 rendering. */
+.composition-sticker.tier-accent{filter:saturate(1.02)}
+.composition-sticker.tier-story{filter:saturate(.98)}
+.composition-sticker.tier-object{filter:saturate(.96)}
+
+/* Brand palette in selection/focus accents */
+.sidebar-nav-item.active{background:var(--brand-soft);border-color:rgba(141,166,132,.18)}
+.view-mode-btn.selected{box-shadow:0 2px 10px rgba(63,64,59,.04),inset 0 -1px 0 rgba(141,166,132,.2)}
+.today-button:hover,.account-button:hover,.open-editor:hover,.ghost-mini:hover,.subtle-action:hover,.subtle-upload:hover,.view-mode-btn:hover{border-color:rgba(141,166,132,.35)}
+
+/* Font system: make the chosen title font feel intentional by default. */
+.title-canvas{font-variation-settings:"wght" 500}
+.font-choice.selected{border-color:rgba(141,166,132,.48);background:#f0f3ed;box-shadow:0 1px 0 rgba(141,166,132,.08)}
+
+@media(max-width:760px){
+  .brand-signature{display:none}
+  .month-title-lockup{gap:9px}
+  .month-brand-mark{width:14px;height:14px}
+}
+
+/* V29: final sticker presentation only — keep all stored sticker geometry unchanged. */
+.sticker-art.hand-drawn{position:relative;isolation:isolate;filter:url(#stickerRough) saturate(.94) contrast(.985) drop-shadow(.45px .35px 0 rgba(63,64,59,.08));}
+.sticker-art.sticker-hero{filter:url(#stickerRough) saturate(.98) contrast(.99) drop-shadow(.55px .4px 0 rgba(63,64,59,.09));}
+.sticker-art.sticker-story{filter:url(#stickerRough) saturate(.97) contrast(.99) drop-shadow(.5px .35px 0 rgba(63,64,59,.08));}

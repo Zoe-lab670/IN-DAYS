@@ -25,7 +25,15 @@ const DATE_SAFE_ZONE = {left:.035, top:.035, right:.145, bottom:.115, margin:.00
 const CONTENT_ZONE = {left:.08, top:.12, right:.95, bottom:.94};
 // 标题默认样式：新的一天第一次输入标题时自动采用，不需要手动调字号/位置。
 const DEFAULT_TITLE_POS = {x:.10, y:.22};
-const DEFAULT_TITLE_STYLE = {fontSize:25, align:'left', weight:500};
+const FONT_OPTIONS = {
+  system:{label:'简约',family:'-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif'},
+  serif:{label:'杂志',family:'"Noto Serif SC","Songti SC",STSong,serif'},
+  cute:{label:'圆润',family:'"ZCOOL KuaiLe","PingFang SC",sans-serif'},
+  diary:{label:'手账',family:'"Long Cang","PingFang SC",cursive'},
+  kai:{label:'楷体',family:'"Ma Shan Zheng","STKaiti",KaiTi,serif'}
+};
+const DEFAULT_TITLE_STYLE = {fontSize:25, align:'left', weight:500, fontFamily:'system'};
+const DEFAULT_CONTENT_STYLE = {fontSize:12, align:'left', weight:400, fontFamily:'system'};
 
 // 2026 mainland China statutory holiday / holiday-period map (official schedule).
 // The app uses these dates only for calendar cues and sticker recommendations;
@@ -1801,7 +1809,7 @@ function hasEntryContent(e){ return !!(e && (String(e.title||'').trim() || Strin
 function emptyEntry(date){
   return {entry_date:date,title:'',content:'',background:'#fffdf7',stickers:[],photos:[],mood:null,
     timeCapsule:null,titlePos:{...DEFAULT_TITLE_POS},contentPos:{x:.10,y:.39},
-    titleStyle:{...DEFAULT_TITLE_STYLE},contentStyle:{fontSize:12,align:'left',weight:400}};
+    titleStyle:{...DEFAULT_TITLE_STYLE},contentStyle:{...DEFAULT_CONTENT_STYLE}};
 }
 function normalizePos(pos,fallback){
   if(!pos || typeof pos!=='object')return {...fallback};
@@ -1848,7 +1856,7 @@ function constrainCanvasElementPosition(kind,item,x,y){
 }
 function normalizeTextStyle(style,fallback){
   if(!style||typeof style!=='object')return {...fallback};
-  return {fontSize:clamp(Number(style.fontSize)||fallback.fontSize,8,48),align:['left','center','right'].includes(style.align)?style.align:fallback.align,weight:Number(style.weight)||fallback.weight};
+  return {fontSize:clamp(Number(style.fontSize)||fallback.fontSize,8,48),align:['left','center','right'].includes(style.align)?style.align:fallback.align,weight:Number(style.weight)||fallback.weight,fontFamily:Object.prototype.hasOwnProperty.call(FONT_OPTIONS,String(style.fontFamily))?String(style.fontFamily):fallback.fontFamily};
 }
 function normalizePhotoItems(items){
   if(!Array.isArray(items))return [];
@@ -2045,8 +2053,8 @@ function compositionDomHtml(e,{mode='canvas'}={}){
   const parts=[];
   const title=String(e?.title||'').trim(), content=String(e?.content||'').trim();
   const titlePos=e?.titlePos||{x:.10,y:.22}, contentPos=e?.contentPos||{x:.10,y:.39};
-  const titleStyle=e?.titleStyle||{fontSize:25,align:'left',weight:500}, contentStyle=e?.contentStyle||{fontSize:12,align:'left',weight:400};
-  const pointStyle=(pos,style)=>{const q={x:clamp(Number(pos?.x)||.1,.02,.94),y:clamp(Number(pos?.y)||.2,.06,.94)};return `left:${q.x*100}%;top:${q.y*100}%;font-size:${Number(style?.fontSize)||12}px;text-align:${style?.align||'left'};font-weight:${style?.weight||400};`;};
+  const titleStyle=e?.titleStyle||DEFAULT_TITLE_STYLE, contentStyle=e?.contentStyle||DEFAULT_CONTENT_STYLE;
+  const pointStyle=(pos,style)=>{const q={x:clamp(Number(pos?.x)||.1,.02,.94),y:clamp(Number(pos?.y)||.2,.06,.94)};const fam=FONT_OPTIONS[String(style?.fontFamily)]?.family||FONT_OPTIONS.system.family;return `left:${q.x*100}%;top:${q.y*100}%;font-size:${Number(style?.fontSize)||12}px;text-align:${style?.align||'left'};font-weight:${style?.weight||400};font-family:${fam};`;};
   const selectedText=(kind)=>state.selectedText===kind?'text-selected':'';
   if(title||mode==='canvas')parts.push(`<div class="canvas-text title-canvas ${!title?'placeholder':''} ${selectedText('title')}" data-drag-kind="title" style="${pointStyle(titlePos,titleStyle)}">${escapeHtml(title||'双击这里写标题')}</div>`);
   if(content||mode==='canvas')parts.push(`<div class="canvas-text content-canvas ${!content?'placeholder':''} ${selectedText('content')}" data-drag-kind="content" style="${pointStyle(contentPos,contentStyle)}">${escapeHtml(content||'双击这里写下今天发生了什么…')}</div>`);
@@ -2068,9 +2076,28 @@ function miniObjectHtml(e){
   // The whole artwork is then scaled by the browser as a single unit.
   return `<svg class="mini-svg" viewBox="0 0 ${CANVAS_W} ${CANVAS_H}" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="0" y="0" width="${CANVAS_W}" height="${CANVAS_H}" fill="transparent"/>${compositionElementsSvg(e,CANVAS_W,CANVAS_H,{includeDate:false})}</svg>`;
 }
+function visualDensityClass(entry){
+  const e=entry||{};
+  const title=String(e.title||'').trim(), content=String(e.content||'').trim();
+  const count=(e.stickers||[]).length+(e.photos||[]).length;
+  const chars=title.length+content.length;
+  if(!chars&&!count)return 'entry-empty';
+  if(count>=4||chars>=72)return 'entry-rich';
+  if(count>=2||chars>=34)return 'entry-medium';
+  return 'entry-light';
+}
+
+function calendarBrandAccent(entry){
+  const e=entry||{};
+  const count=(e.stickers||[]).length+(e.photos||[]).length;
+  const chars=String(e.title||'').length+String(e.content||'').length;
+  return count+chars>40?'brand-accent-strong':count+chars>12?'brand-accent-soft':'';
+}
+
 function calendarDayHtml(entry,key,day,active,today){
   const e=entry||emptyEntry(key),has=hasEntryContent(entry),holiday=holidayCueForDate(key);
-  return `<button class="day-card ${active?'active':''} ${today?'today':''} ${has?'has-entry':''} ${holiday?'holiday-day':''}" data-day="${day}" aria-label="${state.year}年${state.month+1}月${day}日${holiday?`，${holiday.name}`:''}" title="${holiday?escapeHtml(holiday.name):''}" style="--day-bg:${escapeHtml(e.background||'#fffdf7')}">
+  const density=has?visualDensityClass(e):'entry-empty', accent=has?calendarBrandAccent(e):'';
+  return `<button class="day-card ${active?'active':''} ${today?'today':''} ${has?'has-entry':''} ${density} ${accent} ${holiday?'holiday-day':''}" data-day="${day}" aria-label="${state.year}年${state.month+1}月${day}日${holiday?`，${holiday.name}`:''}" title="${holiday?escapeHtml(holiday.name):''}" style="--day-bg:${escapeHtml(e.background||'#fffdf7')}">
     <div class="day-thumbnail">${has?`<div class="mini-canvas" style="background:${escapeHtml(e.background||'#fffdf7')}">${miniObjectHtml(e)}</div>`:''}</div>
     <span class="day-number" aria-hidden="true"><b>${String(day).padStart(2,'0')}</b></span>
     ${holiday?`<span class="holiday-mark">${escapeHtml(holiday.name.replace('节',''))}</span>`:''}
@@ -2175,9 +2202,23 @@ function stickerDataUri(sticker){
   const comma=src.indexOf(',');if(comma<0)return src;
   try{let raw=decodeURIComponent(src.slice(comma+1));const accent=sticker.accent||'#aaa69b';raw=raw.replace(/fill=(['"])(#[0-9a-fA-F]{3,8})\1/g,(m,q,c)=>{const low=c.toLowerCase();if(low==='#3f3f3b'||low==='#3f3f3bff'||low==='#fff'||low==='#ffffff')return m;return `fill=${q}${accent}${q}`;});return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(raw);}catch{return src;}
 }
+function stickerVisualMeta(sticker){
+  const id=String(sticker?.id||sticker?.name||'sticker');
+  let hash=0; for(let i=0;i<id.length;i++) hash=((hash<<5)-hash)+id.charCodeAt(i), hash|=0;
+  const abs=Math.abs(hash);
+  const tilt=((abs%13)-6)*0.42;
+  const jitter=0.975+(abs%9)*0.006;
+  const echoX=((abs%5)-2)*0.45;
+  const echoY=(((abs>>3)%5)-2)*0.38;
+  const cat=String(sticker?.category||'').toLowerCase();
+  const hero=/自然|动物|节日|旅行|运动|情绪/.test(cat)?' sticker-hero':'';
+  const story=/festival|travel|holiday|nature|animals|mood|life/i.test(cat)?' sticker-story':'';
+  return {style:`--sticker-tilt:${tilt.toFixed(2)}deg;--sticker-jitter:${jitter.toFixed(3)};--sticker-echo-x:${echoX.toFixed(2)}px;--sticker-echo-y:${echoY.toFixed(2)}px;`,cls:`sticker-art hand-drawn${hero}${story}`};
+}
 function svgSticker(sticker,size=54){
+  const meta=stickerVisualMeta(sticker);
   if (sticker?.inlineSvg) {
-    return `<img class="sticker-image" src="${stickerDataUri(sticker)}" width="${size}" height="${size}" alt="${escapeHtml(sticker.name||'贴纸')}" loading="lazy" draggable="false" />`;
+    return `<span class="${meta.cls}" style="${meta.style}"><img class="sticker-image" src="${stickerDataUri(sticker)}" width="${size}" height="${size}" alt="${escapeHtml(sticker.name||'贴纸')}" loading="lazy" draggable="false" /></span>`;
   }
   const stroke='#3f3f3b', accent=sticker?.accent||'#b7c9ad';
   const common=`fill="none" stroke="${stroke}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"`;
@@ -2298,7 +2339,7 @@ function svgSticker(sticker,size=54){
     case 'boat': content=`<path ${common} d="M14 37h36l-7 13H21L14 37Z" fill="${accent}" opacity=".4"/><path ${common} d="M32 37V16M32 18h11l-11 10"/>`; break;
     default: content=`<circle ${common} cx="32" cy="32" r="20"/>`;
   }
-  return `<svg width="${size}" height="${size}" viewBox="0 0 64 64" aria-hidden="true">${content}</svg>`;
+  return `<span class="${meta.cls}" style="${meta.style}"><svg width="${size}" height="${size}" viewBox="0 0 64 64" aria-hidden="true">${content}</svg></span>`;
 }
 
 async function ensureSupabaseClient(){
@@ -2316,9 +2357,9 @@ async function ensureSupabaseClient(){
 
 
 function renderShell(){
-  app.innerHTML=`<main class="app-shell">
+  app.innerHTML=`<svg aria-hidden="true" width="0" height="0" style="position:absolute;overflow:hidden"><defs><filter id="stickerRough" x="-8%" y="-8%" width="116%" height="116%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="1" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="0.55" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg><main class="app-shell">
     <aside class="workspace-sidebar" aria-label="IN DAYS 导航">
-      <div class="sidebar-brand"><div class="brand-lockup"><div class="brand-mark" aria-hidden="true"><span></span><i></i></div><div><div class="brand-cn">一隅</div><div class="brand-en">IN DAYS</div></div></div></div>
+      <div class="sidebar-brand"><div class="brand-lockup"><div class="brand-mark" aria-hidden="true"><span></span><i></i><b></b></div><div><div class="brand-cn">一隅</div><div class="brand-en">IN DAYS</div></div></div><span class="brand-signature" aria-hidden="true">·</span></div>
       <nav class="sidebar-nav">
         <button class="sidebar-nav-item" data-nav="home"><span>⌂</span><b>首页</b></button>
         <button class="sidebar-nav-item active" data-nav="month"><span>□</span><b>日历</b></button>
@@ -2334,7 +2375,7 @@ function renderShell(){
     </aside>
     <section class="workspace-main">
       <header class="topbar"><div class="topbar-month-caption"><span class="eyebrow">A LITTLE CORNER, EVERY DAY</span></div><div class="top-actions"><button class="today-button" id="todayBtn">今天</button><span id="accountArea"></span></div></header>
-      <section class="hero"><div class="month-nav"><button class="nav-button" id="prevMonth" aria-label="上个月">←</button><div class="month-heading"><p class="eyebrow" id="yearLabel"></p><h1 id="monthLabel"></h1></div><button class="nav-button" id="nextMonth" aria-label="下个月">→</button></div><p class="subtitle">把平凡的日子，过成喜欢的样子。</p><div class="hero-tools"><div class="view-switcher">${VIEW_MODES.map(v=>`<button class="view-mode-btn ${state.viewMode===v.key?'selected':''}" data-view="${v.key}">${v.label}</button>`).join('')}</div><button class="subtle-action" id="reviewBtn">本月回顾</button><button class="subtle-action" id="exportMonthBtn">导出本月</button></div></section>
+      <section class="hero"><div class="month-nav"><button class="nav-button" id="prevMonth" aria-label="上个月">←</button><div class="month-heading"><p class="eyebrow" id="yearLabel"></p><div class="month-title-lockup"><i class="month-brand-mark" aria-hidden="true"></i><h1 id="monthLabel"></h1></div><p class="subtitle">把平凡的日子，过成喜欢的样子。</p></div><button class="nav-button" id="nextMonth" aria-label="下个月">→</button></div><div class="hero-tools"><div class="view-switcher">${VIEW_MODES.map(v=>`<button class="view-mode-btn ${state.viewMode===v.key?'selected':''}" data-view="${v.key}">${v.label}</button>`).join('')}</div><button class="subtle-action" id="reviewBtn">本月回顾</button><button class="subtle-action" id="exportMonthBtn">导出本月</button></div></section>
       <section class="calendar-card"><div class="weekday-row" id="weekdayRow">${weekdayLabels.map(label=>`<div>${label}</div>`).join('')}</div><div class="calendar-grid" id="calendarGrid"></div></section>
       <section class="month-insights" id="monthInsights" aria-label="MONTHLY REPORT"></section>
       <section class="selected-summary"><div><p class="section-kicker">TODAY'S CORNER</p><h2 id="selectedDate"></h2><p id="selectedPreview"></p></div><div class="summary-actions"><button class="open-editor" id="openEditor">进入这一隅 <span>↗</span></button><button class="open-editor light" id="capsuleBtn">写给未来</button></div></section><footer>一隅 · IN DAYS</footer>
@@ -2552,7 +2593,7 @@ function renderTools(){const wrap=document.getElementById('objectTools');if(!wra
       photoTool.querySelectorAll('[data-photo-crop]').forEach(btn=>btn.addEventListener('click',()=>{const before=clone(state.entry);p.cropMode=btn.dataset.photoCrop;if(p.cropMode==='4:3'){p.objectPositionX=50;p.objectPositionY=50;}recordChange(before);renderCanvasOnly();renderTools();}));
     } else photoTool.innerHTML='';
   }
-  const text=document.getElementById('textTools');if(text){if(state.selectedText){const style=state.entry[`${state.selectedText}Style`]||{};text.innerHTML=`<div class="tool-group"><span class="tool-label">${state.selectedText==='title'?'标题':'正文'} · ${style.fontSize}px</span><button class="ghost-mini" id="textSmaller">A−</button><button class="ghost-mini" id="textLarger">A＋</button><button class="ghost-mini" id="textAlign">对齐：${style.align==='left'?'左':style.align==='center'?'中':'右'}</button></div>`;document.getElementById('textSmaller').onclick=()=>setTextSize(state.selectedText,-2);document.getElementById('textLarger').onclick=()=>setTextSize(state.selectedText,2);document.getElementById('textAlign').onclick=()=>toggleTextAlign(state.selectedText);}else text.innerHTML='<div class="tool-group"><span class="tool-muted">点击文字可编辑；拖动可调整位置</span></div>';}}
+  const text=document.getElementById('textTools');if(text){if(state.selectedText){const style=state.entry[`${state.selectedText}Style`]||{};const activeFont=style.fontFamily||'system';text.innerHTML=`<div class="tool-group font-toolbar"><span class="tool-label">${state.selectedText==='title'?'标题':'正文'} · ${style.fontSize}px</span><button class="ghost-mini" id="textSmaller">A−</button><button class="ghost-mini" id="textLarger">A＋</button><button class="ghost-mini" id="textAlign">对齐：${style.align==='left'?'左':style.align==='center'?'中':'右'}</button></div><div class="font-choice-row">${Object.entries(FONT_OPTIONS).map(([key,opt])=>`<button type="button" class="font-choice ${activeFont===key?'selected':''}" data-font-choice="${key}" style="font-family:${opt.family}" title="${opt.label}">${opt.label}</button>`).join('')}</div>`;document.getElementById('textSmaller').onclick=()=>setTextSize(state.selectedText,-2);document.getElementById('textLarger').onclick=()=>setTextSize(state.selectedText,2);document.getElementById('textAlign').onclick=()=>toggleTextAlign(state.selectedText);text.querySelectorAll('[data-font-choice]').forEach(btn=>btn.addEventListener('click',()=>{const before=clone(state.entry);state.entry[`${state.selectedText}Style`]={...(state.entry[`${state.selectedText}Style`]||DEFAULT_CONTENT_STYLE),fontFamily:btn.dataset.fontChoice};recordChange(before);renderCanvasOnly();renderTools();}));}else text.innerHTML='<div class="tool-group"><span class="tool-muted">点击文字可编辑；拖动可调整位置。选中文字后可选择趣味字体。</span></div>';}}
 function renderCanvasSelectionState(){
   document.querySelectorAll('.placed-sticker').forEach(el=>el.classList.toggle('selected',state.selectedCanvas.has(el.dataset.id)));
   document.querySelectorAll('.placed-photo').forEach(el=>el.classList.toggle('selected',state.selectedPhoto.has(el.dataset.id)));
@@ -2670,7 +2711,7 @@ function renderCanvasSelectionState(){
   });
 }
 
-function renderCanvasOnly(){const c=document.getElementById('journalCanvas');if(!c)return;c.style.background=state.entry.background||'#fffdf7';const t=c.querySelector('[data-drag-kind="title"]'),ct=c.querySelector('[data-drag-kind="content"]');if(t&&!state.textEdit){t.textContent=state.entry.title||'双击这里写标题';t.classList.toggle('placeholder',!state.entry.title);t.style.left=`${state.entry.titlePos.x*100}%`;t.style.top=`${state.entry.titlePos.y*100}%`;t.style.fontSize=`${state.entry.titleStyle.fontSize}px`;t.style.textAlign=state.entry.titleStyle.align;t.style.fontWeight=state.entry.titleStyle.weight||500;}if(ct&&!state.textEdit){ct.textContent=state.entry.content||'双击这里写下今天发生了什么…';ct.classList.toggle('placeholder',!state.entry.content);ct.style.left=`${state.entry.contentPos.x*100}%`;ct.style.top=`${state.entry.contentPos.y*100}%`;ct.style.fontSize=`${state.entry.contentStyle.fontSize}px`;ct.style.textAlign=state.entry.contentStyle.align;ct.style.fontWeight=state.entry.contentStyle.weight||400;}state.entry.stickers?.forEach(p=>{const el=c.querySelector(`[data-id="${CSS.escape(p.id)}"]`);if(el){el.style.left=`${p.x*100}%`;el.style.top=`${p.y*100}%`;el.style.transform=`translate(-50%,-50%) rotate(${p.rotation||0}deg) scale(${p.scale||1})`;el.style.zIndex=p.z||2;}});state.entry.photos?.forEach(p=>{const el=c.querySelector(`[data-id="${CSS.escape(p.id)}"]`);if(el){el.style.left=`${p.x*100}%`;el.style.top=`${p.y*100}%`;el.style.transform=`translate(-50%,-50%) rotate(${p.rotation||0}deg) scale(${p.scale||1})`;el.style.zIndex=p.z||2;}});renderCanvasSelectionState();renderTools();}
+function renderCanvasOnly(){const c=document.getElementById('journalCanvas');if(!c)return;c.style.background=state.entry.background||'#fffdf7';const t=c.querySelector('[data-drag-kind="title"]'),ct=c.querySelector('[data-drag-kind="content"]');if(t&&!state.textEdit){t.textContent=state.entry.title||'双击这里写标题';t.classList.toggle('placeholder',!state.entry.title);t.style.left=`${state.entry.titlePos.x*100}%`;t.style.top=`${state.entry.titlePos.y*100}%`;t.style.fontSize=`${state.entry.titleStyle.fontSize}px`;t.style.textAlign=state.entry.titleStyle.align;t.style.fontWeight=state.entry.titleStyle.weight||500;t.style.fontFamily=FONT_OPTIONS[state.entry.titleStyle.fontFamily||'system']?.family||FONT_OPTIONS.system.family;}if(ct&&!state.textEdit){ct.textContent=state.entry.content||'双击这里写下今天发生了什么…';ct.classList.toggle('placeholder',!state.entry.content);ct.style.left=`${state.entry.contentPos.x*100}%`;ct.style.top=`${state.entry.contentPos.y*100}%`;ct.style.fontSize=`${state.entry.contentStyle.fontSize}px`;ct.style.textAlign=state.entry.contentStyle.align;ct.style.fontWeight=state.entry.contentStyle.weight||400;ct.style.fontFamily=FONT_OPTIONS[state.entry.contentStyle.fontFamily||'system']?.family||FONT_OPTIONS.system.family;}state.entry.stickers?.forEach(p=>{const el=c.querySelector(`[data-id="${CSS.escape(p.id)}"]`);if(el){el.style.left=`${p.x*100}%`;el.style.top=`${p.y*100}%`;el.style.transform=`translate(-50%,-50%) rotate(${p.rotation||0}deg) scale(${p.scale||1})`;el.style.zIndex=p.z||2;}});state.entry.photos?.forEach(p=>{const el=c.querySelector(`[data-id="${CSS.escape(p.id)}"]`);if(el){el.style.left=`${p.x*100}%`;el.style.top=`${p.y*100}%`;el.style.transform=`translate(-50%,-50%) rotate(${p.rotation||0}deg) scale(${p.scale||1})`;el.style.zIndex=p.z||2;}});renderCanvasSelectionState();renderTools();}
 
 function bindCanvasInteractions(canvas){
   if(!canvas)return;
@@ -2875,11 +2916,11 @@ async function svgToPng(svg,w,h,filename){return await new Promise((resolve,reje
 function compositionElementsSvg(e,w,h,{includeDate=true}={}){
   const sx=w/CANVAS_W,sy=h/CANVAS_H,tx=x=>x*CANVAS_W*sx,ty=y=>y*CANVAS_H*sy;let body='';
   const esc=v=>escapeHtml(v);
-  if(e.title){body+=`<text x="${tx(e.titlePos.x)}" y="${ty(e.titlePos.y)}" font-size="${e.titleStyle.fontSize*sx}" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif" font-weight="${e.titleStyle.weight||500}" fill="#3f403b" text-anchor="${e.titleStyle.align==='center'?'middle':e.titleStyle.align==='right'?'end':'start'}">${esc(e.title)}</text>`;}
-  if(e.content){const lines=textLinesSvg(e.content,Math.max(14,Math.floor(38/(e.contentStyle.fontSize/12))));lines.forEach((line,i)=>body+=`<text x="${tx(e.contentPos.x)}" y="${ty(e.contentPos.y)+i*e.contentStyle.fontSize*1.45*sy}" font-size="${e.contentStyle.fontSize*sx}" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif" fill="#66645c" text-anchor="${e.contentStyle.align==='center'?'middle':e.contentStyle.align==='right'?'end':'start'}">${esc(line)}</text>`);}
+  if(e.title){const tf=FONT_OPTIONS[e.titleStyle?.fontFamily||'system']?.family||FONT_OPTIONS.system.family;body+=`<text x="${tx(e.titlePos.x)}" y="${ty(e.titlePos.y)}" font-size="${e.titleStyle.fontSize*sx}" font-family="${escapeHtml(tf)}" font-weight="${e.titleStyle.weight||500}" fill="#3f403b" text-anchor="${e.titleStyle.align==='center'?'middle':e.titleStyle.align==='right'?'end':'start'}">${esc(e.title)}</text>`;}
+  if(e.content){const cf=FONT_OPTIONS[e.contentStyle?.fontFamily||'system']?.family||FONT_OPTIONS.system.family;const lines=textLinesSvg(e.content,Math.max(14,Math.floor(38/(e.contentStyle.fontSize/12))));lines.forEach((line,i)=>body+=`<text x="${tx(e.contentPos.x)}" y="${ty(e.contentPos.y)+i*e.contentStyle.fontSize*1.45*sy}" font-size="${e.contentStyle.fontSize*sx}" font-family="${escapeHtml(cf)}" fill="#66645c" text-anchor="${e.contentStyle.align==='center'?'middle':e.contentStyle.align==='right'?'end':'start'}">${esc(line)}</text>`);}
   if(e.mood){const mm=MOODS.find(m=>m.key===e.mood);const mc={happy:'#d8b971',calm:'#9db5a2',full:'#b6a486',tired:'#9cabb6',sad:'#95a7b3',anxious:'#c39a9d',excited:'#d39b77',love:'#c58d8c',wow:'#c5a269',angry:'#c88e87'}[e.mood]||'#b7b5ae';body+=`<circle cx="${tx(.84)}" cy="${ty(.10)}" r="${8*sx}" fill="${mc}" opacity=".85"/><text x="${tx(.84)+14*sx}" y="${ty(.10)+5*sy}" font-size="${12*sx}" fill="#8f8c84" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif">${esc(mm?.label||'')}</text>`;}
   const layers=[...(e.photos||[]).map(p=>({kind:'photo',item:p,z:Number(p.z)||0})),...(e.stickers||[]).map(p=>({kind:'sticker',item:p,z:Number(p.z)||0}))].sort((a,b)=>a.z-b.z);
-  for(const layer of layers){const p=layer.item;if(layer.kind==='photo'){const rawRatio=clamp(Number(p.ratio)||4/3,.55,2.2),ratio=String(p.cropMode||'original')==='4:3'?4/3:rawRatio,pw=160*p.scale*sx,ph=pw/ratio;body+=`<rect x="${tx(p.x)-pw/2-5*sx}" y="${ty(p.y)-ph/2-5*sy}" width="${pw+10*sx}" height="${ph+10*sy}" rx="10" fill="#fffefb" opacity=".92" transform="rotate(${p.rotation||0} ${tx(p.x)} ${ty(p.y)})"/><image href="${esc(p.src)}" x="${tx(p.x)-pw/2}" y="${ty(p.y)-ph/2}" width="${pw}" height="${ph}" preserveAspectRatio="xMidYMid ${String(p.cropMode||'original')==='4:3'?'slice':'meet'}" transform="rotate(${p.rotation||0} ${tx(p.x)} ${ty(p.y)})"/>`;}else {const st=STICKERS.find(x=>x.id===p.stickerId);body+=exportSvgForSticker(st,tx(p.x),ty(p.y),64*sx,p.scale||1,p.rotation||0);}}
+  for(const layer of layers){const p=layer.item;if(layer.kind==='photo'){const rawRatio=clamp(Number(p.ratio)||4/3,.55,2.2),ratio=String(p.cropMode||'original')==='4:3'?4/3:rawRatio,pw=160*p.scale*sx,ph=pw/ratio;body+=`<rect x="${tx(p.x)-pw/2-5*sx}" y="${ty(p.y)-ph/2-5*sy}" width="${pw+10*sx}" height="${ph+10*sy}" rx="10" fill="#fffefb" opacity=".92" transform="rotate(${p.rotation||0} ${tx(p.x)} ${ty(p.y)})"/><image href="${esc(p.src)}" x="${tx(p.x)-pw/2}" y="${ty(p.y)-ph/2}" width="${pw}" height="${ph}" preserveAspectRatio="xMidYMid ${String(p.cropMode||'original')==='4:3'?'slice':'meet'}" transform="rotate(${p.rotation||0} ${tx(p.x)} ${ty(p.y)})"/>`;}else {const st=STICKERS.find(x=>x.id===p.stickerId);if(!st)continue;const tier=st.category==='mood'||st.category==='nature'?'accent':st.category==='festival'||st.category==='travel'?'story':'object';body+=`<g class="composition-sticker tier-${tier}">${exportSvgForSticker(st,tx(p.x),ty(p.y),64*sx,p.scale||1,p.rotation||0)}</g>`;}}
   if(includeDate)body=`<text x="48" y="55" font-size="18" fill="#9b9991" letter-spacing="3">${esc(e.entry_date)}</text>`+body;
   return body;
 }

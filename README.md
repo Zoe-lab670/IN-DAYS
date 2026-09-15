@@ -1,16 +1,22 @@
-# IN DAYS — Day Composition V24
+# IN DAYS V29 Final
 
-V24 is based on V21 and focuses on the editorial “life magazine / scrapbook” feel of the month wall and the monthly report.
+本轮基于 V28，仅完善「贴纸视觉呈现层」，不改其他产品模块、数据结构或月历 1:1 缩略逻辑。
 
-## This round
-- Keeps the V16+ strict 1:1 day-canvas-to-month-thumbnail rendering rule unchanged.
-- Adds a softer editorial treatment for recorded day cards without changing their composition geometry.
-- Reworks the month summary into a true “MONTHLY REPORT” section with a narrative sentence, mood story, record/sticker stats, featured sticker, and little-things sticker strip.
-- Keeps existing Supabase/config.js contract intact; config.js is intentionally not included in replacement packages.
-- Keeps all 233 stickers in app.js.
+## 本轮唯一改动
+- 保留 233 枚贴纸数据与原有 id、分类、搜索、推荐、收藏、最近使用逻辑。
+- 为贴纸展示增加轻微、可重复的手绘不规则感：小角度、轻微尺寸抖动、轻微纸笔质感滤镜与非常轻的墨线偏移感。
+- 主视觉贴纸与故事类贴纸使用更轻的展示层级差异。
+- 所有变化仅发生在 `stickerVisualMeta()` 与贴纸展示 CSS；不改存储中的位置、缩放、旋转数据。
+- 月历、一日画布、贴纸库、月报等位置与数据结构保持不变；严格保留月历作为一日画布的等比例缩略机制。
+- `config.js` 不在本包内，不会覆盖现有 Supabase 配置。
 
-## Replacement files
-Replace `index.html`, `styles.css`, `app.js`, `README.md`. Keep your existing `config.js`.
+## 检查
+- `node --check app.js`：通过
+- 原始贴纸：107
+- 补充贴纸：126
+- 总计：233
+- 贴纸 ID：233 个且唯一
+- 与 V28 相比，仅变更贴纸视觉呈现相关代码
+- ZIP 完整性：通过
 
-## Checks
-Run `node --check app.js` and verify the archive before deployment.
+替换时保留现有 `config.js`。
