@@ -23,14 +23,25 @@ const CANVAS_H = 420;
 const DATE_SAFE_ZONE = {left:.035, top:.035, right:.145, bottom:.115, margin:.006};
 // 日期只占左上角很小的一块；其余区域尽量留给文字、贴纸和照片。
 const CONTENT_ZONE = {left:.08, top:.12, right:.95, bottom:.94};
+const MOOD_SAFE_ZONE = {left:.72, top:.055, right:.94, bottom:.19};
+function moodZoneOverlap(kind,x,y,halfW,halfH){
+  if(!state.entry?.mood) return false;
+  return x-halfW<MOOD_SAFE_ZONE.right && x+halfW>MOOD_SAFE_ZONE.left && y-halfH<MOOD_SAFE_ZONE.bottom && y+halfH>MOOD_SAFE_ZONE.top;
+}
+function moveOutOfMoodZone(kind,x,y,halfW,halfH){
+  if(!moodZoneOverlap(kind,x,y,halfW,halfH)) return {x,y};
+  // Prefer downward movement so the composition does not hug the right edge.
+  const down=Math.max(y,MOOD_SAFE_ZONE.bottom+halfH+.02);
+  return {x:clamp(x,CONTENT_ZONE.left,CONTENT_ZONE.right),y:clamp(down,CONTENT_ZONE.top,CONTENT_ZONE.bottom)};
+}
 // 标题默认样式：新的一天第一次输入标题时自动采用，不需要手动调字号/位置。
 const DEFAULT_TITLE_POS = {x:.10, y:.22};
 const FONT_OPTIONS = {
-  system:{label:'简约',family:'-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif'},
-  serif:{label:'杂志',family:'"Noto Serif SC","Songti SC",STSong,serif'},
-  cute:{label:'圆润',family:'"ZCOOL KuaiLe","PingFang SC",sans-serif'},
-  diary:{label:'手账',family:'"Long Cang","PingFang SC",cursive'},
-  kai:{label:'楷体',family:'"Ma Shan Zheng","STKaiti",KaiTi,serif'}
+  system:{label:'简约',family:'-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif'},
+  serif:{label:'杂志',family:'"Songti SC","STSong","SimSun",serif'},
+  cute:{label:'圆润',family:'"Hiragino Maru Gothic ProN","Yu Gothic","Microsoft YaHei",sans-serif'},
+  diary:{label:'手账',family:'"Bradley Hand","Segoe Print","Hannotate SC","PingFang SC",cursive'},
+  kai:{label:'楷体',family:'"Kaiti SC","STKaiti","KaiTi",serif'}
 };
 const DEFAULT_TITLE_STYLE = {fontSize:25, align:'left', weight:500, fontFamily:'system'};
 const DEFAULT_CONTENT_STYLE = {fontSize:12, align:'left', weight:400, fontFamily:'system'};
@@ -1832,7 +1843,12 @@ function rotatedHalfExtents(widthPx,heightPx,rotationDeg){
 function constrainCanvasElementPosition(kind,item,x,y){
   let nx=Number.isFinite(Number(x))?Number(x):.5;
   let ny=Number.isFinite(Number(y))?Number(y):.5;
-  if(kind==='text') return {x:clamp(nx,CONTENT_ZONE.left,CONTENT_ZONE.right),y:clamp(ny,CONTENT_ZONE.top,CONTENT_ZONE.bottom)};
+  if(kind==='text'){
+    nx=clamp(nx,CONTENT_ZONE.left,CONTENT_ZONE.right);
+    ny=clamp(ny,CONTENT_ZONE.top,CONTENT_ZONE.bottom);
+    const safe=moveOutOfMoodZone(kind,nx,ny,.18,.07);
+    return {x:safe.x,y:safe.y};
+  }
   let halfW,halfH;
   if(kind==='photo'){
     const ratio=clamp(Number(item?.ratio)||4/3,.55,2.2);
@@ -1852,8 +1868,11 @@ function constrainCanvasElementPosition(kind,item,x,y){
     if(pushRight+halfW <= 1-margin) nx=pushRight; else ny=pushDown;
     nx=clamp(nx,halfW+margin,1-halfW-margin); ny=clamp(ny,halfH+margin,1-halfH-margin);
   }
+  const safe=moveOutOfMoodZone(kind,nx,ny,halfW,halfH);
+  nx=clamp(safe.x,halfW+margin,1-halfW-margin); ny=clamp(safe.y,halfH+margin,1-halfH-margin);
   return {x:nx,y:ny};
 }
+
 function normalizeTextStyle(style,fallback){
   if(!style||typeof style!=='object')return {...fallback};
   return {fontSize:clamp(Number(style.fontSize)||fallback.fontSize,8,48),align:['left','center','right'].includes(style.align)?style.align:fallback.align,weight:Number(style.weight)||fallback.weight,fontFamily:Object.prototype.hasOwnProperty.call(FONT_OPTIONS,String(style.fontFamily))?String(style.fontFamily):fallback.fontFamily};
@@ -2447,13 +2466,21 @@ function festivalForDate(key){
 }
 function holidayCueForDate(key){return festivalForDate(key);}
 function recommendationIds(){
-  const text=getTextForRecommendations().toLowerCase();const scores=new Map();if(!text)return [];
-  for(const [pattern,ids] of (typeof RECOMMENDATION_RULES!=='undefined'?RECOMMENDATION_RULES:[]))if(pattern.test(text))ids.forEach(id=>scores.set(id,(scores.get(id)||0)+4));
-  for(const [pattern,ids] of EXTRA_RECOMMENDATION_RULES)if(pattern.test(text))ids.forEach(id=>scores.set(id,(scores.get(id)||0)+4));
-  const festival=festivalForDate(currentDateKey());festival?.ids.forEach(id=>scores.set(id,(scores.get(id)||0)+5));
-  for(const sticker of STICKERS){const words=[...(sticker.tags||[]),...(STICKER_SYNONYMS[sticker.name]||[])];for(const raw of words){const tag=String(raw||'').toLowerCase();if(tag.length>=1&&text.includes(tag))scores.set(sticker.id,(scores.get(sticker.id)||0)+2);}}
+  const text=getTextForRecommendations().toLowerCase();
+  const scores=new Map();
+  const festival=festivalForDate(currentDateKey());
+  if(festival?.ids)festival.ids.forEach(id=>scores.set(id,(scores.get(id)||0)+8));
+  state.recent.slice(0,6).forEach(id=>scores.set(id,(scores.get(id)||0)+3));
+  [...state.favorites].slice(0,6).forEach(id=>scores.set(id,(scores.get(id)||0)+2));
+  if(text){
+    for(const [pattern,ids] of (typeof RECOMMENDATION_RULES!=='undefined'?RECOMMENDATION_RULES:[]))if(pattern.test(text))ids.forEach(id=>scores.set(id,(scores.get(id)||0)+4));
+    for(const [pattern,ids] of EXTRA_RECOMMENDATION_RULES)if(pattern.test(text))ids.forEach(id=>scores.set(id,(scores.get(id)||0)+4));
+    for(const sticker of STICKERS){const words=[...(sticker.tags||[]),...(STICKER_SYNONYMS[sticker.name]||[])];for(const raw of words){const tag=String(raw||'').toLowerCase();if(tag.length>=1&&text.includes(tag))scores.set(sticker.id,(scores.get(sticker.id)||0)+2);}}
+  }
+  if(!scores.size){['coffee','flower','sun','cloud','leaf','cat'].forEach(id=>{if(STICKERS.some(s=>s.id===id))scores.set(id,1);});}
   return [...scores.entries()].sort((a,b)=>b[1]-a[1]).filter(([id])=>STICKERS.some(s=>s.id===id)).slice(0,14).map(([id])=>id);
 }
+
 function searchScore(sticker,q){if(!q)return 0;const n=String(sticker.name||'').toLowerCase(),tags=(sticker.tags||[]).join(' ').toLowerCase();let score=0;if(n===q)score+=100;if(n.includes(q))score+=40;if(tags.includes(q))score+=25;const chars=[...q];if(chars.length>1&&chars.every(c=>(n+tags).includes(c)))score+=6;return score;}
 function filteredStickers(){
   const q=state.stickerSearch.trim().toLowerCase();let list=STICKERS;
@@ -2561,7 +2588,7 @@ function bindDrawerEvents(){
   t.addEventListener('input',()=>onInput('title',t));c.addEventListener('input',()=>onInput('content',c));
   t.addEventListener('blur',()=>{});c.addEventListener('blur',()=>{});
   document.querySelectorAll('[data-color]').forEach(btn=>btn.addEventListener('click',()=>{const before=clone(state.entry);state.entry.background=btn.dataset.color;recordChange(before);renderDrawer();}));
-  document.querySelectorAll('[data-mood]').forEach(btn=>btn.addEventListener('click',()=>{const before=clone(state.entry);state.entry.mood=state.entry.mood===btn.dataset.mood?null:btn.dataset.mood;recordChange(before);renderDrawer();}));
+  document.querySelectorAll('[data-mood]').forEach(btn=>btn.addEventListener('click',()=>{const before=clone(state.entry);state.entry.mood=state.entry.mood===btn.dataset.mood?null:btn.dataset.mood;if(state.entry.mood){for(const it of state.entry.stickers||[]){const q=constrainCanvasElementPosition('sticker',it,it.x,it.y);it.x=q.x;it.y=q.y;}for(const it of state.entry.photos||[]){const q=constrainCanvasElementPosition('photo',it,it.x,it.y);it.x=q.x;it.y=q.y;}for(const kind of ['title','content']){const pos=state.entry[`${kind}Pos`];const q=constrainCanvasElementPosition('text',null,pos.x,pos.y);state.entry[`${kind}Pos`]=q;}}recordChange(before);saveDraft(state.entry);renderDrawer();}));
   document.getElementById('undoBtn').addEventListener('click',undo);document.getElementById('redoBtn').addEventListener('click',redo);document.getElementById('toggleCanvasMulti').addEventListener('click',()=>{state.canvasMultiSelect=!state.canvasMultiSelect;state.selectedCanvas.clear();state.selectedPhoto.clear();renderDrawer();});document.getElementById('autoArrange').addEventListener('click',autoArrangeStickers);
   document.getElementById('addPhotoBtn').addEventListener('click',()=>document.getElementById('photoInput').click());document.getElementById('photoInput').addEventListener('change',async e=>{for(const f of [...e.target.files])await addPhoto(f);});
   document.getElementById('editCapsule').addEventListener('click',openCapsule);document.getElementById('clearCapsule')?.addEventListener('click',()=>{const before=clone(state.entry);state.entry.timeCapsule=null;recordChange(before);renderDrawer();});document.getElementById('exportDayBtn').addEventListener('click',()=>exportDayPng());document.getElementById('shareDayBtn').addEventListener('click',shareDay);
@@ -2599,7 +2626,7 @@ function renderTools(){const wrap=document.getElementById('objectTools');if(!wra
       photoTool.querySelectorAll('[data-photo-crop]').forEach(btn=>btn.addEventListener('click',()=>{const before=clone(state.entry);p.cropMode=btn.dataset.photoCrop;if(p.cropMode==='4:3'){p.objectPositionX=50;p.objectPositionY=50;}recordChange(before);renderCanvasOnly();renderTools();}));
     } else photoTool.innerHTML='';
   }
-  const text=document.getElementById('textTools');if(text){if(state.selectedText){const style=state.entry[`${state.selectedText}Style`]||{};const activeFont=style.fontFamily||'system';text.innerHTML=`<div class="tool-group font-toolbar"><span class="tool-label">${state.selectedText==='title'?'标题':'正文'} · ${style.fontSize}px</span><button class="ghost-mini" id="textSmaller">A−</button><button class="ghost-mini" id="textLarger">A＋</button><button class="ghost-mini" id="textAlign">对齐：${style.align==='left'?'左':style.align==='center'?'中':'右'}</button></div><div class="font-choice-row">${Object.entries(FONT_OPTIONS).map(([key,opt])=>`<button type="button" class="font-choice ${activeFont===key?'selected':''}" data-font-choice="${key}" style="font-family:${opt.family}" title="${opt.label}">${opt.label}</button>`).join('')}</div>`;document.getElementById('textSmaller').onclick=()=>setTextSize(state.selectedText,-2);document.getElementById('textLarger').onclick=()=>setTextSize(state.selectedText,2);document.getElementById('textAlign').onclick=()=>toggleTextAlign(state.selectedText);text.querySelectorAll('[data-font-choice]').forEach(btn=>btn.addEventListener('click',()=>{const before=clone(state.entry);state.entry[`${state.selectedText}Style`]={...(state.entry[`${state.selectedText}Style`]||DEFAULT_CONTENT_STYLE),fontFamily:btn.dataset.fontChoice};recordChange(before);renderCanvasOnly();renderTools();}));}else text.innerHTML='<div class="tool-group"><span class="tool-muted">点击文字可编辑；拖动可调整位置。选中文字后可选择趣味字体。</span></div>';}}
+  const text=document.getElementById('textTools');if(text){if(state.selectedText){const style=state.entry[`${state.selectedText}Style`]||{};const activeFont=style.fontFamily||'system';text.innerHTML=`<div class="tool-group font-toolbar"><span class="tool-label">${state.selectedText==='title'?'标题':'正文'} · ${style.fontSize}px</span><button class="ghost-mini" id="textSmaller">A−</button><button class="ghost-mini" id="textLarger">A＋</button><button class="ghost-mini" id="textAlign">对齐：${style.align==='left'?'左':style.align==='center'?'中':'右'}</button></div><div class="font-choice-row">${Object.entries(FONT_OPTIONS).map(([key,opt])=>`<button type="button" class="font-choice ${activeFont===key?'selected':''}" data-font-choice="${key}" style="font-family:${opt.family}" title="${opt.label}">${opt.label}</button>`).join('')}</div>`;document.getElementById('textSmaller').onclick=()=>setTextSize(state.selectedText,-2);document.getElementById('textLarger').onclick=()=>setTextSize(state.selectedText,2);document.getElementById('textAlign').onclick=()=>toggleTextAlign(state.selectedText);text.querySelectorAll('[data-font-choice]').forEach(btn=>btn.addEventListener('click',()=>{const before=clone(state.entry);const currentStyle=state.entry[`${state.selectedText}Style`]|| (state.selectedText==='title'?DEFAULT_TITLE_STYLE:DEFAULT_CONTENT_STYLE);state.entry[`${state.selectedText}Style`]={...currentStyle,fontFamily:btn.dataset.fontChoice};recordChange(before);saveDraft(state.entry);renderDrawer();}));}else text.innerHTML='<div class="tool-group"><span class="tool-muted">点击文字可编辑；拖动可调整位置。选中文字后可选择趣味字体。</span></div>';}}
 function renderCanvasSelectionState(){
   document.querySelectorAll('.placed-sticker').forEach(el=>el.classList.toggle('selected',state.selectedCanvas.has(el.dataset.id)));
   document.querySelectorAll('.placed-photo').forEach(el=>el.classList.toggle('selected',state.selectedPhoto.has(el.dataset.id)));
