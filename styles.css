@@ -471,3 +471,107 @@ footer{margin-top:40px;color:#b0aca3}
 .global-search-input{display:flex;align-items:center;gap:10px;border:1px solid #ddd8cf;background:#fbfaf6;border-radius:16px;padding:12px 16px;margin:20px 0}.global-search-input span{font-size:24px;color:#918c82}.global-search-input input{border:0;background:transparent;outline:0;width:100%;font:inherit;font-size:16px;color:#3f403b}.global-search-results{display:grid;gap:10px}.global-search-result{display:grid;grid-template-columns:120px 1fr 28px;gap:18px;text-align:left;align-items:center;border:1px solid #ebe6dd;background:#fffefb;border-radius:18px;padding:16px;cursor:pointer}.global-search-result:hover{border-color:#cfc6b7;transform:translateY(-1px)}.search-result-date{color:#8f8a81;font-size:13px}.search-result-main{display:grid;gap:5px}.search-result-main strong{font-size:16px;color:#3f403b}.search-result-main small{color:#77736b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.search-result-main em{font-style:normal;font-size:12px;color:#b09572}.search-result-arrow{font-size:20px;color:#aaa49a}.search-empty,.search-loading{padding:36px;text-align:center;color:#8f8a81}.search-hint{color:#8a867e;margin-top:6px}
 .annual-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}.annual-actions{display:flex;gap:8px;flex-wrap:wrap}.annual-stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:26px 0}.annual-stat-grid>div{background:#f7f4ee;border-radius:18px;padding:18px;display:grid;gap:5px}.annual-stat-grid strong{font-size:28px;color:#3f403b}.annual-stat-grid span{font-size:12px;color:#8e897f}.annual-section{margin-top:24px;padding-top:22px;border-top:1px solid #ece7df}.annual-section-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}.annual-section-head h3{margin:0;font-size:17px}.annual-section-head span{font-size:12px;color:#a19a8f}.annual-month-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}.annual-month-card{border:1px solid #e6e1d8;background:#fcfbf7;border-radius:15px;padding:12px;text-align:left;cursor:pointer}.annual-month-card:hover{border-color:#cfc6b8}.annual-month-card strong{font-size:13px}.annual-bar{height:56px;margin:9px 0;background:#f1eee7;border-radius:9px;display:flex;align-items:flex-end;overflow:hidden}.annual-bar i{display:block;width:100%;background:#c7b79e;border-radius:9px 9px 0 0}.annual-month-card span{font-size:11px;color:#928d84}.annual-bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.annual-sticker-list{display:grid;gap:10px}.annual-sticker-list>span{display:grid;grid-template-columns:38px 1fr auto;gap:8px;align-items:center;background:#f8f5ef;border-radius:12px;padding:7px 10px}.annual-sticker-list svg{width:32px;height:32px}.annual-sticker-list b{font-size:13px;font-weight:500}.annual-sticker-list em{font-size:12px;color:#9c9387;font-style:normal}.annual-mood-list{display:grid;gap:9px}.annual-mood-list>div{display:grid;grid-template-columns:44px 1fr 24px;gap:10px;align-items:center;font-size:12px}.annual-mood-list i{height:8px;border-radius:8px;background:#eee9e0;overflow:hidden}.annual-mood-list i b{display:block;height:100%;background:#c7b79e;border-radius:8px}.annual-mood-list em{font-style:normal;color:#8f897f;text-align:right}
 @media (max-width:760px){.annual-stat-grid{grid-template-columns:repeat(2,1fr)}.annual-month-grid{grid-template-columns:repeat(4,1fr)}.annual-bottom-grid{grid-template-columns:1fr}.global-search-result{grid-template-columns:1fr 24px}.search-result-date{grid-column:1/-1}.annual-modal,.search-modal{padding:22px}.annual-head{flex-direction:column}}
+
+/* P3：装饰性视觉细节 —— 仅增强视觉，不改变数据/交互结构 */
+:root{
+  --p3-ink-soft:#595951;
+  --p3-paper-warm:#f7f5ef;
+  --p3-line-soft:rgba(205,200,190,.62);
+  --p3-accent-soft:rgba(141,166,132,.12);
+  --p3-yellow-soft:rgba(215,184,110,.16);
+}
+body{background:
+  radial-gradient(circle at 12% 8%,rgba(215,184,110,.055),transparent 24rem),
+  radial-gradient(circle at 88% 10%,rgba(141,166,132,.05),transparent 26rem),
+  var(--paper);
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.18;
+  background-image:radial-gradient(rgba(63,64,59,.11) .55px,transparent .55px);
+  background-size:7px 7px;
+  mix-blend-mode:multiply;
+}
+.app-shell,.editor-drawer,.search-modal,.annual-modal{position:relative;z-index:1}
+.brand-lockup{position:relative}
+.brand-lockup:after{content:"";position:absolute;left:0;bottom:-7px;width:22px;height:1px;background:linear-gradient(90deg,var(--yellow),transparent);opacity:.7}
+.brand-en{letter-spacing:.28em}
+.hero{position:relative}
+.hero:before,.hero:after{content:"";position:absolute;top:50%;width:72px;height:1px;background:linear-gradient(90deg,transparent,var(--p3-line-soft));pointer-events:none}
+.hero:before{right:calc(50% + 190px)}
+.hero:after{left:calc(50% + 190px);transform:scaleX(-1)}
+.hero h1{position:relative;text-shadow:0 1px 0 rgba(255,255,255,.9)}
+.subtitle{letter-spacing:.03em}
+.calendar-card{position:relative;overflow:hidden}
+.calendar-card:before{content:"";position:absolute;right:20px;top:16px;width:42px;height:42px;border:1px solid var(--p3-line-soft);border-radius:50%;opacity:.35}
+.calendar-card:after{content:"";position:absolute;right:33px;top:29px;width:16px;height:1px;background:var(--yellow);opacity:.45;transform:rotate(45deg);box-shadow:0 0 0 0 var(--yellow)}
+.weekday-row{letter-spacing:.08em}
+.day-thumbnail{box-shadow:inset 0 1px 0 rgba(255,255,255,.85)}
+.day-card:not(.empty) .day-number{background:rgba(255,255,255,.55);padding:2px 4px;border-radius:999px}
+.day-card:not(.empty):hover .day-thumbnail{transform:translateY(-1px)}
+.day-card.active .day-thumbnail{box-shadow:0 0 0 2px var(--p3-accent-soft),inset 0 1px 0 rgba(255,255,255,.8)}
+.today-mark{font-size:5px;letter-spacing:.24em}
+.mini-title,.mini-content{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
+.selected-summary{position:relative}
+.selected-summary:before{content:"";position:absolute;left:4px;top:-1px;width:36px;height:2px;background:var(--yellow);opacity:.48}
+footer{opacity:.82}
+
+/* 编辑画布：更像一张纸，但保持原有编辑区域尺寸 */
+.journal-canvas{background:
+  radial-gradient(circle at 84% 15%,rgba(215,184,110,.07),transparent 11rem),
+  linear-gradient(180deg,rgba(255,255,255,.36),transparent 30%),
+  var(--paper-2);
+  border-color:#dfdbd1;
+}
+.journal-canvas:before{inset:12px;border-color:rgba(155,153,145,.13);}
+.canvas-date-block{background:rgba(255,254,251,.52);padding:4px 7px;border-radius:999px;backdrop-filter:blur(3px)}
+.canvas-date-block i{opacity:.55}
+.canvas-text{box-shadow:0 1px 0 rgba(255,255,255,.38)}
+.canvas-text.text-selected{box-shadow:0 7px 18px rgba(42,42,36,.06)}
+.canvas-mood{filter:saturate(.95)}
+
+/* 输入区 / 工具区：增加轻微层次感 */
+.text-style-panel,.p1-tool-card,.profile-backup{box-shadow:0 7px 20px rgba(42,42,36,.025)}
+.text-style-target.selected,.p1-choice.selected,.scene-active{box-shadow:inset 0 0 0 1px rgba(141,166,132,.07)}
+.p1-tool-head small,.text-style-head span{letter-spacing:.01em}
+.font-choice{transition:transform .16s ease,border-color .16s ease,background .16s ease}
+.font-choice:hover{transform:translateY(-1px)}
+
+/* 时间轴：增加“沿着日子往前走”的轻微视觉节奏 */
+.timeline-grid:before{background:linear-gradient(var(--line),var(--p3-accent-soft),var(--line));}
+.timeline-card{box-shadow:0 4px 18px rgba(42,42,36,.018)}
+.timeline-card:after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--p3-line-soft),transparent);opacity:.7}
+.timeline-dot{box-shadow:0 0 0 4px var(--paper),0 0 0 6px rgba(141,166,132,.05)}
+.timeline-meta{letter-spacing:.01em}
+
+/* 搜索 / 年度回顾：更接近杂志式信息卡 */
+.search-modal,.annual-modal{background:
+  radial-gradient(circle at 92% 8%,rgba(141,166,132,.055),transparent 12rem),
+  #fffefb;
+}
+.search-modal:after,.annual-modal:after{content:"";position:absolute;right:28px;top:26px;width:46px;height:46px;border:1px solid rgba(205,200,190,.55);border-radius:50%;pointer-events:none}
+.global-search-result,.annual-month-card{transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}
+.global-search-result:hover,.annual-month-card:hover{box-shadow:0 10px 26px rgba(42,42,36,.05);transform:translateY(-1px)}
+.annual-stat-grid>div{box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+.annual-bar{background:linear-gradient(180deg,#eeebe3,#f4f1eb)}
+
+/* 小贴纸推荐 / 热门贴纸：更像收藏卡片 */
+.hot-sticker{box-shadow:0 4px 12px rgba(42,42,36,.018)}
+.hot-sticker:hover{transform:translateY(-2px) rotate(-.4deg)}
+.hot-sticker:nth-child(2n):hover{transform:translateY(-2px) rotate(.35deg)}
+
+/* 导出弹窗 */
+.export-modal{border-color:#e3ded4;box-shadow:0 30px 90px rgba(48,45,39,.13)}
+.export-choice{transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}
+.export-choice:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(42,42,36,.045)}
+
+@media(max-width:900px){
+  .hero:before,.hero:after{display:none}
+  .calendar-card:before,.calendar-card:after{opacity:.55}
+  body:before{opacity:.12}
+}
+@media(max-width:520px){
+  .hero{padding-top:26px}
+  .calendar-card:before,.calendar-card:after{display:none}
+  .journal-canvas:before{inset:9px}
+  .canvas-date-block{padding:3px 6px}
+}
