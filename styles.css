@@ -491,7 +491,7 @@ body:before{
   background-size:7px 7px;
   mix-blend-mode:multiply;
 }
-.app-shell,.editor-drawer,.search-modal,.annual-modal{position:relative;z-index:1}
+.app-shell{position:relative;z-index:1}
 .brand-lockup{position:relative}
 .brand-lockup:after{content:"";position:absolute;left:0;bottom:-7px;width:22px;height:1px;background:linear-gradient(90deg,var(--yellow),transparent);opacity:.7}
 .brand-en{letter-spacing:.28em}
