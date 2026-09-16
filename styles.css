@@ -426,8 +426,7 @@ footer{margin-top:40px;color:#b0aca3}
 }
 
 /* V34：日期 + 心情保留顶部安全带，编辑元素不得进入心情标记区域。 */
-.canvas-mood{left:88% !important;top:10% !important;}
-@media (max-width:760px){.canvas-mood{left:87% !important;top:10% !important;}.font-choice{padding:7px 10px;}}
+@media (max-width:760px){.font-choice{padding:7px 10px;}}
 
 /* P1: templates, sticker scenes and an editorial timeline */
 .p1-editor-section{margin:12px 0 4px}
@@ -452,7 +451,6 @@ footer{margin-top:40px;color:#b0aca3}
 
 
 /* P1返工：心情安全带 + 常驻文字样式面板 + 小场景整组操作 + 月历可读性 */
-.canvas-mood{left:84% !important;top:10% !important;z-index:18 !important;}
 .text-style-panel{margin:10px 0 2px;padding:12px 13px;border:1px solid var(--line);border-radius:16px;background:rgba(255,254,251,.84)}
 .text-style-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:9px}
 .text-style-head>div:first-child{display:flex;flex-direction:column;gap:3px;min-width:0}.text-style-head b{font-size:11px;font-weight:500}.text-style-head span{font-size:8px;color:var(--muted);line-height:1.5}
@@ -580,3 +578,17 @@ footer{opacity:.82}
 .editor-drawer{position:fixed !important;top:0 !important;right:0 !important;bottom:0 !important;left:auto !important;transform:none !important;z-index:21 !important;display:flex !important;flex-direction:column !important;overflow:hidden;}
 .drawer-backdrop{position:fixed !important;inset:0 !important;z-index:20 !important;}
 #drawerRoot:empty{display:none;}
+
+/* P3 canvas safe zones: invisible layout boundaries, only subtle corner tint. */
+.journal-canvas{background:
+  radial-gradient(circle at 0% 0%,rgba(141,166,132,.045),transparent 18%),
+  radial-gradient(circle at 100% 100%,rgba(215,184,110,.045),transparent 19%),
+  radial-gradient(circle at 84% 15%,rgba(215,184,110,.025),transparent 11rem),
+  linear-gradient(180deg,rgba(255,255,255,.36),transparent 30%),
+  var(--paper-2);}
+.journal-canvas:after{content:"";position:absolute;inset:0;pointer-events:none;background:
+  radial-gradient(circle at 2% 3%,rgba(141,166,132,.035),transparent 15%),
+  radial-gradient(circle at 98% 97%,rgba(215,184,110,.035),transparent 16%);z-index:0;}
+.canvas-date-block{z-index:31;}
+.canvas-mood{left:84% !important;top:90% !important;z-index:18 !important;border:0 !important;box-shadow:none !important;background:rgba(255,254,251,.68) !important;}
+.canvas-text,.placed-sticker,.placed-photo-wrap{z-index:6;}
