@@ -20,10 +20,10 @@ const DRAFT_PREFIX = 'in-days:draft:';
 const CANVAS_W = 560;
 const CANVAS_H = 420;
 // 固定日期区：日期是独立板块，标题/正文/贴纸/照片都不得侵入。
-const DATE_SAFE_ZONE = {left:.035, top:.035, right:.145, bottom:.105, margin:.008};
-// 中央内容区：四角由日期与心情占位保护，其他区域保持自由移动。
-const CONTENT_ZONE = {left:.025, top:.025, right:.975, bottom:.975};
-// 右下角心情标记安全区：贴纸 / 照片 / 文字都不得压到心情。
+const DATE_SAFE_ZONE = {left:.035, top:.035, right:.145, bottom:.115, margin:.006};
+// 日期只占左上角很小的一块；其余区域尽量留给文字、贴纸和照片。
+const CONTENT_ZONE = {left:.08, top:.12, right:.95, bottom:.94};
+// 右上角心情标记安全区：贴纸 / 照片 / 文字都不得压到日期与心情。
 const MOOD_SAFE_ZONE = {left:.825, top:.845, right:.965, bottom:.965, margin:.008};
 // 标题默认样式：新的一天第一次输入标题时自动采用，不需要手动调字号/位置。
 const DEFAULT_TITLE_POS = {x:.10, y:.22};
@@ -1880,38 +1880,6 @@ function normalizeTextPos(pos,fallback){
   const nx=x>1?x/CANVAS_W:x, ny=y>1?y/CANVAS_H:y;
   return {x:clamp(nx,CONTENT_ZONE.left,CONTENT_ZONE.right),y:clamp(ny,CONTENT_ZONE.top,CONTENT_ZONE.bottom)};
 }
-function estimateTextHalfExtents(kind,entry){
-  const style=entry?.[`${kind}Style`]|| (kind==='title'?DEFAULT_TITLE_STYLE:DEFAULT_CONTENT_STYLE);
-  const text=String(entry?.[kind]|| (kind==='title'?'双击这里写标题':'双击这里写下今天发生了什么…'));
-  const fs=clamp(Number(style.fontSize)||12,8,54);
-  const maxW=CANVAS_W*(kind==='title'?.72:.74);
-  const chars=[...text].length;
-  const avgWidth=fs*(/^[\x00-\x7F]*$/.test(text)?0.58:0.92);
-  const width=Math.min(maxW,Math.max(fs*3,chars*avgWidth+18));
-  const lines=Math.max(1,Math.ceil((chars*avgWidth)/Math.max(80,maxW-18)));
-  const height=Math.min(CANVAS_H*.46,lines*fs*1.55+14);
-  return {w:width/CANVAS_W/2,h:height/CANVAS_H/2};
-}
-function constrainTextPosition(kind,entry,x,y){
-  const ext=estimateTextHalfExtents(kind,entry);
-  let nx=clamp(Number(x)||.5,ext.w+CONTENT_ZONE.left*.18,1-ext.w-CONTENT_ZONE.left*.18);
-  let ny=clamp(Number(y)||.5,ext.h+CONTENT_ZONE.top*.55,1-ext.h-(1-CONTENT_ZONE.bottom)*.55);
-  const overlapsDate=nx-ext.w < DATE_SAFE_ZONE.right && nx+ext.w > DATE_SAFE_ZONE.left && ny-ext.h < DATE_SAFE_ZONE.bottom && ny+ext.h > DATE_SAFE_ZONE.top;
-  if(overlapsDate){
-    const pushRight=DATE_SAFE_ZONE.right+ext.w+DATE_SAFE_ZONE.margin;
-    const pushDown=DATE_SAFE_ZONE.bottom+ext.h+DATE_SAFE_ZONE.margin;
-    if(pushRight+ext.w <= 1-(1-CONTENT_ZONE.right)) nx=pushRight; else ny=pushDown;
-  }
-  const overlapsMood=nx-ext.w < MOOD_SAFE_ZONE.right && nx+ext.w > MOOD_SAFE_ZONE.left && ny-ext.h < MOOD_SAFE_ZONE.bottom && ny+ext.h > MOOD_SAFE_ZONE.top;
-  if(overlapsMood){
-    const pushLeft=MOOD_SAFE_ZONE.left-ext.w-MOOD_SAFE_ZONE.margin;
-    const pushUp=MOOD_SAFE_ZONE.top-ext.h-MOOD_SAFE_ZONE.margin;
-    if(pushLeft-ext.w >= CONTENT_ZONE.left) nx=pushLeft; else ny=pushUp;
-  }
-  nx=clamp(nx,ext.w+CONTENT_ZONE.left,1-ext.w-CONTENT_ZONE.left);
-  ny=clamp(ny,ext.h+CONTENT_ZONE.top,1-ext.h-CONTENT_ZONE.top);
-  return {x:nx,y:ny};
-}
 function rotatedHalfExtents(widthPx,heightPx,rotationDeg){
   const rad=Math.abs(Number(rotationDeg)||0)*Math.PI/180, c=Math.abs(Math.cos(rad)), s=Math.abs(Math.sin(rad));
   return {w:(widthPx*c+heightPx*s)/CANVAS_W/2,h:(widthPx*s+heightPx*c)/CANVAS_H/2};
@@ -1920,9 +1888,10 @@ function constrainCanvasElementPosition(kind,item,x,y){
   let nx=Number.isFinite(Number(x))?Number(x):.5;
   let ny=Number.isFinite(Number(y))?Number(y):.5;
   if(kind==='text'){
-    const tKind=item?.kind||'content';
-    const entry=item?.entry||state?.entry||null;
-    return constrainTextPosition(tKind,entry,nx,ny);
+    nx=clamp(nx,CONTENT_ZONE.left,.90); ny=clamp(ny,.16,CONTENT_ZONE.bottom);
+    // 顶部整条区域留给日期/心情：文字不能进入右上角安全区，也不能贴住日期带。
+    if(ny < .215 && nx > .66) nx=.60;
+    return {x:nx,y:ny};
   }
   let halfW,halfH;
   if(kind==='photo'){
@@ -2149,16 +2118,6 @@ function moodVisualMarkup(mood,mini=false){
   return mini?`<div class="mini-object mini-mood" style="left:84%;top:90%;--mood-color:${color};font-size:${(9/CANVAS_W)*100}cqw;padding:${(4/CANVAS_W)*100}cqw ${(7/CANVAS_W)*100}cqw;gap:${(5/CANVAS_W)*100}cqw"><i style="width:${(7/CANVAS_W)*100}cqw;height:${(7/CANVAS_W)*100}cqw"></i><span>${escapeHtml(item.label)}</span></div>`:
   `<div class="canvas-mood" style="left:84%;top:90%;--mood-color:${color}"><i></i><span>${escapeHtml(item.label)}</span></div>`;
 }
-function enforceCanvasSafeZones(e){
-  if(!e)return e;
-  const t=constrainTextPosition('title',e,e.titlePos?.x??DEFAULT_TITLE_POS.x,e.titlePos?.y??DEFAULT_TITLE_POS.y);
-  const c=constrainTextPosition('content',e,e.contentPos?.x??.10,e.contentPos?.y??.39);
-  e.titlePos=t;e.contentPos=c;
-  (e.stickers||[]).forEach(it=>{const q=constrainCanvasElementPosition('sticker',it,it.x,it.y);it.x=q.x;it.y=q.y;});
-  (e.photos||[]).forEach(it=>{const q=constrainCanvasElementPosition('photo',it,it.x,it.y);it.x=q.x;it.y=q.y;});
-  return e;
-}
-
 function compositionDomHtml(e,{mode='canvas'}={}){
   const parts=[];
   const title=String(e?.title||'').trim(), content=String(e?.content||'').trim();
@@ -2645,7 +2604,6 @@ async function addPhoto(file){
 
 function renderDrawer(){
   if(!state.drawerOpen){closeDrawer();return;}const e=state.entry||emptyEntry(currentDateKey());
-  enforceCanvasSafeZones(e);
   const canvasObjects=compositionDomHtml(e,{mode:'canvas'});
   const title=e.title||'',content=e.content||'';document.getElementById('drawerRoot').innerHTML=`<button class="drawer-backdrop" id="drawerBackdrop"></button><aside class="editor-drawer"><div class="drawer-head"><div class="drawer-head-main"><button class="mobile-back-button" id="mobileBackMonth" aria-label="返回月历">← 返回月历</button><div><div class="section-kicker">A CORNER FOR</div><h2>${currentDateKey()}</h2><span class="draft-label ${e._draft?'show':''}">${e._draft?'未保存草稿':''}</span></div></div><button class="close-button" id="closeDrawer">×</button></div><div class="editor-body">
     ${supabase&&!state.user?'<div class="login-hint"><strong>云端记录</strong><span>当前输入会自动保留在本机，登录后再保存到云端。</span><button id="loginFromEditor">登录</button></div>':''}
@@ -3076,7 +3034,6 @@ function exportSvgForSticker(sticker,x,y,size,scale=1,rot=0){if(!sticker)return 
 function textLinesSvg(text,maxChars){const out=[];for(const rawLine of String(text||'').split(/\r?\n/)){const line=rawLine||' ';for(let i=0;i<line.length;i+=maxChars)out.push(line.slice(i,i+maxChars));if(rawLine==='')out.push(' ');}return out.length?out:[' '];}
 async function svgToPng(svg,w,h,filename){return await new Promise((resolve,reject)=>{const blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}),url=URL.createObjectURL(blob),img=new Image();img.onload=()=>{const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');ctx.fillStyle='#fbfaf6';ctx.fillRect(0,0,w,h);ctx.drawImage(img,0,0,w,h);URL.revokeObjectURL(url);c.toBlob(b=>{if(!b)return reject(new Error('export failed'));const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);resolve();},'image/png');};img.onerror=reject;img.src=url;});}
 function compositionElementsSvg(e,w,h,{includeDate=true,mini=false}={}){
-  enforceCanvasSafeZones(e);
   const sx=w/CANVAS_W,sy=h/CANVAS_H,tx=x=>x*CANVAS_W*sx,ty=y=>y*CANVAS_H*sy;let body='';
   const esc=v=>escapeHtml(v);
   if(e.title){const tf=FONT_OPTIONS[e.titleStyle?.fontFamily||'system']?.family||FONT_OPTIONS.system.family;const titleSize=(mini?Math.max(Number(e.titleStyle?.fontSize)||25,44):Number(e.titleStyle?.fontSize)||25);body+=`<text x="${tx(e.titlePos.x)}" y="${ty(e.titlePos.y)}" font-size="${titleSize*sx}" font-family="${escapeHtml(tf)}" font-weight="${e.titleStyle.weight||500}" fill="#3f403b" text-anchor="${e.titleStyle.align==='center'?'middle':e.titleStyle.align==='right'?'end':'start'}">${esc(e.title)}</text>`;}
