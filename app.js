@@ -22,11 +22,11 @@ const CANVAS_H = 420;
 // 固定日期区：日期是独立板块，标题/正文/贴纸/照片都不得侵入。
 const DATE_SAFE_ZONE = {left:.035, top:.035, right:.145, bottom:.115, margin:.006};
 // 日期只占左上角很小的一块；其余区域尽量留给文字、贴纸和照片。
-const CONTENT_ZONE = {left:.16, top:.20, right:.94, bottom:.84};
+const CONTENT_ZONE = {left:.08, top:.12, right:.95, bottom:.94};
 // 右上角心情标记安全区：贴纸 / 照片 / 文字都不得压到日期与心情。
-const MOOD_SAFE_ZONE = {left:.825, top:.845, right:.965, bottom:.965, margin:.008};
+const MOOD_SAFE_ZONE = {left:.76, top:.035, right:.975, bottom:.16, margin:.008};
 // 标题默认样式：新的一天第一次输入标题时自动采用，不需要手动调字号/位置。
-const DEFAULT_TITLE_POS = {x:.16, y:.24};
+const DEFAULT_TITLE_POS = {x:.10, y:.22};
 const FONT_OPTIONS = {
   system:{label:'简约',family:'-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif'},
   serif:{label:'杂志',family:'"Noto Serif SC","Songti SC",STSong,serif'},
@@ -1758,7 +1758,7 @@ function applyCanvasTemplate(key){
     const items=[...(e.photos||[]),...(e.stickers||[])];
     items.forEach((it,i)=>{if(it.locked)return;it.x=.57+(i%3)*.17;it.y=.43+Math.floor(i/3)*.17;if('scale' in it)it.scale=clamp(Number(it.scale)||1,.55,1.35);if('rotation' in it)it.rotation=((i%5)-2)*4;});
   }else{
-    e.titlePos={...DEFAULT_TITLE_POS};e.contentPos={x:.16,y:.42};
+    e.titlePos={...DEFAULT_TITLE_POS};e.contentPos={x:.10,y:.39};
   }
   normalizeLayerOrder(e.stickers,e.photos);recordChange(before,'已应用版式');saveDraft(e);scheduleCloudSave();renderDrawer();toast(`已应用「${CANVAS_TEMPLATES[key].label}」`);
 }
@@ -1863,7 +1863,7 @@ function isTodayKey(key){ const d=parseKey(key); return d.y===now.getFullYear() 
 function hasEntryContent(e){ return !!(e && (String(e.title||'').trim() || String(e.content||'').trim() || (e.stickers||[]).length || (e.photos||[]).length || e.mood || e.timeCapsule)); }
 function emptyEntry(date){
   return {entry_date:date,title:'',content:'',background:'#fffdf7',stickers:[],photos:[],mood:null,
-    timeCapsule:null,layoutTemplate:'free',titlePos:{...DEFAULT_TITLE_POS},contentPos:{x:.16,y:.42},
+    timeCapsule:null,layoutTemplate:'free',titlePos:{...DEFAULT_TITLE_POS},contentPos:{x:.10,y:.39},
     titleStyle:{...DEFAULT_TITLE_STYLE},contentStyle:{...DEFAULT_CONTENT_STYLE}};
 }
 function normalizePos(pos,fallback){
@@ -1889,8 +1889,9 @@ function constrainCanvasElementPosition(kind,item,x,y){
   let ny=Number.isFinite(Number(y))?Number(y):.5;
   if(kind==='text'){
     nx=clamp(nx,CONTENT_ZONE.left,CONTENT_ZONE.right); ny=clamp(ny,CONTENT_ZONE.top,CONTENT_ZONE.bottom);
-    // 顶部整条区域留给日期/心情：文字不能进入右上角安全区，也不能贴住日期带。
-    if(ny < .215 && nx > .66) nx=.60;
+    if(nx>=MOOD_SAFE_ZONE.left && ny>=MOOD_SAFE_ZONE.top && ny<=MOOD_SAFE_ZONE.bottom){
+      nx=clamp(MOOD_SAFE_ZONE.left-MOOD_SAFE_ZONE.margin,CONTENT_ZONE.left,CONTENT_ZONE.right);
+    }
     return {x:nx,y:ny};
   }
   let halfW,halfH;
@@ -2121,9 +2122,9 @@ function moodVisualMarkup(mood,mini=false){
 function compositionDomHtml(e,{mode='canvas'}={}){
   const parts=[];
   const title=String(e?.title||'').trim(), content=String(e?.content||'').trim();
-  const titlePos=e?.titlePos||DEFAULT_TITLE_POS, contentPos=e?.contentPos||{x:.16,y:.42};
+  const titlePos=e?.titlePos||{x:.10,y:.22}, contentPos=e?.contentPos||{x:.10,y:.39};
   const titleStyle=e?.titleStyle||DEFAULT_TITLE_STYLE, contentStyle=e?.contentStyle||DEFAULT_CONTENT_STYLE;
-  const pointStyle=(pos,style)=>{const q={x:clamp(Number(pos?.x)||CONTENT_ZONE.left,CONTENT_ZONE.left,CONTENT_ZONE.right),y:clamp(Number(pos?.y)||CONTENT_ZONE.top,CONTENT_ZONE.top,CONTENT_ZONE.bottom)};const fam=FONT_OPTIONS[String(style?.fontFamily)]?.family||FONT_OPTIONS.system.family;return `left:${q.x*100}%;top:${q.y*100}%;font-size:${Number(style?.fontSize)||12}px;text-align:${style?.align||'left'};font-weight:${style?.weight||400};font-family:${fam};`;};
+  const pointStyle=(pos,style)=>{const q={x:clamp(Number(pos?.x)||.1,.02,.94),y:clamp(Number(pos?.y)||.2,.06,.94)};const fam=FONT_OPTIONS[String(style?.fontFamily)]?.family||FONT_OPTIONS.system.family;return `left:${q.x*100}%;top:${q.y*100}%;font-size:${Number(style?.fontSize)||12}px;text-align:${style?.align||'left'};font-weight:${style?.weight||400};font-family:${fam};`;};
   const selectedText=(kind)=>state.selectedText===kind?'text-selected':'';
   if(title||mode==='canvas')parts.push(`<div class="canvas-text title-canvas ${!title?'placeholder':''} ${selectedText('title')}" data-drag-kind="title" style="${pointStyle(titlePos,titleStyle)}">${escapeHtml(title||'双击这里写标题')}</div>`);
   if(content||mode==='canvas')parts.push(`<div class="canvas-text content-canvas ${!content?'placeholder':''} ${selectedText('content')}" data-drag-kind="content" style="${pointStyle(contentPos,contentStyle)}">${escapeHtml(content||'双击这里写下今天发生了什么…')}</div>`);
