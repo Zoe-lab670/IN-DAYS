@@ -20,11 +20,11 @@ const DRAFT_PREFIX = 'in-days:draft:';
 const CANVAS_W = 560;
 const CANVAS_H = 420;
 // 固定日期区：日期是独立板块，标题/正文/贴纸/照片都不得侵入。
-const DATE_SAFE_ZONE = {left:.035, top:.035, right:.18, bottom:.15, margin:.012};
+const DATE_SAFE_ZONE = {left:.035, top:.035, right:.145, bottom:.105, margin:.008};
 // 中央内容区：四角由日期与心情占位保护，其他区域保持自由移动。
-const CONTENT_ZONE = {left:.10, top:.17, right:.90, bottom:.82};
+const CONTENT_ZONE = {left:.025, top:.025, right:.975, bottom:.975};
 // 右下角心情标记安全区：贴纸 / 照片 / 文字都不得压到心情。
-const MOOD_SAFE_ZONE = {left:.72, top:.78, right:.98, bottom:.97, margin:.012};
+const MOOD_SAFE_ZONE = {left:.825, top:.845, right:.965, bottom:.965, margin:.008};
 // 标题默认样式：新的一天第一次输入标题时自动采用，不需要手动调字号/位置。
 const DEFAULT_TITLE_POS = {x:.10, y:.22};
 const FONT_OPTIONS = {
@@ -1908,8 +1908,8 @@ function constrainTextPosition(kind,entry,x,y){
     const pushUp=MOOD_SAFE_ZONE.top-ext.h-MOOD_SAFE_ZONE.margin;
     if(pushLeft-ext.w >= CONTENT_ZONE.left) nx=pushLeft; else ny=pushUp;
   }
-  nx=clamp(nx,ext.w+CONTENT_ZONE.left,1-ext.w-CONTENT_ZONE.right*0.04);
-  ny=clamp(ny,ext.h+CONTENT_ZONE.top,1-ext.h-(1-CONTENT_ZONE.bottom));
+  nx=clamp(nx,ext.w+CONTENT_ZONE.left,1-ext.w-CONTENT_ZONE.left);
+  ny=clamp(ny,ext.h+CONTENT_ZONE.top,1-ext.h-CONTENT_ZONE.top);
   return {x:nx,y:ny};
 }
 function rotatedHalfExtents(widthPx,heightPx,rotationDeg){
