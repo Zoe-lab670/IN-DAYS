@@ -24,7 +24,7 @@ const DATE_SAFE_ZONE = {left:.035, top:.035, right:.145, bottom:.115, margin:.00
 // 日期只占左上角很小的一块；其余区域尽量留给文字、贴纸和照片。
 const CONTENT_ZONE = {left:.08, top:.12, right:.95, bottom:.94};
 // 右上角心情标记安全区：贴纸 / 照片 / 文字都不得压到日期与心情。
-const MOOD_SAFE_ZONE = {left:.76, top:.035, right:.975, bottom:.16, margin:.008};
+const MOOD_SAFE_ZONE = {left:.70, top:.035, right:.985, bottom:.185, margin:.012};
 // 标题默认样式：新的一天第一次输入标题时自动采用，不需要手动调字号/位置。
 const DEFAULT_TITLE_POS = {x:.10, y:.22};
 const FONT_OPTIONS = {
@@ -1748,13 +1748,13 @@ function applyCanvasTemplate(key){
   const e=state.entry;if(!e||!CANVAS_TEMPLATES[key])return;
   const before=clone(e);e.layoutTemplate=key;
   if(key==='focus'){
-    e.titlePos={x:.16,y:.28};e.contentPos={x:.16,y:.46};
+    e.titlePos={x:.10,y:.32};e.contentPos={x:.10,y:.46};
     (e.stickers||[]).forEach((it,i)=>{if(it.locked)return;const a=[[.70,.40],[.82,.48],[.66,.64],[.84,.70]][i%4];it.x=a[0];it.y=a[1];});
   }else if(key==='split'){
-    e.titlePos={x:.16,y:.28};e.contentPos={x:.16,y:.50};
+    e.titlePos={x:.10,y:.32};e.contentPos={x:.10,y:.50};
     (e.stickers||[]).forEach((it,i)=>{if(it.locked)return;it.x=.70+(i%2)*.16;it.y=.38+Math.floor(i/2)*.15;});
   }else if(key==='gallery'){
-    e.titlePos={x:.16,y:.27};e.contentPos={x:.16,y:.44};
+    e.titlePos={x:.10,y:.30};e.contentPos={x:.10,y:.44};
     const items=[...(e.photos||[]),...(e.stickers||[])];
     items.forEach((it,i)=>{if(it.locked)return;it.x=.57+(i%3)*.17;it.y=.43+Math.floor(i/3)*.17;if('scale' in it)it.scale=clamp(Number(it.scale)||1,.55,1.35);if('rotation' in it)it.rotation=((i%5)-2)*4;});
   }else{
@@ -1888,10 +1888,9 @@ function constrainCanvasElementPosition(kind,item,x,y){
   let nx=Number.isFinite(Number(x))?Number(x):.5;
   let ny=Number.isFinite(Number(y))?Number(y):.5;
   if(kind==='text'){
-    nx=clamp(nx,CONTENT_ZONE.left,CONTENT_ZONE.right); ny=clamp(ny,CONTENT_ZONE.top,CONTENT_ZONE.bottom);
-    if(nx>=MOOD_SAFE_ZONE.left && ny>=MOOD_SAFE_ZONE.top && ny<=MOOD_SAFE_ZONE.bottom){
-      nx=clamp(MOOD_SAFE_ZONE.left-MOOD_SAFE_ZONE.margin,CONTENT_ZONE.left,CONTENT_ZONE.right);
-    }
+    nx=clamp(nx,CONTENT_ZONE.left,.90); ny=clamp(ny,.16,CONTENT_ZONE.bottom);
+    // 顶部整条区域留给日期/心情：文字不能进入右上角安全区，也不能贴住日期带。
+    if(ny < .215 && nx > .66) nx=.60;
     return {x:nx,y:ny};
   }
   let halfW,halfH;
@@ -2116,8 +2115,8 @@ function miniPoint(x,y,p){
 }
 function moodVisualMarkup(mood,mini=false){
   if(!mood)return '';const item=MOODS.find(m=>m.key===mood);if(!item)return '';const color={happy:'#d8b971',calm:'#9db5a2',full:'#b6a486',tired:'#9cabb6',sad:'#95a7b3',anxious:'#c39a9d'}[mood]||'#b7b5ae';
-  return mini?`<div class="mini-object mini-mood" style="left:84%;top:90%;--mood-color:${color};font-size:${(9/CANVAS_W)*100}cqw;padding:${(4/CANVAS_W)*100}cqw ${(7/CANVAS_W)*100}cqw;gap:${(5/CANVAS_W)*100}cqw"><i style="width:${(7/CANVAS_W)*100}cqw;height:${(7/CANVAS_W)*100}cqw"></i><span>${escapeHtml(item.label)}</span></div>`:
-  `<div class="canvas-mood" style="left:84%;top:90%;--mood-color:${color}"><i></i><span>${escapeHtml(item.label)}</span></div>`;
+  return mini?`<div class="mini-object mini-mood" style="left:84%;top:10%;--mood-color:${color};font-size:${(9/CANVAS_W)*100}cqw;padding:${(4/CANVAS_W)*100}cqw ${(7/CANVAS_W)*100}cqw;gap:${(5/CANVAS_W)*100}cqw"><i style="width:${(7/CANVAS_W)*100}cqw;height:${(7/CANVAS_W)*100}cqw"></i><span>${escapeHtml(item.label)}</span></div>`:
+  `<div class="canvas-mood" style="left:84%;top:10%;--mood-color:${color}"><i></i><span>${escapeHtml(item.label)}</span></div>`;
 }
 function compositionDomHtml(e,{mode='canvas'}={}){
   const parts=[];
@@ -2582,7 +2581,7 @@ function duplicateSelected(){
   recordChange(before,'已复制');
   renderDrawer();
 }
-function adjustSelectedScale(delta){const before=clone(state.entry);if(state.selectedText){const key=state.selectedText+'Style',style=state.entry[key]||{};style.fontSize=clamp((style.fontSize|| (state.selectedText==='title'?25:12))+(delta*28),state.selectedText==='title'?16:9,state.selectedText==='title'?54:28);state.entry[key]=style;const pk=state.selectedText+'Pos';state.entry[pk]=constrainTextPosition(state.selectedText,state.entry,state.entry[pk]?.x??.5,state.entry[pk]?.y??.5);}state.entry.stickers.forEach(x=>{if(state.selectedCanvas.has(x.id)&&!x.locked){x.scale=clamp((x.scale||1)+delta,.35,2.15);const q=constrainCanvasElementPosition('sticker',x,x.x,x.y);x.x=q.x;x.y=q.y;}});state.entry.photos.forEach(x=>{if(state.selectedPhoto.has(x.id)&&!x.locked){x.scale=clamp((x.scale||1)+delta,.35,1.8);const q=constrainCanvasElementPosition('photo',x,x.x,x.y);x.x=q.x;x.y=q.y;}});recordChange(before);renderCanvasOnly();}
+function adjustSelectedScale(delta){const before=clone(state.entry);if(state.selectedText){const key=state.selectedText+'Style',style=state.entry[key]||{};style.fontSize=clamp((style.fontSize|| (state.selectedText==='title'?25:12))+(delta*28),state.selectedText==='title'?16:9,state.selectedText==='title'?54:28);state.entry[key]=style;}state.entry.stickers.forEach(x=>{if(state.selectedCanvas.has(x.id)&&!x.locked){x.scale=clamp((x.scale||1)+delta,.35,2.15);const q=constrainCanvasElementPosition('sticker',x,x.x,x.y);x.x=q.x;x.y=q.y;}});state.entry.photos.forEach(x=>{if(state.selectedPhoto.has(x.id)&&!x.locked){x.scale=clamp((x.scale||1)+delta,.35,1.8);const q=constrainCanvasElementPosition('photo',x,x.x,x.y);x.x=q.x;x.y=q.y;}});recordChange(before);renderCanvasOnly();}
 function rotateSelected(delta){const before=clone(state.entry);state.entry.stickers.forEach(x=>{if(state.selectedCanvas.has(x.id)&&!x.locked){x.rotation=clamp((x.rotation||0)+delta,-180,180);const q=constrainCanvasElementPosition('sticker',x,x.x,x.y);x.x=q.x;x.y=q.y;}});state.entry.photos.forEach(x=>{if(state.selectedPhoto.has(x.id)&&!x.locked){x.rotation=clamp((x.rotation||0)+delta,-180,180);const q=constrainCanvasElementPosition('photo',x,x.x,x.y);x.x=q.x;x.y=q.y;}});recordChange(before);renderCanvasOnly();}
 function layerSelected(dir){const ids=new Set([...state.selectedCanvas,...state.selectedPhoto]);if(!ids.size)return;const before=clone(state.entry);const list=[...(state.entry.stickers||[]),...(state.entry.photos||[])];if(dir==='front'){let max=Math.max(0,...list.map(x=>Number(x.z)||0));for(const it of list){if(ids.has(it.id))it.z=++max;}}else{let min=Math.min(0,...list.map(x=>Number(x.z)||0));for(const it of list){if(ids.has(it.id))it.z=--min;}}normalizeLayerOrder(state.entry.stickers,state.entry.photos);recordChange(before);renderCanvasOnly();renderTools();}
 function toggleLockSelected(){const ids=new Set([...state.selectedCanvas,...state.selectedPhoto]),before=clone(state.entry);state.entry.stickers.forEach(x=>{if(ids.has(x.id))x.locked=!x.locked;});state.entry.photos.forEach(x=>{if(ids.has(x.id))x.locked=!x.locked;});recordChange(before);renderCanvasOnly();renderTools();}
@@ -2880,7 +2879,7 @@ function bindCanvasInteractions(canvas){
     }else if(candidate.kind==='photo'){
       for(const id of state.selectedPhoto){const it=state.entry.photos.find(x=>x.id===id),st=candidate.starts[id];if(!it||it.locked||!st)continue;const q=constrainCanvasElementPosition('photo',it,st.x+dx,st.y+dy);it.x=q.x;it.y=q.y;const el=canvas.querySelector(`[data-id="${CSS.escape(id)}"]`);if(el){el.style.left=`${it.x*100}%`;el.style.top=`${it.y*100}%`;}}
     }else{
-      const posKey=candidate.kind==='title'?'titlePos':'contentPos',base=candidate.before[posKey]||state.entry[posKey],q=constrainCanvasElementPosition('text',{kind:candidate.kind,entry:state.entry},base.x+dx,base.y+dy);state.entry[posKey]={x:q.x,y:q.y};const el=canvas.querySelector(`[data-drag-kind="${candidate.kind}"]`);if(el){el.style.left=`${state.entry[posKey].x*100}%`;el.style.top=`${state.entry[posKey].y*100}%`;}
+      const posKey=candidate.kind==='title'?'titlePos':'contentPos',base=candidate.before[posKey]||state.entry[posKey],q=constrainCanvasElementPosition('text',null,base.x+dx,base.y+dy);state.entry[posKey]={x:q.x,y:q.y};const el=canvas.querySelector(`[data-drag-kind="${candidate.kind}"]`);if(el){el.style.left=`${state.entry[posKey].x*100}%`;el.style.top=`${state.entry[posKey].y*100}%`;}
     }
     state.autosaveStatus='正在保存草稿…';updateDrawerFooter();
   };
@@ -2968,9 +2967,9 @@ function finishInlineTextEdit(cancel=false){
   renderCanvasOnly();
   renderTools();
 }
-function setTextSize(kind,delta){const before=clone(state.entry),style=state.entry[`${kind}Style`]||{};style.fontSize=clamp((style.fontSize|| (kind==='title'?25:12))+delta,kind==='title'?16:9,kind==='title'?46:22);state.entry[`${kind}Style`]=style;const pk=kind+'Pos';state.entry[pk]=constrainTextPosition(kind,state.entry,state.entry[pk]?.x??.5,state.entry[pk]?.y??.5);recordChange(before);renderCanvasOnly();renderTools();}
+function setTextSize(kind,delta){const before=clone(state.entry),style=state.entry[`${kind}Style`]||{};style.fontSize=clamp((style.fontSize|| (kind==='title'?25:12))+delta,kind==='title'?16:9,kind==='title'?46:22);state.entry[`${kind}Style`]=style;recordChange(before);renderCanvasOnly();renderTools();}
 function toggleTextAlign(kind){const before=clone(state.entry),style=state.entry[`${kind}Style`]||{};style.align=style.align==='left'?'center':style.align==='center'?'right':'left';state.entry[`${kind}Style`]=style;recordChange(before);renderCanvasOnly();renderTools();}
-function moveSelectionByKeyboard(dx,dy){const before=clone(state.entry);if(state.selectedText){const k=state.selectedText+'Pos',p=state.entry[k],q=constrainCanvasElementPosition('text',{kind:state.selectedText,entry:state.entry},p.x+dx,p.y+dy);state.entry[k]={x:q.x,y:q.y};}else{state.entry.stickers.forEach(it=>{if(state.selectedCanvas.has(it.id)&&!it.locked){const q=constrainCanvasElementPosition('sticker',it,it.x+dx,it.y+dy);it.x=q.x;it.y=q.y;}});state.entry.photos.forEach(it=>{if(state.selectedPhoto.has(it.id)&&!it.locked){const q=constrainCanvasElementPosition('photo',it,it.x+dx,it.y+dy);it.x=q.x;it.y=q.y;}});}recordChange(before);renderCanvasOnly();}
+function moveSelectionByKeyboard(dx,dy){const before=clone(state.entry);if(state.selectedText){const k=state.selectedText+'Pos',p=state.entry[k],q=constrainCanvasElementPosition('text',null,p.x+dx,p.y+dy);state.entry[k]={x:q.x,y:q.y};}else{state.entry.stickers.forEach(it=>{if(state.selectedCanvas.has(it.id)&&!it.locked){const q=constrainCanvasElementPosition('sticker',it,it.x+dx,it.y+dy);it.x=q.x;it.y=q.y;}});state.entry.photos.forEach(it=>{if(state.selectedPhoto.has(it.id)&&!it.locked){const q=constrainCanvasElementPosition('photo',it,it.x+dx,it.y+dy);it.x=q.x;it.y=q.y;}});}recordChange(before);renderCanvasOnly();}
 function undo(){if(!state.historyPast.length)return;const current=clone(state.entry);state.historyFuture.push(current);state.entry=state.historyPast.pop();saveDraft(state.entry);renderDrawer();toast('已撤销');}
 function redo(){if(!state.historyFuture.length)return;const current=clone(state.entry);state.historyPast.push(current);state.entry=state.historyFuture.pop();saveDraft(state.entry);renderDrawer();toast('已恢复');}
 
@@ -3039,7 +3038,7 @@ function compositionElementsSvg(e,w,h,{includeDate=true,mini=false}={}){
   const esc=v=>escapeHtml(v);
   if(e.title){const tf=FONT_OPTIONS[e.titleStyle?.fontFamily||'system']?.family||FONT_OPTIONS.system.family;const titleSize=(mini?Math.max(Number(e.titleStyle?.fontSize)||25,44):Number(e.titleStyle?.fontSize)||25);body+=`<text x="${tx(e.titlePos.x)}" y="${ty(e.titlePos.y)}" font-size="${titleSize*sx}" font-family="${escapeHtml(tf)}" font-weight="${e.titleStyle.weight||500}" fill="#3f403b" text-anchor="${e.titleStyle.align==='center'?'middle':e.titleStyle.align==='right'?'end':'start'}">${esc(e.title)}</text>`;}
   if(e.content){const cf=FONT_OPTIONS[e.contentStyle?.fontFamily||'system']?.family||FONT_OPTIONS.system.family;const contentSize=(mini?Math.max(Number(e.contentStyle?.fontSize)||12,24):Number(e.contentStyle?.fontSize)||12);const lines=textLinesSvg(e.content,Math.max(9,Math.floor((mini?24:38)/(contentSize/12))));lines.slice(0,mini?4:99).forEach((line,i)=>body+=`<text x="${tx(e.contentPos.x)}" y="${ty(e.contentPos.y)+i*contentSize*1.45*sy}" font-size="${contentSize*sx}" font-family="${escapeHtml(cf)}" fill="#66645c" text-anchor="${e.contentStyle.align==='center'?'middle':e.contentStyle.align==='right'?'end':'start'}">${esc(line)}</text>`);}
-  if(e.mood){const mm=MOODS.find(m=>m.key===e.mood);const mc={happy:'#d8b971',calm:'#9db5a2',full:'#b6a486',tired:'#9cabb6',sad:'#95a7b3',anxious:'#c39a9d',excited:'#d39b77',love:'#c58d8c',wow:'#c5a269',angry:'#c88e87'}[e.mood]||'#b7b5ae';body+=`<circle cx="${tx(.84)}" cy="${ty(.90)}" r="${8*sx}" fill="${mc}" opacity=".85"/><text x="${tx(.84)+14*sx}" y="${ty(.90)+5*sy}" font-size="${12*sx}" fill="#8f8c84" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif">${esc(mm?.label||'')}</text>`;}
+  if(e.mood){const mm=MOODS.find(m=>m.key===e.mood);const mc={happy:'#d8b971',calm:'#9db5a2',full:'#b6a486',tired:'#9cabb6',sad:'#95a7b3',anxious:'#c39a9d',excited:'#d39b77',love:'#c58d8c',wow:'#c5a269',angry:'#c88e87'}[e.mood]||'#b7b5ae';body+=`<circle cx="${tx(.84)}" cy="${ty(.10)}" r="${8*sx}" fill="${mc}" opacity=".85"/><text x="${tx(.84)+14*sx}" y="${ty(.10)+5*sy}" font-size="${12*sx}" fill="#8f8c84" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif">${esc(mm?.label||'')}</text>`;}
   const layers=[...(e.photos||[]).map(p=>({kind:'photo',item:p,z:Number(p.z)||0})),...(e.stickers||[]).map(p=>({kind:'sticker',item:p,z:Number(p.z)||0}))].sort((a,b)=>a.z-b.z);
   for(const layer of layers){const p=layer.item;if(layer.kind==='photo'){const rawRatio=clamp(Number(p.ratio)||4/3,.55,2.2),ratio=String(p.cropMode||'original')==='4:3'?4/3:rawRatio,pw=160*p.scale*sx,ph=pw/ratio;body+=`<rect x="${tx(p.x)-pw/2-5*sx}" y="${ty(p.y)-ph/2-5*sy}" width="${pw+10*sx}" height="${ph+10*sy}" rx="10" fill="#fffefb" opacity=".92" transform="rotate(${p.rotation||0} ${tx(p.x)} ${ty(p.y)})"/><image href="${esc(p.src)}" x="${tx(p.x)-pw/2}" y="${ty(p.y)-ph/2}" width="${pw}" height="${ph}" preserveAspectRatio="xMidYMid ${String(p.cropMode||'original')==='4:3'?'slice':'meet'}" transform="rotate(${p.rotation||0} ${tx(p.x)} ${ty(p.y)})"/>`;}else {const st=STICKERS.find(x=>x.id===p.stickerId);if(!st)continue;const tier=st.category==='mood'||st.category==='nature'?'accent':st.category==='festival'||st.category==='travel'?'story':'object';body+=`<g class="composition-sticker tier-${tier}">${exportSvgForSticker(st,tx(p.x),ty(p.y),64*sx,p.scale||1,p.rotation||0)}</g>`;}}
   if(includeDate)body=`<text x="48" y="55" font-size="18" fill="#9b9991" letter-spacing="3">${esc(e.entry_date)}</text>`+body;
@@ -3098,7 +3097,7 @@ function closeMonthExport(){document.getElementById('exportMonthRoot').innerHTML
 function boot(){
   try{
     if(!window.IN_DAYS_CONFIG){console.info('[IN DAYS] config.js 未提供，当前按未配置账号模式启动；不会覆盖现有 config.js。');}
-    renderShell();state.entry=emptyEntry(currentDateKey());state.drawerOpen=false;renderCalendar();
+    renderShell();state.entry=emptyEntry(currentDateKey());state.drawerOpen=window.innerWidth>=1180;renderCalendar();
     Promise.resolve(initAuth()).then(async()=>{if(!supabase){await loadCurrentMonth();await loadSelectedEntry();}}).catch(async()=>{await loadCurrentMonth();await loadSelectedEntry();});
   }catch(error){console.error(error);app.innerHTML='<main class="app-shell"><section class="selected-summary"><div><p class="section-kicker">IN DAYS</p><h2>页面加载失败</h2><p>请刷新页面重试。</p></div></section></main>';}
 }

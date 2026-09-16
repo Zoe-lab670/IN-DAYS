@@ -65,6 +65,3 @@ V33 是 P0 基线；P1（时间轴 / 模板版式 / 贴纸小场景）尚未开�
 - 年度回顾：侧边栏新增“年度回顾”，按当前年份汇总记录日、贴纸、照片、心情与月度节奏。
 - 年度导出：在“导出本月”中增加“年度回顾 PNG”“年度数据 JSON”；年度回顾弹窗也可直接导出。
 - 不新增 Supabase 表，不覆盖 config.js。
-
-
-P3 boundary refinement: date zone remains protected at top-left; mood zone is protected at bottom-right; text/stickers/photos are constrained away from both zones without visible guide lines.
